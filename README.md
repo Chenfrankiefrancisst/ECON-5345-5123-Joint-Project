@@ -4,4 +4,5 @@
 
 **Instructors:** Professors Byoungchan Lee (HKUST), Chaewon Baek (SKKU)
 
-* `csvtom.m` transfers a `.csv` to `.m`
+* `SVAR.zip`: Estimation of geopolitical risks to macro variables in Structural VAR.
+* `csvtom.m`: transfers a `.csv` to `.m`
