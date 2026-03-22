@@ -1,4 +1,4 @@
-# ECON-5345-5123-Joint-Project
+# ECON 5345 & 5123 Joint Project
 
 **Team Members:** Frankie CHEN (HKUST), Nayeong KANG (SKKU), Bomi YUN (SKKU)
 
