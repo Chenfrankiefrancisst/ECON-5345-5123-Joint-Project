@@ -139,9 +139,7 @@ Then:
 - if $\delta > 0$, the Phillips curve becomes **steeper** under geopolitical risk
 - if $\delta < 0$, the Phillips curve becomes **flatter**
 
-A more refined version separates **threat** and **act** shocks:
-
-$$
+A more refined version separates **threat** and **act** shocks: $$
 \pi_t
 =
 \alpha
