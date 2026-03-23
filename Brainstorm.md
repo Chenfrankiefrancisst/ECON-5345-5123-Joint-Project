@@ -111,13 +111,10 @@ This is a state-space model, and Kalman filter is the natural tool.
 
 For the project, start **without** Kalman filter. Begin with interaction models. Add TVP/Kalman only later if the evidence is strong and the time-varying interpretation becomes central.
 
----
 
 ## 4. How to study the Phillips curve under geopolitical shocks
 
-A clean baseline is an interaction specification:
-
-$$ \pi_t
+A clean baseline is an interaction specification: $\pi_t
 =
 \alpha
 +
@@ -127,7 +124,7 @@ $$ \pi_t
 +
 \delta (x_t \times g_t)
 +
-\varepsilon_t $$
+\varepsilon_t $
 
 Interpretation:
 
