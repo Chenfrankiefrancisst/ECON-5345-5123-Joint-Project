@@ -117,8 +117,7 @@ For the project, start **without** Kalman filter. Begin with interaction models.
 
 A clean baseline is an interaction specification:
 
-$$
-\pi_t
+$$ \pi_t
 =
 \alpha
 +
@@ -128,8 +127,7 @@ $$
 +
 \delta (x_t \times g_t)
 +
-\varepsilon_t
-$$
+\varepsilon_t $$
 
 Interpretation:
 
