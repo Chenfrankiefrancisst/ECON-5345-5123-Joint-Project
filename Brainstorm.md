@@ -25,9 +25,9 @@ From the current IRFs, the broad pattern appears to be:
 
 A key puzzle is:
 
-\[
+$$
 \Delta r_t > \text{what a simple Taylor rule would predict from } \Delta \pi_t
-\]
+$$
 
 In words: the policy rate response seems more volatile or more aggressive than the increase in inflation alone would imply.
 
@@ -43,7 +43,7 @@ A better framing is:
 
 > The observed policy response appears stronger than can be rationalized by a simple contemporaneous Taylor rule based only on current inflation and current activity.
 
-This matters because the larger response of \( r_t \) may reflect several things:
+This matters because the larger response of $r_t$ may reflect several things:
 
 - the central bank reacting to **expected future inflation**, not just current CPI
 - response to **oil / commodity pass-through**
@@ -67,22 +67,24 @@ So the empirical task is to distinguish between:
 - **Yes**, if the goal is to estimate **time-varying coefficients**.
 
 ### Case A: fixed-slope Phillips curve
+
 If the Phillips curve is estimated as a constant-parameter equation, then Kalman filter is not necessary.
 
 For example:
 
-\[
+$$
 \pi_t = \alpha + \kappa x_t + \gamma g_t + \varepsilon_t
-\]
+$$
 
 where:
-- \( \pi_t \) = inflation
-- \( x_t \) = slack / output gap / unemployment gap / marginal cost
-- \( g_t \) = geopolitical risk shock
+- $\pi_t$ = inflation
+- $x_t$ = slack / output gap / unemployment gap / marginal cost
+- $g_t$ = geopolitical risk shock
 
 This can be estimated with ordinary reduced-form methods.
 
 ### Case B: time-varying Phillips slope
+
 If the question is:
 
 > Does the slope of the Phillips curve change under geopolitical stress?
@@ -91,21 +93,22 @@ then Kalman filter becomes useful.
 
 For example:
 
-\[
+$$
 \pi_t = \alpha_t + \kappa_t x_t + \gamma_t g_t + \varepsilon_t
-\]
+$$
 
 with state evolution:
 
-\[
+$$
 \alpha_t = \alpha_{t-1} + \nu_t^\alpha,\qquad
 \kappa_t = \kappa_{t-1} + \nu_t^\kappa,\qquad
 \gamma_t = \gamma_{t-1} + \nu_t^\gamma
-\]
+$$
 
 This is a state-space model, and Kalman filter is the natural tool.
 
 ### Recommendation
+
 For the project, start **without** Kalman filter. Begin with interaction models. Add TVP/Kalman only later if the evidence is strong and the time-varying interpretation becomes central.
 
 ---
@@ -114,7 +117,7 @@ For the project, start **without** Kalman filter. Begin with interaction models.
 
 A clean baseline is an interaction specification:
 
-\[
+$$
 \pi_t
 =
 \alpha
@@ -126,21 +129,21 @@ A clean baseline is an interaction specification:
 \delta (x_t \times g_t)
 +
 \varepsilon_t
-\]
+$$
 
 Interpretation:
 
-- \( \kappa \): baseline Phillips curve slope
-- \( \delta \): how geopolitical shocks change the slope
+- $\kappa$: baseline Phillips curve slope
+- $\delta$: how geopolitical shocks change the slope
 
 Then:
 
-- if \( \delta > 0 \), the Phillips curve becomes **steeper** under geopolitical risk
-- if \( \delta < 0 \), the Phillips curve becomes **flatter**
+- if $\delta > 0$, the Phillips curve becomes **steeper** under geopolitical risk
+- if $\delta < 0$, the Phillips curve becomes **flatter**
 
 A more refined version separates **threat** and **act** shocks:
 
-\[
+$$
 \pi_t
 =
 \alpha
@@ -156,11 +159,12 @@ A more refined version separates **threat** and **act** shocks:
 \delta_2 (x_t \times g_t^{act})
 +
 \varepsilon_t
-\]
+$$
 
 This is probably the best first empirical design.
 
 ### Economic interpretation
+
 Under geopolitical threat shocks, inflation may become less demand-driven and more supply-risk-driven:
 
 - oil prices rise
@@ -182,15 +186,16 @@ That is an empirical question.
 
 The observed pattern:
 
-\[
+$$
 \Delta r_t > \phi_\pi \Delta \pi_t + \phi_x \Delta x_t
-\]
+$$
 
 does not automatically imply an irrational central bank.
 
 It may simply imply that the rule is incomplete.
 
 ### A richer interpretation
+
 Under geopolitical threat shocks, the central bank may respond to:
 
 - **expected inflation**
@@ -202,7 +207,7 @@ Under geopolitical threat shocks, the central bank may respond to:
 
 A more realistic policy rule is therefore:
 
-\[
+$$
 r_t
 =
 \rho r_{t-1}
@@ -216,9 +221,9 @@ r_t
 \right)
 +
 u_t
-\]
+$$
 
-where \( \phi_g > 0 \) is possible, especially for **threat shocks**.
+where $\phi_g > 0$ is possible, especially for **threat shocks**.
 
 This would explain why the rate response is stronger than current CPI alone would suggest.
 
@@ -237,13 +242,14 @@ The shadow rate differs from the observed federal funds rate because it is infer
 
 So if:
 
-\[
+$$
 \Delta \text{ShadowRate}_t \gg \Delta \pi_t
-\]
+$$
 
 this may reflect not only actual policy moves, but also a repricing of the expected path of monetary policy.
 
 ### Recommendation
+
 For the monetary-policy extension, compare several indicators:
 
 - actual federal funds rate or target rate
@@ -261,28 +267,28 @@ If the pattern is concentrated in the shadow rate, then part of the puzzle may b
 
 ### Step 1: estimate a baseline Taylor rule
 
-\[
+$$
 r_t = \rho r_{t-1} + (1-\rho)(\phi_\pi \pi_t + \phi_x x_t) + \varepsilon_t^r
-\]
+$$
 
 where:
-- \( r_t \) = policy rate or shadow rate
-- \( \pi_t \) = inflation
-- \( x_t \) = output gap / unemployment gap / activity measure
+- $r_t$ = policy rate or shadow rate
+- $\pi_t$ = inflation
+- $x_t$ = output gap / unemployment gap / activity measure
 
 Then define the fitted residual:
 
-\[
+$$
 \widehat{u}_t^{TR}
 =
 r_t - \widehat{r}_t^{Taylor}
-\]
+$$
 
 This residual captures the part of the policy move not explained by the standard Taylor rule.
 
 ### Step 2: relate the Taylor-rule residual to geopolitical shocks
 
-\[
+$$
 \widehat{u}_t^{TR}
 =
 a
@@ -292,18 +298,18 @@ b_1 g_t^{threat}
 b_2 g_t^{act}
 +
 e_t
-\]
+$$
 
 Interpretation:
 
-- if \( b_1 > 0 \), then **threat shocks** are associated with a policy response stronger than the standard Taylor rule predicts
-- if \( b_2 \) is small or negative, then act shocks do not generate the same “excess” tightening
+- if $b_1 > 0$, then **threat shocks** are associated with a policy response stronger than the standard Taylor rule predicts
+- if $b_2$ is small or negative, then act shocks do not generate the same “excess” tightening
 
 This is a clean way to formalize the visual IRF puzzle.
 
 ### Step 3: estimate an augmented Taylor rule
 
-\[
+$$
 r_t
 =
 \rho r_{t-1}
@@ -319,12 +325,12 @@ r_t
 \right)
 +
 u_t
-\]
+$$
 
 Possible interpretation:
 
-- \( \phi_{th} > 0 \): the central bank responds directly to threat shocks
-- \( \phi_{act} \) may be smaller or negative
+- $\phi_{th} > 0$: the central bank responds directly to threat shocks
+- $\phi_{act}$ may be smaller or negative
 
 If the standard Taylor residual shrinks a lot in this augmented specification, then the earlier “excess response” is not true overreaction. It is a systematic response to omitted risk factors.
 
@@ -334,7 +340,7 @@ If the standard Taylor residual shrinks a lot in this augmented specification, t
 
 Since geopolitical threats are largely about expectations, a forward-looking rule may be more appropriate:
 
-\[
+$$
 r_t
 =
 \rho r_{t-1}
@@ -348,7 +354,7 @@ r_t
 \right)
 +
 u_t
-\]
+$$
 
 This matters because policymakers often respond to future inflation risk rather than current observed CPI.
 
@@ -364,7 +370,7 @@ That would be a strong and convincing result.
 
 One strong contribution is to decompose the policy-rate response into components:
 
-\[
+$$
 \Delta r_t
 =
 \underbrace{\phi_\pi \Delta \pi_t}_{\text{inflation term}}
@@ -374,11 +380,11 @@ One strong contribution is to decompose the policy-rate response into components
 \underbrace{\phi_g g_t}_{\text{direct geopolitical term}}
 +
 \underbrace{\xi_t}_{\text{residual / policy shock}}
-\]
+$$
 
 Then, after a threat shock, ask:
 
-- how much of the increase in \( r_t \) is explained by inflation?
+- how much of the increase in $r_t$ is explained by inflation?
 - how much by activity?
 - how much by direct geopolitical response?
 - how much is left as unexplained residual?
@@ -394,9 +400,11 @@ This distinction is crucial.
 When the rate rises strongly after a threat shock, two interpretations are possible:
 
 ### Case 1: systematic policy response
+
 The central bank intentionally reacts to geopolitical threats as part of its reaction function.
 
 ### Case 2: true exogenous monetary-policy shock
+
 The central bank tightens more than fundamentals justify.
 
 Empirically, the way to separate these is:
@@ -415,15 +423,17 @@ If it does not, then the larger rate response is systematic and explainable.
 The cleanest sequence is:
 
 ### Stage 1: policy variables
+
 Compare:
 - actual policy rate
 - shadow rate
 - short yields (1-year, 2-year)
 
 ### Stage 2: Phillips-curve extension
+
 Estimate interaction models:
 
-\[
+$$
 \pi_t
 =
 \alpha
@@ -439,27 +449,29 @@ Estimate interaction models:
 \delta_2 (x_t \times g_t^{act})
 +
 \varepsilon_t
-\]
+$$
 
 ### Stage 3: baseline Taylor rule
+
 Estimate:
 
-\[
+$$
 r_t = \rho r_{t-1} + (1-\rho)(\phi_\pi \pi_t + \phi_x x_t) + \varepsilon_t^r
-\]
+$$
 
 and compute the Taylor-rule gap:
 
-\[
+$$
 \widehat{u}_t^{TR}
 =
 r_t - \widehat{r}_t^{Taylor}
-\]
+$$
 
 ### Stage 4: explain the Taylor-rule gap
+
 Regress the gap on geopolitical shocks:
 
-\[
+$$
 \widehat{u}_t^{TR}
 =
 a
@@ -469,12 +481,13 @@ b_1 g_t^{threat}
 b_2 g_t^{act}
 +
 e_t
-\]
+$$
 
 ### Stage 5: augmented and forward-looking rules
+
 Estimate:
 
-\[
+$$
 r_t
 =
 \rho r_{t-1}
@@ -490,12 +503,13 @@ r_t
 \right)
 +
 u_t
-\]
+$$
 
 ### Stage 6: only then consider TVP/Kalman
+
 If needed, estimate a time-varying policy rule:
 
-\[
+$$
 r_t
 =
 \rho_t r_{t-1}
@@ -509,7 +523,7 @@ r_t
 \right)
 +
 \varepsilon_t
-\]
+$$
 
 with time-varying parameters estimated in state-space form.
 
