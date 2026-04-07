@@ -67,14 +67,6 @@ Feedback_Pf.Baek/
 
 ## 6. Methodological notes — Local Projections
 
-- **Estimator:** OLS, horizon-by-horizon, $h = 0, 1, \dots, H$.
-- **Specification (baseline):**
-  $$y_{t+h} - y_{t-1} = \alpha_h + \beta_h \, \text{shock}_t + \sum_{l=1}^{L} \gamma_{h,l} \, X_{t-l} + u_{t+h}$$
-  where the IRF at horizon $h$ is $\beta_h$, and $X$ stacks lags of $y$, the shock, and any controls.
-- **Inference:** Newey–West HAC with bandwidth $\geq h$ (LP residuals are MA($h$) by construction).
-- **Channel test:** Add the contemporaneous channel variable on the RHS — if $\beta_h$ shrinks toward zero, that channel carries the response.
-- **Reference implementation already in repo:** `code/` of this subfolder will reuse the LP routine pattern from PS3 (`PS3_Answer_NY.m`, Q7) — same `ols_nw` helper and `t+h − t−1` LHS construction.
-
 ## 7. Open questions
 
 - Which sample period? (Full post-1985 vs. post-2000 to avoid the Great Moderation break)
