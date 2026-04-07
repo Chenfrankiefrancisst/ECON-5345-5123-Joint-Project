@@ -10,7 +10,7 @@ This subfolder explores the research direction suggested by **Prof. Chaewon Baek
 
 ## 1. Research question
 
-> **Does a Geopolitical Risk (GPR) shock act as a cost-push shock to the US economy, and if so, through which channels?**
+> **Does a Geopolitical Risk (GPR) shock act as a cost-push shock to the US economy, and if so, through which channels? Do *threats* (GPT) and *acts* (GPA) transmit differently?**
 
 The motivating idea (from Prof. Baek):
 
@@ -18,6 +18,13 @@ The motivating idea (from Prof. Baek):
 2. If yes, decompose the response into specific transmission **channels** (oil, raw materials, expected inflation, credit spread, ...).
 3. Identify which channel is **dominant**.
 4. Interpret the result as a rationale for the Federal Reserve's interest-rate response, and/or motivate a follow-up study.
+
+**Shock decomposition (own extension).** Caldara & Iacoviello (2022) construct the headline GPR index as the sum of two sub-indices:
+
+- **GPT — Geopolitical Threats:** news mentioning *risks* of war, terror, or military tension (forward-looking, expectational).
+- **GPA — Geopolitical Acts:** news reporting *realised* events (war outbreaks, attacks, invasions).
+
+Aggregating into a single GPR index can mask very different transmission mechanisms — threats may operate mainly through **expectations and risk premia**, while acts may operate through **physical supply disruption** (oil, shipping, commodities). I will run the entire analysis (baseline + each channel) **separately for GPT and GPA**, then compare.
 
 **Methodological steer (Prof. Baek):** Use **Local Projections** (Jordà 2005) as the primary estimation method. LP is more robust to specification error than VAR, accommodates nonlinearities and state dependence naturally, and gives horizon-by-horizon impulse responses with clean inference.
 
@@ -27,6 +34,7 @@ The motivating idea (from Prof. Baek):
 - **H2.** The effect operates primarily through commodity-price channels (oil, raw materials) rather than demand-side channels.
 - **H3.** Expected inflation responds positively, amplifying the cost-push effect.
 - **H4.** The Fed responds by raising the policy rate — consistent with a Taylor rule augmented by GPR.
+- **H5 (GPT vs. GPA).** *Threats* (GPT) transmit primarily through expectations and credit-spread / risk-premium channels; *acts* (GPA) transmit primarily through physical commodity-price (oil, raw materials) channels. The two should therefore have distinct dominant channels and possibly different inflation persistence.
 
 ## 3. Channels to investigate
 
@@ -57,10 +65,10 @@ Feedback_Pf.Baek/
 1. **Stage 0 — Notes.** Fill in `notes/channels.md`: mechanism, proxy choice, prior literature.
 2. **Stage 1 — Data.** Pull the GPR index (Caldara & Iacoviello, 2022) plus US monthly macro and channel proxies.
 3. **Stage 2 — Design lock.** Specify the baseline LP (LHS variables, controls, lag length, sample, shock variable, confidence interval method) **before** estimating anything.
-4. **Stage 3 — Baseline LP.** Estimate horizon-by-horizon LP of (log) IP and (log) CPI on the GPR shock; confirm the cost-push signature (π ↑, y ↓).
-5. **Stage 4 — Channel LPs.** For each channel: (a) LP of the channel variable on the GPR shock, (b) LP of inflation on the GPR shock controlling for the channel, to assess attenuation.
-6. **Stage 5 — Channel ranking.** Compare attenuation magnitudes / share of inflation response explained by each channel. Optional: mediation-style decomposition.
-7. **Stage 6 — Fed response.** LP of the Fed funds rate (or shadow rate) on the GPR shock; interpret as augmented Taylor rule reaction.
+4. **Stage 3 — Baseline LP.** Estimate horizon-by-horizon LP of (log) IP and (log) CPI on the shock; confirm the cost-push signature (π ↑, y ↓). **Run three variants in parallel: headline GPR, GPT only, GPA only.**
+5. **Stage 4 — Channel LPs.** For each channel × each shock (GPT, GPA): (a) LP of the channel variable on the shock, (b) LP of inflation on the shock controlling for the channel, to assess attenuation.
+6. **Stage 5 — Channel ranking.** Compare attenuation magnitudes / share of inflation response explained by each channel — separately for GPT and GPA. Test whether the dominant channel differs across the two.
+7. **Stage 6 — Fed response.** LP of the Fed funds rate (or shadow rate) on each shock; interpret as augmented Taylor rule reaction. Check whether the Fed reacts differently to threats vs. acts.
 8. **Stage 7 — Summary.** Write up in the team Overleaf.
 
 ## 6. Methodological notes — Local Projections
@@ -76,7 +84,8 @@ Feedback_Pf.Baek/
 ## 7. Open questions
 
 - Which sample period? (Full post-1985 vs. post-2000 to avoid the Great Moderation break)
-- Shock construction: raw GPR innovations, residuals from an AR, or external proxy (Caldara–Iacoviello shock series)?
+- Shock construction: raw GPR/GPT/GPA innovations, residuals from an AR, or external proxy (Caldara–Iacoviello narrative shock series)?
+- When running GPT and GPA jointly in one LP, how to order them? Or run separately and compare? (Default: separate, to keep the IRF interpretation clean.)
 - Linear LP vs. state-dependent LP (high-GPR vs. low-GPR regimes; size/sign asymmetry à la Caldara et al. 2024)?
 - Lag length $L$: AIC/BIC, or fixed at 12 following the team's preliminary work?
 

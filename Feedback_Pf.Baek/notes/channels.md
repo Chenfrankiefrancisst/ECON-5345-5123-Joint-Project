@@ -2,6 +2,8 @@
 
 For each candidate channel: the mechanism, the proxy variable(s), expected sign, and identification/measurement caveats. To be filled in iteratively as the literature is read.
 
+**Shock split.** Throughout, the analysis is run separately for **GPT (threats)** and **GPA (acts)**, the two sub-indices of Caldara & Iacoviello (2022). Prior expectation: GPT loads more on expectations / credit-spread channels; GPA loads more on physical commodity channels (oil, raw materials).
+
 ---
 
 ## 1. Oil price
