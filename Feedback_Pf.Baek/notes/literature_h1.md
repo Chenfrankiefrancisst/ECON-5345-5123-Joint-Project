@@ -142,4 +142,94 @@ The first eight papers below directly estimate IRFs of inflation to GPR. Items 9
 
 ---
 
+## Recommendation for our US-only baseline LP (H1)
+
+Synthesising the conventions used across papers 1–3 above, here is a concrete recommendation for the US-only Stage 3 baseline. **This is a preliminary recommendation, not a locked spec** — Stage 2 (design lock) is where the team formally signs off.
+
+### Variables
+
+**Shock (RHS, key regressor)** — three parallel runs:
+1. `gpr_us` — log of the US-specific GPR index (Caldara & Iacoviello provide a US-only version on the data page).
+2. `gpt_us` — log GPT (threats sub-index).
+3. `gpa_us` — log GPA (acts sub-index).
+
+Using log levels (rather than first differences) follows Caldara & Iacoviello (2022). If GPR turns out to be persistent enough to look unit-rooty in our sample, switch to AR(p) residuals as the shock — to be decided in Stage 2 after seeing the autocorrelation.
+
+**LHS (dependent variables)** — two cost-push signature outcomes, run *separately* (one LP per outcome):
+1. `log(INDPRO)` — log industrial production (FRED `INDPRO`). This is the *output* leg of the cost-push test (expected sign: −).
+2. `log(CPI_headline)` — log headline CPI (FRED `CPIAUCSL`). This is the *price* leg (expected sign: +).
+
+LHS construction: $y_{t+h} - y_{t-1}$ in line with Jordà-style level IRFs (the same form we used in PS3 Q7). Robustness: also run with `log(CPILFESL)` (core CPI) and `log(PCEPI)`.
+
+**Controls (RHS, contemporaneous and lagged)** — standard Caldara-style monthly macro controls so the LP is comparable to existing US VAR results:
+- $L$ own lags of the LHS variable
+- $L$ lags of the shock
+- $L$ lags of: log industrial production, log headline CPI, fed funds rate, log real S&P 500 (FRED `SP500` deflated by CPI), log USD broad index (FRED `DTWEXBGS` or `TWEXBMTH`)
+
+For Channel-stage LPs (Stage 4) the relevant channel variable is added contemporaneously and at lags, and we compare $\beta_h$ with vs. without it.
+
+### Lag length
+
+Recommend **L = 12** for the baseline (one full year of monthly lags). Reasons:
+1. Matches the lag choice in `Prelim_OLS_MICH/EQ19852025VAR.m` (the team's existing preliminary work) — keeps results comparable to teammates' analysis.
+2. Standard in monthly US LP/VAR literature (Caldara & Iacoviello use 12 in the AER paper VAR).
+3. Long enough to absorb seasonal autocorrelation in monthly inflation.
+
+Robustness: also run AIC/BIC selection over $L \in \{6, 12, 18, 24\}$ as a check.
+
+### Horizon
+
+$H = 36$ months (3 years). Long enough to see the full hump-shaped IRF documented in Caldara et al. (2024), short enough to avoid degree-of-freedom problems.
+
+### Inference
+
+Newey–West HAC standard errors with bandwidth $\max(h, \lfloor 4(T/100)^{2/9} \rfloor)$, since LP residuals are MA($h$) by construction. 90% confidence bands (in line with the team's Q5/Q7 plots).
+
+### Sample period
+
+**Recommend baseline sample: 1985-01 → 2024-12 (480 months).**
+
+Reasoning:
+
+| Constraint | Implication |
+|---|---|
+| Volcker disinflation ends ~1984 → post-1985 is a single monetary-policy regime | Start = 1985-01 |
+| All H1 baseline series available pre-1985 (INDPRO 1919, CPI 1947, FFR 1954, MICH 1978) | No binding data constraint |
+| GPR full sample 1900–present | Not binding |
+| End at 2024-12 (or latest FRED vintage) | Maximal $T$ |
+| COVID 2020-03 to 2021-12 is a clear outlier in IP and CPI | Dummy or robustness exclusion (see below) |
+
+**Sample length:** ~480 monthly observations — comfortable for an LP with $L=12$ controls and $H=36$ horizon. No degree-of-freedom concerns even after dropping COVID months for robustness.
+
+**COVID treatment.** Three options to report side-by-side as robustness:
+1. **Full sample with dummy.** Add a 2020-03 to 2021-12 dummy interacted with the constant (and possibly with the LHS) — preferred default.
+2. **Pre-COVID truncation.** End sample at 2020-02. Cleaner, but loses the most informative GPR period (Russia–Ukraine 2022).
+3. **Post-COVID extension.** Start at 2022-01. Captures the high-GPR period but $T$ is too short for credible LP inference; use only as illustration.
+
+**Why not post-2003 (TIPS sample) or post-1997 (GSCPI sample)?** Those constraints bind only for *channel* variables in Stages 4–5. For the H1 baseline (only IP and CPI on the LHS, FFR/oil/SP500/USD as controls), there is no reason to truncate. The longer sample wins.
+
+### Sub-sample slices to report (robustness)
+
+| Slice | Window | Purpose |
+|---|---|---|
+| Baseline | 1985-01 – 2024-12 | Main result |
+| Pre-GFC | 1985-01 – 2007-12 | Removes ZLB and unconventional MP era |
+| Pre-COVID | 1985-01 – 2020-02 | Cleanest sample |
+| Post-2000 | 2000-01 – 2024-12 | Matches Wang et al. (2024) sample for direct comparison |
+
+### Concrete first deliverable
+
+After Stage 2 design lock, the first script (`code/02_baseline_LP.m`) should produce **6 panels in one figure**:
+
+```
+                IP response          CPI response
+GPR (headline)  [β_h(IP|GPR)]        [β_h(CPI|GPR)]
+GPT (threats)   [β_h(IP|GPT)]        [β_h(CPI|GPT)]
+GPA (acts)      [β_h(IP|GPA)]        [β_h(CPI|GPA)]
+```
+
+with shaded 90% NW HAC CIs and horizon on the x-axis (0–36 months). H1 is supported if the right column trends positive and the left column trends negative for at least one of GPR/GPT/GPA at conventional horizons (h ≈ 6–24 months).
+
+---
+
 *Last updated: 2026-04-08. All bibliographic entries verified against publisher / SSRN / RePEc landing pages on this date. Items marked `[verify in PDF]` could not be extracted from publicly accessible HTML and need a manual read of the PDF before being relied on.*
