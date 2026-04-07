@@ -68,7 +68,7 @@ Feedback_Pf.Baek/
 4. **Stage 3 — Baseline LP.** Estimate horizon-by-horizon LP of (log) IP and (log) CPI on the shock; confirm the cost-push signature (π ↑, y ↓). **Run three variants in parallel: headline GPR, GPT only, GPA only.**
 5. **Stage 4 — Channel LPs.** For each channel × each shock (GPT, GPA): (a) LP of the channel variable on the shock, (b) LP of inflation on the shock controlling for the channel, to assess attenuation.
 6. **Stage 5 — Channel ranking.** Compare attenuation magnitudes / share of inflation response explained by each channel — separately for GPT and GPA. Test whether the dominant channel differs across the two.
-7. **Stage 6 — Fed response.** LP of the Fed funds rate (or shadow rate) on each shock; interpret as augmented Taylor rule reaction. Check whether the Fed reacts differently to threats vs. acts.
+7. **Stage 6 *(optional, time-permitting)* — Fed response.** LP of the Fed funds rate (or shadow rate) on each shock; interpret as augmented Taylor rule reaction. Check whether the Fed reacts differently to threats vs. acts. *Reason for downgrading to optional:* per Prof. Baek, naive OLS suffers from endogeneity and the Taylor rule is notoriously hard to estimate cleanly — pursue only after Stages 3–5 deliver a credible cost-push result.
 8. **Stage 7 — Summary.** Write up in the team Overleaf.
 
 ## 6. Methodological notes — Local Projections
