@@ -159,7 +159,7 @@ Using log levels (rather than first differences) follows Caldara & Iacoviello (2
 1. `log(INDPRO)` — log industrial production (FRED `INDPRO`). This is the *output* leg of the cost-push test (expected sign: −).
 2. `log(CPI_headline)` — log headline CPI (FRED `CPIAUCSL`). This is the *price* leg (expected sign: +).
 
-LHS construction: $y_{t+h} - y_{t-1}$ in line with Jordà-style level IRFs (the same form we used in PS3 Q7). Robustness: also run with `log(CPILFESL)` (core CPI) and `log(PCEPI)`.
+LHS construction: $y_{t+h} - y_{t-1}$ in line with Jordà-style level IRFs. Robustness: also run with `log(CPILFESL)` (core CPI) and `log(PCEPI)`.
 
 **Controls (RHS, contemporaneous and lagged)** — standard Caldara-style monthly macro controls so the LP is comparable to existing US VAR results:
 - $L$ own lags of the LHS variable
@@ -183,7 +183,7 @@ $H = 36$ months (3 years). Long enough to see the full hump-shaped IRF documente
 
 ### Inference
 
-Newey–West HAC standard errors with bandwidth $\max(h, \lfloor 4(T/100)^{2/9} \rfloor)$, since LP residuals are MA($h$) by construction. 90% confidence bands (in line with the team's Q5/Q7 plots).
+Newey–West HAC standard errors with bandwidth $\max(h, \lfloor 4(T/100)^{2/9} \rfloor)$, since LP residuals are MA($h$) by construction. 90% confidence bands.
 
 ### Sample period
 
