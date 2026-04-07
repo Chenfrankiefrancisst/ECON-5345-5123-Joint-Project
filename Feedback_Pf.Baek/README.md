@@ -38,14 +38,7 @@ Aggregating into a single GPR index can mask very different transmission mechani
 
 ## 3. Channels to investigate
 
-| # | Channel | Proxy variable(s) | Source |
-|---|---------|-------------------|--------|
-| 1 | Oil price | WTI, Brent crude | FRED: `DCOILWTICO`, `DCOILBRENTEU` |
-| 2 | Raw materials | PPI: industrial commodities, BCOM index | FRED: `WPU03THRU15`, Bloomberg BCOM |
-| 3 | Expected inflation | Michigan E[π], FRBNY SCE 1y | FRED: `MICH`, NY Fed SCE |
-| 4 | Credit spread | BAA-AAA spread, GZ spread | FRED: `BAA10Y`, Gilchrist-Zakrajšek |
-
-See [`notes/channels.md`](notes/channels.md) for the per-channel rationale, expected sign, and identification notes.
+See [`notes/channels.md`](notes/channels.md) for the full proxy table, per-channel rationale, expected sign, and identification notes.
 
 ## 4. Folder structure
 
@@ -68,9 +61,9 @@ Feedback_Pf.Baek/
 4. **Stage 3 — Baseline LP.** Estimate horizon-by-horizon LP of (log) IP and (log) CPI on the shock; confirm the cost-push signature (π ↑, y ↓). **Run three variants in parallel: headline GPR, GPT only, GPA only.**
 5. **Stage 4 — Channel LPs.** For each channel × each shock (GPT, GPA): (a) LP of the channel variable on the shock, (b) LP of inflation on the shock controlling for the channel, to assess attenuation.
 6. **Stage 5 — Channel ranking.** Compare attenuation magnitudes / share of inflation response explained by each channel — separately for GPT and GPA. Test whether the dominant channel differs across the two.
-7. **Stage 5.5 *(optional, time-permitting)* — Threshold-based magnitude analysis.** Split the shock series into *small* and *large* events using a standard-deviation threshold (e.g. $|\text{shock}_t| < 1\sigma$ vs. $\geq 1\sigma$, or $1\sigma$ / $2\sigma$ bins), then re-estimate the baseline LP within each bin. Implementation options: (a) state-dependent LP with a dummy interaction, $\beta_h^{\text{small}}$ vs. $\beta_h^{\text{large}}$; (b) separate LP on the two sub-samples. Run for GPT and GPA independently. Goal: test whether GPR transmits *nonlinearly* — large geopolitical shocks may trigger disproportionate cost-push effects (consistent with Caldara et al. 2024's nonlinearity finding). This addresses the *size effect* question without committing to a fully nonparametric specification.
-8. **Stage 6 *(optional, time-permitting)* — Fed response.** LP of the Fed funds rate (or shadow rate) on each shock; interpret as augmented Taylor rule reaction. Check whether the Fed reacts differently to threats vs. acts. *Reason for downgrading to optional:* per Prof. Baek, naive OLS suffers from endogeneity and the Taylor rule is notoriously hard to estimate cleanly — pursue only after Stages 3–5 deliver a credible cost-push result.
-9. **Stage 7 — Summary.** Write up in the team Overleaf.
+7. **Stage 6 *(optional, time-permitting)* — Threshold-based magnitude analysis.** Split the shock series into *small* and *large* events using a standard-deviation threshold (e.g. $|\text{shock}_t| < 1\sigma$ vs. $\geq 1\sigma$, or $1\sigma$ / $2\sigma$ bins), then re-estimate the baseline LP within each bin. Implementation options: (a) state-dependent LP with a dummy interaction, $\beta_h^{\text{small}}$ vs. $\beta_h^{\text{large}}$; (b) separate LP on the two sub-samples. Run for GPT and GPA independently. Goal: test whether GPR transmits *nonlinearly* — large geopolitical shocks may trigger disproportionate cost-push effects (consistent with Caldara et al. 2024's nonlinearity finding). This addresses the *size effect* question without committing to a fully nonparametric specification.
+8. **Stage 7 *(optional, time-permitting)* — Fed response.** LP of the Fed funds rate (or shadow rate) on each shock; interpret as augmented Taylor rule reaction. Check whether the Fed reacts differently to threats vs. acts. *Reason for downgrading to optional:* per Prof. Baek, naive OLS suffers from endogeneity and the Taylor rule is notoriously hard to estimate cleanly — pursue only after Stages 3–5 deliver a credible cost-push result.
+9. **Stage 8 — Summary.** Write up in the team Overleaf.
 
 ## 6. Methodological notes — Local Projections
 
