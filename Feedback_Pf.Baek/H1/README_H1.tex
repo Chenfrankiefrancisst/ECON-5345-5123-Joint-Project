@@ -374,7 +374,13 @@ Figure~\ref{fig:corr} presents the correlation matrix in log levels. Key observa
 
 \subsection{Lag Selection}
 
-Figure~\ref{fig:lagsel} plots the AIC and BIC across lag orders $p = 1, \ldots, 24$ for three VAR systems. In all three systems, BIC selects $p = 2$--$3$ while AIC selects $p = 5$--$8$. Our baseline $L = 12$ is more conservative than both criteria suggest. This is deliberate: $L = 12$ absorbs seasonal autocorrelation and matches Caldara \& Iacoviello (2022). The AIC curve is relatively flat for $p \geq 6$, confirming that $L = 12$ does not introduce meaningful over-parameterisation.
+Figure~\ref{fig:lagsel} plots the AIC and BIC across lag orders $p = 1, \ldots, 24$ for three VAR systems. In all three systems, BIC selects $p = 2$--$3$ while AIC selects $p = 5$--$8$. Our baseline $L = 12$ is more conservative than both criteria suggest. This is deliberate: $L = 12$ absorbs seasonal autocorrelation and matches Caldara \& Iacoviello (2022). The AIC curve is relatively flat for $p \geq 6$, confirming that $L = 12$ does not introduce meaningful over-parameterisation. Degrees of freedom are not a concern: even at the longest horizon $h = 36$, the effective sample is $T_{\text{eff}} \approx 444$ with only 26 right-hand-side variables.
+
+\medskip
+\noindent\textbf{Important caveat: LP $\neq$ VAR for lag selection.} Plagborg-M\o ller \& Wolf (2021, \textit{Econometrica}) show that LP and VAR estimate the same impulse responses asymptotically, but the role of lags differs fundamentally. In a VAR, the lag order is a \textit{model selection} parameter that determines the dynamics. In an LP, lags serve as \textit{controls for serial correlation} --- they prevent spurious long-horizon correlations but do not define the model's dynamic structure. The VAR-based AIC/BIC reported here is therefore a \textbf{cross-check for comparability with the VAR literature}, not a model selection criterion for the LP itself. For LP, erring on the side of more lags (under-fitting risk is low) is safer than too few lags (which risks residual serial correlation and biased inference).
+
+\medskip
+\noindent\textbf{Conclusion on lag length.} $L = 12$ is not ``optimal'' in an information-criterion sense --- it is \textbf{conservatively safe}. It absorbs a full year of seasonal dynamics, matches the benchmark literature, and does not over-parameterise the model given our sample size. We retain $L = 12$ as the baseline.
 
 \begin{figure}[H]
 \centering
@@ -409,7 +415,10 @@ Figure~\ref{fig:baseline} presents the baseline IRFs (own lags only, $L = 12$, 9
 \label{fig:robust1}
 \end{figure}
 
-\noindent Adding UNRATE as a business-cycle control leaves the IRF shapes largely unchanged. The IP responses remain negative, and the CPI responses remain near zero. This suggests that the baseline results are not driven by business-cycle confounding.
+\noindent\textbf{Why UNRATE as a confounder.} Unemployment proxies the business-cycle state. A recession may simultaneously (a)~increase geopolitical tensions through political instability, raising GPR, and (b)~independently affect inflation via the Phillips curve. If the business cycle drives both GPR and CPI, the baseline $\beta_h$ would be biased. UNRATE is \textit{not} a mediator: GPR's primary transmission runs through supply-side channels (oil, commodities, expectations), not through unemployment.
+
+\medskip
+\noindent\textbf{Result.} Adding UNRATE leaves the IRF shapes largely unchanged. The IP responses remain negative, and the CPI responses remain near zero. This confirms that the baseline results are \textbf{not driven by business-cycle confounding}.
 
 \subsection{Robustness 2: + UNRATE + log(VIX)}
 
@@ -420,11 +429,14 @@ Figure~\ref{fig:baseline} presents the baseline IRFs (own lags only, $L = 12$, 9
 \label{fig:robust2}
 \end{figure}
 
-\noindent Further adding VIX (financial uncertainty) produces similar results. The IP contraction persists, and the CPI response remains insignificant. The shorter sample ($\approx$\,432 months due to VIX availability) does not qualitatively alter the findings.
+\noindent\textbf{Why VIX as a confounder.} Global financial uncertainty (VIX) could simultaneously (a)~raise media attention to geopolitical events, inflating the GPR measurement, and (b)~depress investment and consumption, independently affecting macro outcomes. Caldara \& Iacoviello (2022, Table~3) show that GPR and VIX are moderately correlated ($\rho \approx 0.3$--$0.4$) but capture distinct constructs --- the shared variation likely reflects common drivers (e.g., global crises), not unidirectional causation from GPR to VIX.
+
+\medskip
+\noindent\textbf{Result.} Further adding VIX produces similar results. The IP contraction persists, and the CPI response remains insignificant. The shorter sample ($\approx$\,432 months due to VIX availability starting 1990:01) does not qualitatively alter the findings.
 
 \subsection{Specification Comparison}
 
-Figure~\ref{fig:comparison} overlays the point estimates $\hat{\beta}_h$ from all three specifications. The close alignment of the three lines across all shock-outcome pairs confirms the \textbf{stability of the LP estimates to the inclusion of potential confounders}.
+Figure~\ref{fig:comparison} overlays the point estimates $\hat{\beta}_h$ from all three specifications. The close alignment of the three lines across all shock-outcome pairs confirms the \textbf{stability of the LP estimates to the inclusion of potential confounders}. This stability has a direct identification implication: if omitted variables (business cycle, financial uncertainty) were driving the baseline result, adding them as controls would shift $\hat{\beta}_h$ substantially. The fact that $\hat{\beta}_h$ is virtually unchanged across all three specifications \textbf{supports the exogeneity assumption} of Caldara \& Iacoviello (2022) --- that GPR is driven by geopolitical events exogenous to the US business cycle within the month.
 
 \begin{figure}[H]
 \centering
@@ -477,6 +489,10 @@ GPA (acts)     & $-$ (significant) & $\approx 0$ (insignificant) & Partial \\
     \item \textit{Reveal} the demand channel: the residual CPI response (net of oil) may turn negative, exposing the uncertainty-driven demand contraction.
 \end{itemize}
 
+\medskip
+\noindent\textbf{Key methodological point.} Whether a GPR shock is ``cost-push'' cannot be judged from the reduced-form net CPI effect alone. A reduced-form $\beta_h \approx 0$ is consistent with a strong supply-side inflationary pressure that is exactly offset by demand contraction and policy response. The correct test is whether the \textbf{supply channel operates independently}: if conditioning on oil prices attenuates the CPI response, the supply channel is confirmed as operative regardless of the net sign. This is the identification strategy for Stage~4.
+
+\medskip
 \noindent In summary, the H1 baseline delivers the \textbf{output half} of the cost-push signature and produces a CPI result that is both theoretically interpretable and consistent with recent literature. The ambiguity in the inflation response is itself a substantive finding that shapes the next stage of analysis.
 
 %% ====================================================================
