@@ -16,7 +16,7 @@
 %    data/raw/gpr_caldara_iacoviello.xls
 % -----------------------------------------------------------------------
 
-clear; clc;
+if ~exist('H1_ROOT','var'), clear; clc; end
 
 %% === Paths ===
 proj_root = fileparts(fileparts(mfilename('fullpath')));

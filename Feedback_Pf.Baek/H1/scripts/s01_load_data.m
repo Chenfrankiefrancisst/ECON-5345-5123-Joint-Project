@@ -18,7 +18,7 @@
 %  Usage:  >> run('scripts/s01_load_data.m')
 % -----------------------------------------------------------------------
 
-clear; clc;
+if ~exist('H1_ROOT','var'), clear; clc; end
 
 %% === Paths ===
 proj_root  = fileparts(fileparts(mfilename('fullpath')));
@@ -43,9 +43,37 @@ month_col = find(contains(col_names, 'month'), 1);
 year_col  = find(contains(col_names, 'year'), 1);
 
 if ~isempty(month_col) && ~isempty(year_col)
+    % Separate year and month columns
     gpr_dates = datetime(gpr_raw{:, year_col}, gpr_raw{:, month_col}, ...
                          ones(height(gpr_raw), 1));
-    fprintf('Date constructed from month+year columns.\n');
+    fprintf('Date constructed from year + month columns.\n');
+elseif ~isempty(month_col)
+    % Single "month" column — could be "1985m01" format or datetime
+    raw_month = gpr_raw{:, month_col};
+    if iscell(raw_month) || isstring(raw_month)
+        % Parse "1985m01" or "1985M01" format
+        raw_str = string(raw_month);
+        tokens = regexp(raw_str, '(\d{4})[mM](\d{1,2})', 'tokens');
+        yr = nan(height(gpr_raw), 1);
+        mo = nan(height(gpr_raw), 1);
+        for k = 1:length(tokens)
+            if ~isempty(tokens{k})
+                yr(k) = str2double(tokens{k}{1}{1});
+                mo(k) = str2double(tokens{k}{1}{2});
+            end
+        end
+        gpr_dates = datetime(yr, mo, ones(length(yr), 1));
+        fprintf('Date parsed from "month" column (YYYYmMM format).\n');
+    elseif isdatetime(raw_month)
+        gpr_dates = raw_month;
+        fprintf('Date from datetime "month" column.\n');
+    elseif isnumeric(raw_month)
+        % Numeric serial date or Excel date number
+        gpr_dates = datetime(raw_month, 'ConvertFrom', 'datenum');
+        fprintf('Date converted from numeric "month" column.\n');
+    else
+        error('Cannot parse "month" column (class: %s).', class(raw_month));
+    end
 else
     date_col = find(contains(col_names, 'date'), 1);
     if ~isempty(date_col)
@@ -57,16 +85,21 @@ else
 end
 
 % Auto-detect GPR, GPT, GPA columns
+% Actual file uses: GPR, GPRT (threats), GPRA (acts)
 gpr_col = find(strcmpi(col_names, 'gpr'), 1);
 if isempty(gpr_col)
-    gpr_col = find(contains(col_names, 'gpr') & ~contains(col_names, 'threat') & ...
-                   ~contains(col_names, 'act') & ~contains(col_names, 'gprt') & ...
-                   ~contains(col_names, 'gpra'), 1);
+    gpr_col = find(contains(col_names, 'gpr') & ~contains(col_names, 'gprt') & ...
+                   ~contains(col_names, 'gpra') & ~contains(col_names, 'gprh') & ...
+                   ~contains(col_names, 'gprc') & ~contains(col_names, 'gpr_'), 1);
 end
-gpt_col = find(contains(col_names, 'threat') | strcmpi(col_names, 'gprt') | ...
-               strcmpi(col_names, 'gpt'), 1);
-gpa_col = find(contains(col_names, 'act') | strcmpi(col_names, 'gpra') | ...
-               strcmpi(col_names, 'gpa'), 1);
+gpt_col = find(strcmpi(col_names, 'gprt'), 1);
+if isempty(gpt_col)
+    gpt_col = find(contains(col_names, 'threat') | strcmpi(col_names, 'gpt'), 1);
+end
+gpa_col = find(strcmpi(col_names, 'gpra'), 1);
+if isempty(gpa_col)
+    gpa_col = find(contains(col_names, 'act') | strcmpi(col_names, 'gpa'), 1);
+end
 
 if isempty(gpr_col) || isempty(gpt_col) || isempty(gpa_col)
     fprintf('\nWARNING: Could not auto-detect all GPR columns.\n');

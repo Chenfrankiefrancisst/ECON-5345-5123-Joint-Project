@@ -13,7 +13,7 @@
 %    >> run('scripts/s02_explore_data.m')
 % -----------------------------------------------------------------------
 
-clear; clc; close all;
+if ~exist('H1_ROOT','var'), clear; clc; close all; end
 
 %% === Paths ===
 proj_root = fileparts(fileparts(mfilename('fullpath')));
@@ -330,8 +330,8 @@ function t_stat = manual_adf(x, n_lags)
     dx = diff(x);
 
     % Build lagged differences
-    Y = dx(n_lags+1:end);           % dependent: dx_t
-    X = x(n_lags:end-1);            % lagged level: x_{t-1}
+    Y = dx(n_lags+1:end);           % dependent: dx_t  (length T-1-n_lags)
+    X = x(n_lags+1:end-1);          % lagged level: x_{t-1}  (same length)
     X = [ones(length(Y),1), X];     % add constant
 
     % Add lagged differences

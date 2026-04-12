@@ -349,6 +349,110 @@ H1 is supported if, for at least one shock variant (GPR / GPT / GPA) at horizons
 \noindent This constitutes the \textbf{cost-push signature}. The result should be robust across specifications (Table~\ref{tab:robust}).
 
 %% ====================================================================
+\section{Results}
+%% ====================================================================
+
+\subsection{Descriptive Analysis}
+
+Figure~\ref{fig:gpr_indices} shows the GPR, GPT, and GPA indices over the sample period. Major geopolitical events (Gulf War 1990--91, 9/11 attacks, Iraq War 2003, Russia-Ukraine conflict 2022) produce visible spikes. GPA (acts) exhibits sharper, shorter spikes than GPT (threats), consistent with the distinction between realised events and anticipatory news coverage.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{output/fig_gpr_indices.png}
+\caption{GPR / GPT / GPA Indices (1985--2025)}
+\label{fig:gpr_indices}
+\end{figure}
+
+Figure~\ref{fig:corr} presents the correlation matrix in log levels. Key observations: (i)~GPR, GPT, and GPA are highly correlated with each other ($\rho = 0.57$--$0.89$), confirming they measure related but not identical constructs; (ii)~GPR--CPI correlation is positive ($\rho = 0.18$), consistent with the cost-push hypothesis; (iii)~GPR--IP correlation is near zero ($\rho = 0.06$), suggesting any output effect is dynamic (lag-dependent) rather than contemporaneous.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{output/fig_correlation_matrix.png}
+\caption{Correlation Matrix (log levels, 1985--2025)}
+\label{fig:corr}
+\end{figure}
+
+\subsection{Lag Selection}
+
+Figure~\ref{fig:lagsel} plots the AIC and BIC across lag orders $p = 1, \ldots, 24$ for three VAR systems. In all three systems, BIC selects $p = 2$--$3$ while AIC selects $p = 5$--$8$. Our baseline $L = 12$ is more conservative than both criteria suggest. This is deliberate: $L = 12$ absorbs seasonal autocorrelation and matches Caldara \& Iacoviello (2022). The AIC curve is relatively flat for $p \geq 6$, confirming that $L = 12$ does not introduce meaningful over-parameterisation.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{output/fig_h1_lag_selection.png}
+\caption{VAR-Based AIC/BIC Lag Selection (dashed line: $L = 12$)}
+\label{fig:lagsel}
+\end{figure}
+
+\subsection{Baseline LP --- Impulse Responses}
+
+Figure~\ref{fig:baseline} presents the baseline IRFs (own lags only, $L = 12$, 90\% Newey--West CI).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{output/fig_h1_baseline.png}
+\caption{H1 Baseline: IRFs of IP and CPI to GPR / GPT / GPA Shocks}
+\label{fig:baseline}
+\end{figure}
+
+\noindent\textbf{IP responses (left column).} All three shock variants produce a \textbf{negative} IP response. The GPR and GPA shocks generate a persistent decline in industrial production starting around $h = 3$--$6$ and deepening through $h = 24$--$36$. The 90\% confidence band excludes zero at medium horizons for GPR and GPA, indicating statistical significance. GPT shows a qualitatively similar pattern but with wider confidence bands.
+
+\noindent\textbf{CPI responses (right column).} The CPI responses are \textbf{mixed}. GPR and GPT show a slightly negative or near-zero CPI response, while GPA shows a slight negative drift. The 90\% confidence bands generally include zero, making the CPI result statistically insignificant across all shock variants.
+
+\noindent\textbf{Interpretation.} The output contraction (IP $\downarrow$) is consistent with the cost-push hypothesis and with Caldara \& Iacoviello (2022). However, the CPI response does not show the expected positive sign. This may reflect: (i)~the sample period includes the Great Moderation, during which inflation expectations were well-anchored; (ii)~the Fed's response to geopolitical shocks may have been sufficiently aggressive to offset inflationary pressures (monetary policy as a mediator); (iii)~the CPI effect may require conditioning on the channel (oil prices) to emerge, which belongs to Stage~4.
+
+\subsection{Robustness 1: + UNRATE}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{output/fig_h1_robust1_unrate.png}
+\caption{H1 Robustness 1: + UNRATE}
+\label{fig:robust1}
+\end{figure}
+
+\noindent Adding UNRATE as a business-cycle control leaves the IRF shapes largely unchanged. The IP responses remain negative, and the CPI responses remain near zero. This suggests that the baseline results are not driven by business-cycle confounding.
+
+\subsection{Robustness 2: + UNRATE + log(VIX)}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{output/fig_h1_robust2_unrate_vix.png}
+\caption{H1 Robustness 2: + UNRATE + $\log$(VIX)}
+\label{fig:robust2}
+\end{figure}
+
+\noindent Further adding VIX (financial uncertainty) produces similar results. The IP contraction persists, and the CPI response remains insignificant. The shorter sample ($\approx$\,432 months due to VIX availability) does not qualitatively alter the findings.
+
+\subsection{Specification Comparison}
+
+Figure~\ref{fig:comparison} overlays the point estimates $\hat{\beta}_h$ from all three specifications. The close alignment of the three lines across all shock-outcome pairs confirms the \textbf{stability of the LP estimates to the inclusion of potential confounders}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{output/fig_h1_comparison.png}
+\caption{H1 Specification Comparison: Baseline vs.\ Robustness 1 vs.\ Robustness 2}
+\label{fig:comparison}
+\end{figure}
+
+\subsection{Summary of H1 Findings}
+
+\begin{table}[H]
+\centering
+\caption{H1 Results Summary}
+\label{tab:h1_summary}
+\begin{tabular}{@{}l c c l@{}}
+\toprule
+\textbf{Shock} & \textbf{IP response} & \textbf{CPI response} & \textbf{Cost-push?} \\
+\midrule
+GPR (headline) & $-$ (significant) & $\approx 0$ (insignificant) & Partial \\
+GPT (threats)  & $-$ (marginal)    & $\approx 0$ (insignificant) & Partial \\
+GPA (acts)     & $-$ (significant) & $\approx 0$ (insignificant) & Partial \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent\textbf{Conclusion.} The output contraction half of the cost-push signature is confirmed: GPR shocks produce a statistically significant decline in industrial production at horizons $h = 6$--$36$, robust across specifications. However, the inflation half (CPI $\uparrow$) is not significant in the baseline reduced-form LP. This motivates Stage~4 (channel analysis): conditioning on specific transmission channels --- particularly oil and commodity prices --- may reveal a positive CPI effect that is masked in the total reduced-form response by the Fed's monetary-policy offset.
+
+%% ====================================================================
 \section{Code Structure}
 %% ====================================================================
 
@@ -356,27 +460,25 @@ H1 is supported if, for at least one shock variant (GPR / GPT / GPA) at horizons
 
 \begin{verbatim}
 Feedback_Pf.Baek/H1/
-├── run_all.m                  <- master script (run this one file)
+├── run_all.m                  <- run this one file (download + analysis)
 ├── README_H1.md / .tex        this document
 ├── scripts/
-│   ├── download_data.sh       Step 0: download raw data (bash)
-│   ├── s01_load_data.m        Step 1: load, merge, transform
-│   ├── s02_explore_data.m     Step 2: descriptive analysis
-│   └── s03_run_h1.m           Step 3: LP estimation + robustness
+│   ├── s02_explore_data.m     descriptive analysis
+│   └── s03_run_h1.m           LP estimation + robustness
 ├── code/                      reusable functions (called by s03)
 │   ├── lp_estimate.m          LP estimation + Newey-West SE
 │   ├── lp_newey_west.m        Newey-West HAC standard errors
 │   ├── lp_lag_select.m        VAR-based AIC/BIC lag selection
 │   └── lp_plot_irf.m          IRF plotting with confidence bands
 ├── data/
-│   ├── raw/                   populated by download_data.sh
-│   └── h1_baseline.mat        created by s01 (not committed)
-└── output/                    figures + results (created by scripts)
+│   ├── raw/                   auto-downloaded by run_all
+│   └── h1_baseline.mat        created by run_all (not committed)
+└── output/                    figures + results (created by run_all)
 \end{verbatim}
 
 \subsection{How to Run}
 
-\textbf{Prerequisites:} MATLAB (R2020a or later recommended).
+\textbf{Prerequisites:} MATLAB (R2020a or later). Internet connection (first run only).
 
 \medskip
 \noindent\textbf{MATLAB에서 이것 하나만 실행:}
@@ -385,33 +487,26 @@ Feedback_Pf.Baek/H1/
 run('Feedback_Pf.Baek/H1/run_all.m')
 \end{verbatim}
 
-\noindent \texttt{run\_all.m}이 raw 데이터가 없으면 자동으로 다운로드한 뒤, 전체 파이프라인을 순서대로 실행합니다:
+\noindent \texttt{run\_all.m} handles everything automatically:
 
 \begin{table}[H]
 \centering
 \caption{Pipeline Execution Order}
 \label{tab:execution}
 \small
-\begin{tabularx}{\textwidth}{@{}c l X l@{}}
+\begin{tabularx}{\textwidth}{@{}c X l@{}}
 \toprule
-\textbf{Step} & \textbf{Script} & \textbf{What it does} & \textbf{Output} \\
+\textbf{Step} & \textbf{What it does} & \textbf{Output} \\
 \midrule
-1/3 & \texttt{s01\_load\_data.m} & Load raw CSV/XLS $\to$ daily-to-monthly $\to$ merge $\to$ log transform $\to$ save & \texttt{h1\_baseline.mat} \\
-2/3 & \texttt{s02\_explore\_data.m} & Summary stats, time series plots, ADF tests, correlations, ACF & \texttt{output/fig\_*.png} \\
-3/3 & \texttt{s03\_run\_h1.m} & Lag selection $\to$ Baseline LP $\to$ Robustness 1\,\&\,2 $\to$ comparison & \texttt{output/fig\_h1\_*.png} \\
+0 & Download raw data from FRED (\texttt{websave}/\texttt{curl}) and Caldara--Iacoviello website. Skips if files already exist. & \texttt{data/raw/*} \\
+1 & Load CSV/XLS $\to$ daily-to-monthly $\to$ merge $\to$ 1985:01--2025:12 trim $\to$ log transform $\to$ save & \texttt{h1\_baseline.mat} \\
+2 & Summary stats, time series plots, ADF tests, correlations, ACF (\texttt{s02\_explore\_data.m}) & \texttt{output/fig\_*.png} \\
+3 & Lag selection $\to$ Baseline LP $\to$ Robustness 1\,\&\,2 $\to$ comparison (\texttt{s03\_run\_h1.m}) & \texttt{output/fig\_h1\_*.png} \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-\noindent Alternatively, run each step individually:
-
-\begin{verbatim}
-run('Feedback_Pf.Baek/H1/scripts/s01_load_data.m')    % step 1
-run('Feedback_Pf.Baek/H1/scripts/s02_explore_data.m')  % step 2
-run('Feedback_Pf.Baek/H1/scripts/s03_run_h1.m')        % step 3
-\end{verbatim}
-
-\noindent Functions in \texttt{code/} (\texttt{lp\_estimate.m}, \texttt{lp\_newey\_west.m}, \texttt{lp\_lag\_select.m}, \texttt{lp\_plot\_irf.m}) are called internally by \texttt{s03} --- do not run them directly.
+\noindent Functions in \texttt{code/} are called internally by \texttt{s03} --- do not run them directly.
 
 %% ====================================================================
 \section*{References}

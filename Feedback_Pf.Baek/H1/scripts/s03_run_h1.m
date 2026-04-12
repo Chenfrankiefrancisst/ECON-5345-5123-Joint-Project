@@ -19,7 +19,7 @@
 %    ../output/h1_results.mat
 % -----------------------------------------------------------------------
 
-clear; clc; close all;
+if ~exist('H1_ROOT','var'), clear; clc; close all; end
 
 %% === Paths ===
 proj_root = fileparts(fileparts(mfilename('fullpath')));

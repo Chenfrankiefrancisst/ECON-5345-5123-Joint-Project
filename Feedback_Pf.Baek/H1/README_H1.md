@@ -194,28 +194,26 @@ This constitutes the **cost-push signature**. The result should be robust across
 
 ```
 Feedback_Pf.Baek/H1/
-├── run_all.m                  ← master script (run this one file)
+├── run_all.m                  ← 이 파일 하나만 실행 (다운로드 + 분석)
 ├── README_H1.md               this document
 ├── README_H1.tex              LaTeX version (for Overleaf)
 ├── scripts/
-│   ├── download_data.sh       Step 0: download raw data (bash)
-│   ├── s01_load_data.m        Step 1: load, merge, transform
-│   ├── s02_explore_data.m     Step 2: descriptive analysis
-│   └── s03_run_h1.m           Step 3: LP estimation + robustness
+│   ├── s02_explore_data.m     descriptive analysis (called by run_all)
+│   └── s03_run_h1.m           LP estimation + robustness (called by run_all)
 ├── code/                      reusable functions (called by s03)
 │   ├── lp_estimate.m          LP estimation + Newey-West SE
 │   ├── lp_newey_west.m        Newey-West HAC standard errors
 │   ├── lp_lag_select.m        VAR-based AIC/BIC lag selection
 │   └── lp_plot_irf.m          IRF plotting with confidence bands
 ├── data/
-│   ├── raw/                   populated by download_data.sh
-│   └── h1_baseline.mat        created by s01 (not committed)
-└── output/                    figures + results (created by scripts)
+│   ├── raw/                   auto-downloaded by run_all
+│   └── h1_baseline.mat        created by run_all (not committed)
+└── output/                    figures + results (created by run_all)
 ```
 
 ### 8.2 How to run
 
-**Prerequisites:** MATLAB (R2020a or later recommended).
+**Prerequisites:** MATLAB (R2020a or later). Internet connection (first run only).
 
 **MATLAB에서 이것 하나만 실행하면 됩니다:**
 
@@ -223,23 +221,16 @@ Feedback_Pf.Baek/H1/
 run('Feedback_Pf.Baek/H1/run_all.m')
 ```
 
-`run_all.m`이 raw 데이터가 없으면 자동으로 다운로드한 뒤, 전체 파이프라인을 순서대로 실행합니다:
+`run_all.m`이 모든 것을 자동으로 처리합니다:
 
-| Internal step | Script | What it does | Output |
-|---------------|--------|-------------|--------|
-| 1/3 | `s01_load_data.m` | Load raw CSV/XLS → aggregate daily→monthly → merge → log transform → save | `data/h1_baseline.mat` |
-| 2/3 | `s02_explore_data.m` | Summary statistics, time series plots, ADF unit root tests, correlation matrix, ACF | `output/fig_*.png` (5 figures) |
-| 3/3 | `s03_run_h1.m` | VAR AIC/BIC lag selection → Baseline LP → Robustness 1 (+UNRATE) → Robustness 2 (+UNRATE+VIX) → overlay comparison | `output/fig_h1_*.png` (5 figures), `output/h1_results.mat` |
+| Step | What it does | Output |
+|------|-------------|--------|
+| 0 | FRED에서 CSV 다운로드 + Caldara–Iacoviello GPR XLS 다운로드 (이미 있으면 skip) | `data/raw/*` |
+| 1 | Raw 데이터 로드 → daily→monthly → merge → 1985:01–2025:12 trim → log 변환 | `data/h1_baseline.mat` |
+| 2 | Summary stats, time series plots, ADF tests, correlations, ACF (`s02`) | `output/fig_*.png` (5 figures) |
+| 3 | Lag selection → Baseline LP → Robustness 1&2 → comparison (`s03`) | `output/fig_h1_*.png` (5 figures), `h1_results.mat` |
 
-**Alternatively**, you can run each step individually in MATLAB:
-
-```matlab
-run('Feedback_Pf.Baek/H1/scripts/s01_load_data.m')    % step 1
-run('Feedback_Pf.Baek/H1/scripts/s02_explore_data.m')  % step 2
-run('Feedback_Pf.Baek/H1/scripts/s03_run_h1.m')        % step 3
-```
-
-Functions in `code/` (`lp_estimate.m`, `lp_newey_west.m`, `lp_lag_select.m`, `lp_plot_irf.m`) are called internally by `s03` — do not run them directly.
+Functions in `code/` are called internally by `s03` — do not run them directly.
 
 ---
 
