@@ -352,44 +352,74 @@ H1 is supported if, for at least one shock variant (GPR / GPT / GPA) at horizons
 \section{Code Structure}
 %% ====================================================================
 
-\begin{table}[H]
-\centering
-\caption{Code and Script Files}
-\label{tab:code}
-\small
-\begin{tabularx}{\textwidth}{@{}l l X@{}}
-\toprule
-\textbf{File} & \textbf{Location} & \textbf{Role} \\
-\midrule
-\texttt{download\_data.sh}    & \texttt{scripts/} & Download raw data from FRED + C\&I website \\
-\texttt{s01\_load\_data.m}    & \texttt{scripts/} & Load, aggregate daily$\to$monthly, merge, log transform, save \texttt{.mat} \\
-\texttt{s02\_explore\_data.m} & \texttt{scripts/} & Summary stats, time series plots, ADF tests, correlations, ACF \\
-\texttt{s03\_run\_h1.m}       & \texttt{scripts/} & \textbf{Main analysis}: lag selection + baseline LP + robustness 1\,\&\,2 + comparison plots \\
-\addlinespace
-\texttt{lp\_estimate.m}       & \texttt{code/} & LP estimation: horizon-by-horizon OLS + Newey--West SE \\
-\texttt{lp\_newey\_west.m}    & \texttt{code/} & Newey--West HAC standard error function \\
-\texttt{lp\_lag\_select.m}    & \texttt{code/} & VAR-based AIC/BIC lag selection \\
-\texttt{lp\_plot\_irf.m}      & \texttt{code/} & IRF plotting with shaded confidence bands \\
-\bottomrule
-\end{tabularx}
-\end{table}
+\subsection{Folder Layout}
+
+\begin{verbatim}
+Feedback_Pf.Baek/H1/
+├── run_all.m                  <- master script (run this one file)
+├── README_H1.md / .tex        this document
+├── scripts/
+│   ├── download_data.sh       Step 0: download raw data (bash)
+│   ├── s01_load_data.m        Step 1: load, merge, transform
+│   ├── s02_explore_data.m     Step 2: descriptive analysis
+│   └── s03_run_h1.m           Step 3: LP estimation + robustness
+├── code/                      reusable functions (called by s03)
+│   ├── lp_estimate.m          LP estimation + Newey-West SE
+│   ├── lp_newey_west.m        Newey-West HAC standard errors
+│   ├── lp_lag_select.m        VAR-based AIC/BIC lag selection
+│   └── lp_plot_irf.m          IRF plotting with confidence bands
+├── data/
+│   ├── raw/                   populated by download_data.sh
+│   └── h1_baseline.mat        created by s01 (not committed)
+└── output/                    figures + results (created by scripts)
+\end{verbatim}
+
+\subsection{How to Run}
+
+\textbf{Prerequisites:} MATLAB (R2020a or later recommended). Git Bash or WSL for the download script.
+
+\medskip
+\noindent\textbf{Step 0 --- Download raw data} (terminal, one-time):
+
+\begin{verbatim}
+cd Feedback_Pf.Baek/H1
+bash scripts/download_data.sh
+\end{verbatim}
+
+\noindent This fetches FRED series (INDPRO, CPIAUCSL, UNRATE, VIXCLS, FEDFUNDS, DCOILWTICO) and the Caldara--Iacoviello GPR index into \texttt{data/raw/}. Run once, or again to refresh data.
+
+\medskip
+\noindent\textbf{Step 1 --- Run the full pipeline} (MATLAB, one command):
+
+\begin{verbatim}
+run('Feedback_Pf.Baek/H1/run_all.m')
+\end{verbatim}
+
+\noindent \texttt{run\_all.m} executes the entire pipeline in order:
 
 \begin{table}[H]
 \centering
-\caption{Execution Order}
+\caption{Pipeline Execution Order}
 \label{tab:execution}
 \small
 \begin{tabularx}{\textwidth}{@{}c l X l@{}}
 \toprule
-\textbf{Step} & \textbf{File} & \textbf{What it does} & \textbf{Output} \\
+\textbf{Step} & \textbf{Script} & \textbf{What it does} & \textbf{Output} \\
 \midrule
-1 & \texttt{download\_data.sh} & Download raw CSV/XLS from FRED and C\&I website & \texttt{data/raw/*} \\
-2 & \texttt{s01\_load\_data.m} & Load $\to$ daily-to-monthly $\to$ merge $\to$ log transform $\to$ save & \texttt{h1\_baseline.mat} \\
-3 & \texttt{s02\_explore\_data.m} & Summary stats, time series plots, ADF tests, correlations, ACF & \texttt{output/fig\_*.png} \\
-4 & \texttt{s03\_run\_h1.m} & Lag selection $\to$ Baseline LP $\to$ Robustness 1\,\&\,2 $\to$ comparison & \texttt{output/fig\_h1\_*.png} \\
+1/3 & \texttt{s01\_load\_data.m} & Load raw CSV/XLS $\to$ daily-to-monthly $\to$ merge $\to$ log transform $\to$ save & \texttt{h1\_baseline.mat} \\
+2/3 & \texttt{s02\_explore\_data.m} & Summary stats, time series plots, ADF tests, correlations, ACF & \texttt{output/fig\_*.png} \\
+3/3 & \texttt{s03\_run\_h1.m} & Lag selection $\to$ Baseline LP $\to$ Robustness 1\,\&\,2 $\to$ comparison & \texttt{output/fig\_h1\_*.png} \\
 \bottomrule
 \end{tabularx}
 \end{table}
+
+\noindent Alternatively, run each step individually:
+
+\begin{verbatim}
+run('Feedback_Pf.Baek/H1/scripts/s01_load_data.m')    % step 1
+run('Feedback_Pf.Baek/H1/scripts/s02_explore_data.m')  % step 2
+run('Feedback_Pf.Baek/H1/scripts/s03_run_h1.m')        % step 3
+\end{verbatim}
 
 \noindent Functions in \texttt{code/} (\texttt{lp\_estimate.m}, \texttt{lp\_newey\_west.m}, \texttt{lp\_lag\_select.m}, \texttt{lp\_plot\_irf.m}) are called internally by \texttt{s03} --- do not run them directly.
 

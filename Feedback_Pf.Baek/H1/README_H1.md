@@ -190,27 +190,63 @@ This constitutes the **cost-push signature**. The result should be robust across
 
 ## 8. Code Structure
 
-| File | Location | Role |
-|------|----------|------|
-| `download_data.sh` | `scripts/` | Download raw data from FRED + C&I website |
-| `s01_load_data.m` | `scripts/` | Load → daily-to-monthly → merge → log transform → `.mat` |
-| `s02_explore_data.m` | `scripts/` | Summary stats, time series plots, ADF tests, correlations, ACF |
-| `s03_run_h1.m` | `scripts/` | **Main analysis:** lag selection + baseline LP + robustness 1&2 + comparison |
-| `lp_estimate.m` | `code/` | LP estimation: horizon-by-horizon OLS + Newey-West SE |
-| `lp_newey_west.m` | `code/` | Newey-West HAC standard error function |
-| `lp_lag_select.m` | `code/` | VAR-based AIC/BIC lag selection |
-| `lp_plot_irf.m` | `code/` | IRF plotting with shaded confidence bands |
+### 8.1 Folder layout
 
-### Execution Order
+```
+Feedback_Pf.Baek/H1/
+├── run_all.m                  ← master script (run this one file)
+├── README_H1.md               this document
+├── README_H1.tex              LaTeX version (for Overleaf)
+├── scripts/
+│   ├── download_data.sh       Step 0: download raw data (bash)
+│   ├── s01_load_data.m        Step 1: load, merge, transform
+│   ├── s02_explore_data.m     Step 2: descriptive analysis
+│   └── s03_run_h1.m           Step 3: LP estimation + robustness
+├── code/                      reusable functions (called by s03)
+│   ├── lp_estimate.m          LP estimation + Newey-West SE
+│   ├── lp_newey_west.m        Newey-West HAC standard errors
+│   ├── lp_lag_select.m        VAR-based AIC/BIC lag selection
+│   └── lp_plot_irf.m          IRF plotting with confidence bands
+├── data/
+│   ├── raw/                   populated by download_data.sh
+│   └── h1_baseline.mat        created by s01 (not committed)
+└── output/                    figures + results (created by scripts)
+```
 
-All scripts are in `Feedback_Pf.Baek/scripts/`. Run in MATLAB (except step 1, which is a shell script).
+### 8.2 How to run
 
-| Step | File | What it does | Output |
-|------|------|-------------|--------|
-| 1 | `bash scripts/download_data.sh` | Download raw CSV/XLS from FRED and C&I website | `data/raw/*.csv`, `data/raw/*.xls` |
-| 2 | `scripts/s01_load_data.m` | Load raw files → aggregate daily→monthly → merge → log transform → save | `data/h1_baseline.mat` |
-| 3 | `scripts/s02_explore_data.m` | Summary statistics, time series plots, ADF unit root tests, correlation matrix, ACF | `output/fig_*.png` (5 figures) |
-| 4 | `scripts/s03_run_h1.m` | VAR AIC/BIC lag selection → Baseline LP (own lags) → Robustness 1 (+UNRATE) → Robustness 2 (+UNRATE+VIX) → overlay comparison | `output/fig_h1_*.png` (4 figures), `output/h1_results.mat` |
+**Prerequisites:** MATLAB (R2020a or later recommended). Git Bash or WSL for the download script.
+
+**Step 0 — Download raw data (one-time, in terminal):**
+
+```bash
+cd Feedback_Pf.Baek/H1
+bash scripts/download_data.sh
+```
+
+This fetches FRED series (INDPRO, CPIAUCSL, UNRATE, VIXCLS, FEDFUNDS, DCOILWTICO) and the Caldara–Iacoviello GPR index into `data/raw/`. You only need to run this once (or again when you want to refresh data).
+
+**Step 1 — Run the full pipeline (in MATLAB):**
+
+```matlab
+run('Feedback_Pf.Baek/H1/run_all.m')
+```
+
+That's it. `run_all.m` executes the entire pipeline in order:
+
+| Internal step | Script | What it does | Output |
+|---------------|--------|-------------|--------|
+| 1/3 | `s01_load_data.m` | Load raw CSV/XLS → aggregate daily→monthly → merge → log transform → save | `data/h1_baseline.mat` |
+| 2/3 | `s02_explore_data.m` | Summary statistics, time series plots, ADF unit root tests, correlation matrix, ACF | `output/fig_*.png` (5 figures) |
+| 3/3 | `s03_run_h1.m` | VAR AIC/BIC lag selection → Baseline LP → Robustness 1 (+UNRATE) → Robustness 2 (+UNRATE+VIX) → overlay comparison | `output/fig_h1_*.png` (5 figures), `output/h1_results.mat` |
+
+**Alternatively**, you can run each step individually in MATLAB:
+
+```matlab
+run('Feedback_Pf.Baek/H1/scripts/s01_load_data.m')    % step 1
+run('Feedback_Pf.Baek/H1/scripts/s02_explore_data.m')  % step 2
+run('Feedback_Pf.Baek/H1/scripts/s03_run_h1.m')        % step 3
+```
 
 Functions in `code/` (`lp_estimate.m`, `lp_newey_west.m`, `lp_lag_select.m`, `lp_plot_irf.m`) are called internally by `s03` — do not run them directly.
 
