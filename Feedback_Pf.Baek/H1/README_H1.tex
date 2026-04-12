@@ -376,26 +376,16 @@ Feedback_Pf.Baek/H1/
 
 \subsection{How to Run}
 
-\textbf{Prerequisites:} MATLAB (R2020a or later recommended). Git Bash or WSL for the download script.
+\textbf{Prerequisites:} MATLAB (R2020a or later recommended).
 
 \medskip
-\noindent\textbf{Step 0 --- Download raw data} (terminal, one-time):
-
-\begin{verbatim}
-cd Feedback_Pf.Baek/H1
-bash scripts/download_data.sh
-\end{verbatim}
-
-\noindent This fetches FRED series (INDPRO, CPIAUCSL, UNRATE, VIXCLS, FEDFUNDS, DCOILWTICO) and the Caldara--Iacoviello GPR index into \texttt{data/raw/}. Run once, or again to refresh data.
-
-\medskip
-\noindent\textbf{Step 1 --- Run the full pipeline} (MATLAB, one command):
+\noindent\textbf{MATLAB에서 이것 하나만 실행:}
 
 \begin{verbatim}
 run('Feedback_Pf.Baek/H1/run_all.m')
 \end{verbatim}
 
-\noindent \texttt{run\_all.m} executes the entire pipeline in order:
+\noindent \texttt{run\_all.m}이 raw 데이터가 없으면 자동으로 다운로드한 뒤, 전체 파이프라인을 순서대로 실행합니다:
 
 \begin{table}[H]
 \centering

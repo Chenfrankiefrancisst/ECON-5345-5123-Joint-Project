@@ -1,14 +1,14 @@
 %% RUN_ALL  Execute the full H1 analysis pipeline in one go.
 %
 %  H1: GPR as a Cost-Push Shock
-%  Pipeline: download_data.sh -> s01 (load) -> s02 (explore) -> s03 (LP)
+%  Pipeline: download -> s01 (load) -> s02 (explore) -> s03 (LP)
 %
-%  Prerequisites:
-%    1. Run  bash scripts/download_data.sh  first (downloads raw data).
-%       On Windows, use Git Bash or WSL.
-%    2. Then run this script in MATLAB:
-%       >> run('H1/run_all.m')
-%       or open this file and press F5.
+%  Usage (in MATLAB):
+%    >> run('Feedback_Pf.Baek/H1/run_all.m')
+%    or open this file and press F5.
+%
+%  This script automatically downloads raw data if not already present,
+%  then runs the full pipeline (s01 -> s02 -> s03).
 %
 %  Output:
 %    data/h1_baseline.mat          — merged monthly dataset
@@ -36,11 +36,11 @@ fprintf('  H1 Pipeline: GPR as Cost-Push Shock\n');
 fprintf('  Root: %s\n', h1_root);
 fprintf('========================================\n');
 
-% Check that raw data exists
+%% === Step 0: Download raw data if missing ===
 raw_dir = fullfile(h1_root, 'data', 'raw');
 if ~exist(fullfile(raw_dir, 'gpr_caldara_iacoviello.xls'), 'file')
-    error(['Raw data not found in %s\n' ...
-           'Run  bash scripts/download_data.sh  first.'], raw_dir);
+    fprintf('\n>>> Step 0: Raw data not found. Downloading ...\n\n');
+    run(fullfile(h1_root, 'scripts', 'download_data.m'));
 end
 
 %% === Step 1: Load and merge data ===

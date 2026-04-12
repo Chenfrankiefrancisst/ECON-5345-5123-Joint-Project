@@ -72,20 +72,14 @@ Feedback_Pf.Baek/
 
 ## 4a. How to run H1
 
-**Prerequisites:** MATLAB (R2020a+), Git Bash or WSL (for the data download script).
-
-```bash
-# Step 0: download raw data (terminal, one-time)
-cd Feedback_Pf.Baek/H1
-bash scripts/download_data.sh
-```
+**Prerequisites:** MATLAB (R2020a+).
 
 ```matlab
-% Step 1: run the full pipeline (MATLAB, one command)
+% MATLAB에서 이것 하나만 실행:
 run('Feedback_Pf.Baek/H1/run_all.m')
 ```
 
-`run_all.m` executes s01 → s02 → s03 sequentially. Output goes to `H1/output/`.
+`run_all.m`이 raw 데이터 자동 다운로드 → s01 → s02 → s03 순차 실행. Output: `H1/output/`.
 
 > **H1 details** (data, model spec, parameters, deliverables): see [`H1/README_H1.md`](H1/README_H1.md) | LaTeX: [`H1/README_H1.tex`](H1/README_H1.tex)
 
