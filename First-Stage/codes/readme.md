@@ -1,2 +1,4 @@
-Main File: 'run_h1_simple.m'
-others: function codes and data mat file
+## Files
+
+- **Main file**: `run_h1_simple.m`
+- **Others**: function codes and data `.mat` file
