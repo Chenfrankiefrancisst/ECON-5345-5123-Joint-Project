@@ -3,6 +3,8 @@ clc
 close all
 warning('off','all')
 
+cd 'D:\OneDrive\SKKU PhD\2026 Spring - 거시실증분석\Team Project (with HKUST)\repo\First-Stage\codes'
+
 load("h1_baseline.mat");
 
 % --- Figure output directory ---
@@ -13,26 +15,30 @@ fprintf('Figures will be saved to: %s\n', out_dir);
 %% 0. data trimming
 
 % ------------------------------------------------------------------------
-% ADF unit root tests (pre-transformation, full available sample).
-%
-% Purpose: verify the integration order of each analysis variable so that
-% the LP/ADL transformations are justified:
-%   - Level-LP LHS (log(IP), log(CPI)) assumes the series is I(1).
-%   - Growth-rate ADL LHS (dlog_ip, infl) assumes the first difference is I(0).
-%   - log(VIX) is used as a level control; must be I(0) or borderline.
-%
-% Implementation: a manual ADF regression in manual_adf.m (no Econometrics
-% Toolbox required). Regression: Delta x_t = a + rho * x_{t-1} +
-% sum phi_j * Delta x_{t-j} + e_t with n_lags=12 monthly augmentation
-% terms and a constant. Reject unit root when t(rho) < 1% critical value
-% (-3.44 for T ~ 500; MacKinnon 1996). Integration order is flagged as
-%   I(0) if the level test rejects,
-%   I(1) if the level test fails to reject but the 1st-difference test rejects,
-%   I(2)? otherwise (would invalidate the LP specification).
-%
-% Runs on full pre-trim master so that series with long histories
-% (INDPRO since 1919, CPI since 1947) exploit maximum sample size.
+% Sample period: 1990:01 - 2025:12 (unified across ALL specifications).
+% Rationale: VIX (VIXCLS, FRED) only starts in 1990:01. Since Robustness 2
+% adds log(VIX) as a control, we would lose 1985-1989 for that spec only,
+% breaking apples-to-apples comparison across Baseline / R1 / R2. We trim
+% the whole sample to 1990:01+ so that all three LP specifications are
+% estimated on an identical time window (T ~ 432 months).
 % ------------------------------------------------------------------------
+
+sample_start = datetime(1990,1,1);
+sample_end   = datetime(2025,12,31);
+mask = master.date >= sample_start & master.date <= sample_end;
+master = master(mask, :);
+fprintf('Sample trimmed to %s - %s (%d months)\n', ...
+    datestr(master.date(1)), datestr(master.date(end)), height(master));
+
+% GPR normalized levels
+master.gpr_n = 100 * log(master.GPR);
+master.gpt_n = 100 * log(master.GPT);
+master.gpa_n = 100 * log(master.GPA);
+
+% ------------------------------------------------------------------------
+% ADF unit root tests
+% ------------------------------------------------------------------------
+
 fprintf('\n==============================\n');
 fprintf('  ADF UNIT ROOT TESTS\n');
 fprintf('==============================\n\n');
@@ -74,25 +80,6 @@ for i = 1:size(adf_series, 1)
 end
 fprintf('\n');
 
-% ------------------------------------------------------------------------
-% Sample period: 1990:01 - 2025:12 (unified across ALL specifications).
-% Rationale: VIX (VIXCLS, FRED) only starts in 1990:01. Since Robustness 2
-% adds log(VIX) as a control, we would lose 1985-1989 for that spec only,
-% breaking apples-to-apples comparison across Baseline / R1 / R2. We trim
-% the whole sample to 1990:01+ so that all three LP specifications are
-% estimated on an identical time window (T ~ 432 months).
-% ------------------------------------------------------------------------
-sample_start = datetime(1990,1,1);
-sample_end   = datetime(2025,12,31);
-mask = master.date >= sample_start & master.date <= sample_end;
-master = master(mask, :);
-fprintf('Sample trimmed to %s - %s (%d months)\n', ...
-    datestr(master.date(1)), datestr(master.date(end)), height(master));
-
-% GPR normalized levels
-master.gpr_n = 100 * log(100 * master.GPR);
-master.gpt_n = 100 * log(100 * master.GPT);
-master.gpa_n = 100 * log(100 * master.GPA);
 
 % ------------------------------------------------------------------------
 % Macro outcome variables: both log-level and log-difference are stored.
@@ -104,6 +91,7 @@ master.gpa_n = 100 * log(100 * master.GPA);
 %            differences and cumulates IRF internally) and for descriptive
 %            plots / summary stats.
 % ------------------------------------------------------------------------
+
 master.log_ip   = 100 * log(master.INDPRO);                 % log-level (x100, log-points)
 master.log_cpi  = 100 * log(master.CPI);                    % log-level (x100, log-points)
 master.log_wti  = 100 * log(master.WTI);                    % log-level
@@ -126,6 +114,7 @@ master.unrate_level = master.UNRATE;                        % level
 %     (2016, QJE), both of which use log(VIX) as a level control.
 % dlog_vix is retained only for descriptive plots / summary stats.
 % ------------------------------------------------------------------------
+
 master.log_vix  = 100 * log(master.VIX);                    % log-level VIX (preferred control)
 master.dlog_vix = [NaN; 100 * diff(log(master.VIX))];       % monthly VIX growth (%) - descriptive only
 
@@ -1210,7 +1199,7 @@ panel = 0;
 for s = 1:3
     
     % ---------- IP ----------
-    panel = panel + 1;
+    panel = panel + 1;ple_
     subplot(3,2,panel); hold on;
     
     scale_adl = adl_results.baseline.(shock_names{s}).ip.shock.std;
