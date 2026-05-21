@@ -1,75 +1,28 @@
 clear; clc; close all;
-%% ============================================================
-% PART 3AB: LEVEL LOCAL PROJECTIONS WITH FWL RAW EVENT COUNTS
-% MAIN BASELINE: N_t^k + GPR SHOCK CONTROLS; POISSON RESIDUALS ARE ROBUSTNESS
-%
-% Teacher/FWL-suggested baseline specification:
-%
-%   y_{t+h} - y_{t-1} = alpha_h + beta_h N_t^k
-%       + theta_h z_t^{WorldGPR} + Gamma_h controls_t + e_{t+h}.
-%
-% where:
-%   - y is a level variable.
-%   - N_t^k is the raw event-arrival count and is the main impulse.
-%   - z_t^{WorldGPR}, GPR lags, macro controls, oil controls, lagged N,
-%     lagged outcomes, and other event dummies are controls.
-%   - By FWL, beta_h uses the component of N_t^k orthogonal to those controls.
-%
-% This version:
-%   1. Uses the levels database Q_Levels_Database.csv.
-%   2. Extracts GPR shocks with AR(4), current Unemp/FFR, and lag-1 oil prices.
-%   3. Runs the main FWL baseline with raw event-arrival counts N_t^k.
-%   4. Keeps Poisson-residual LPs in the file as robustness checks, off by default.
-%   5. Does NOT save figures or results by default.
-%% ============================================================
 
-%% -------------------- USER SETTINGS --------------------
 cfg.datafile = 'Q_Levels_Database.csv';
-% Fallback names for uploaded copies in ChatGPT / local tests.
-cfg.datafile_fallbacks = {'Q_Levels_Database(2).csv'};
-cfg.output_dir = 'Part3AB_FWL_RawEventCount_GPRShock_LP';
+cfg.dummy_file = 'oil_relevant_gpr_event_dummies_extended_onset_realized_1986Q1_2025Q4.csv';
 
-% Dummy file. Your original level dataset is not changed.
-% The dummy file is aligned by the Quarter column.
-cfg.dummy_file = 'oil_relevant_gprDummies_extended_onset_realized.mat';
-cfg.dummy_csv_fallback = 'oil_relevant_gpr_event_dummies_extended_onset_realized_1986Q1_2025Q4.csv';
-% Fallback names for uploaded copies in ChatGPT / local tests.
-cfg.dummy_csv_fallbacks = {'oil_relevant_gpr_event_dummies_extended_onset_realized_1986Q1_2025Q4.csv', ...
-    'oil_relevant_gpr_event_dummies_extended_onset_realized_1986Q1_2025Q4(5).csv', ...
-    'oil_relevant_gpr_event_dummies_extended_onset_realized_1986Q1_2025Q4(7).csv'};
+cfg.output_dir = 'Part3AB_Overlay_ExactLP_zN_vs_rawN_ThreeEvents';
 
-% No saving by default.
 cfg.save_results = false;
-cfg.save_figures = false;
+cfg.save_figures = true;
 cfg.show_figures = true;
+cfg.run_gpr_shock_dashboards = false;
 
-% Figure style. Use LaTeX interpreters for all figure text, titles,
-% labels, and axis tick labels.
 cfg.use_latex_fonts = true;
 
-% Bigger and bolder figure fonts.
 cfg.figure_font_size = 16;
 cfg.figure_title_font_size = 18;
 cfg.figure_axis_line_width = 1.4;
 
-% Darker confidence band and thicker impulse-response line.
 cfg.ci_band_color = [0.45 0.45 0.45];
 cfg.ci_band_alpha = 0.75;
 cfg.irf_line_width = 3.2;
 cfg.zero_line_width = 1.4;
 
-% Choose what to estimate and plot:
-%   'aggregate'  = only World, GPT, GPA. No country-specific plots.
-%   'countries'  = only country-specific GPR shocks. No aggregate plots.
-%   'all'        = both aggregate and country-specific shocks.
-cfg.plot_mode = 'countries';     % change to 'countries' when you want country-specific plots
+cfg.plot_mode = 'countries';
 
-% GPR shock extraction.
-% Revised after the FWL / teacher comments:
-%   GPR_t = a + sum_{j=1}^4 rho_j GPR_{t-j}
-%           + xi' B_t + omega' O_{t-1} + u_t,
-% where B_t contains contemporaneous unemployment and policy-rate controls,
-% and O_{t-1} contains lagged Brent, WTI, and gasoline prices.
 cfg.p_gpr_shock = 4;
 cfg.standardize_shock = true;
 
@@ -84,30 +37,25 @@ cfg.gpr_shock_lag1_oil_aliases = { ...
     {'Real_Gasoline','Gasoline','Gasoline_Price'} ...
 };
 
-% Level LP controls.
-% IMPORTANT: the LP includes lagged GPR LEVELS, not lagged z-values.
 cfg.p_lp = 4;
+
+cfg.use_compact_event_count_lp = true;
+cfg.p_dynamic_lp_event_count = 4;
+cfg.p_macro_lp_event_count = 1;
+cfg.include_current_business_controls_event_count = false;
+cfg.include_oil_controls_event_count = true;
+
 cfg.H = 12;
 cfg.ci = 0.90;
 
-% z_t is already standardized. Use 1 for a one-standard-deviation shock.
-% If you want the old two-standard-deviation scaling, change this to 2.
 cfg.shock_size = 1;
 
-% COVID dummy. Baseline choice: COVID = 1 for 2020Q1--2020Q4.
-% This dummy enters as a contemporaneous level-LP control, not as an impulse.
 cfg.use_covid_dummy = true;
 cfg.covid_dummy_name = 'COVID_2020';
 cfg.covid_quarters = {'2020Q1','2020Q2','2020Q3','2020Q4'};
 
-% Oil-event dummies from the extended dummy file.
-% This file contains broad oil-relevant dummies, oil-specific realized/threat
-% dummies, and onset dummies. The code aligns all numeric dummy columns by
-% Quarter and then uses cfg.dummy_control_vars as contemporaneous controls.
 cfg.use_event_dummies = true;
 
-% These names are used only as a fallback to construct missing onset dummies.
-% If the extended MAT/CSV already contains the onset columns, they are used directly.
 cfg.event_episode_vars = { ...
     'OilThreat','OilAct','ThreatOnly','ActOnly','ThreatAct','AnyOilEvent', ...
     'OilRealization','StrictSupplyDisruption','ChokepointShippingRisk', ...
@@ -115,11 +63,6 @@ cfg.event_episode_vars = { ...
     'OilSpecificRealizedShock','OilSpecificThreatShock' ...
 };
 
-% Dummy controls included contemporaneously in the LP.
-% For event-onset impulse regressions, the code starts from this full set and
-% then drops the current impulse's own raw dummy. Therefore the regression for
-% ProducerRegionRisk_EventOnset controls World GPR in the joint LP and keeps the
-% other onset dummies as controls.
 cfg.event_onset_control_vars = { ...
     'OilSpecificThreatShock_EventOnset', ...
     'OilSpecificRealizedShock_EventOnset', ...
@@ -131,132 +74,73 @@ cfg.event_onset_control_vars = { ...
 
 cfg.dummy_control_vars = [{'COVID_2020'}, cfg.event_onset_control_vars];
 
-% Alternative stricter control set if you want to decompose oil-specific events:
-% cfg.dummy_control_vars = { ...
-%     'COVID_2020', ...
-%     'StrictSupplyDisruption_EventOnset', ...
-%     'ChokepointShippingRisk_EventOnset', ...
-%     'EnergySanction_EventOnset' ...
-% };
+cfg.run_event_onset_impulse_dashboards = false;
+cfg.run_event_residual_impulse_dashboards = true;
+cfg.run_gpr_plus_event_residual_lp = true;
+cfg.run_gpr_plus_event_count_lp = true;
+cfg.run_poisson_arrival_rawN_control_robustness = false;
 
-% Very broad control set, not recommended as main because it may absorb too much:
-% cfg.dummy_control_vars = { ...
-%     'COVID_2020', ...
-%     'ThreatOnly_EventOnset', ...
-%     'ActOnly_EventOnset', ...
-%     'ThreatAct_EventOnset' ...
-% };
-
-% Event-onset impulse dashboards.
-% The old raw-dummy dashboards are switched off by default. The new default
-% uses a Poisson event-arrival residualization.
-%
-% IMPORTANT UPDATE IN THIS VERSION:
-%   GPR is EXCLUDED from the Poisson MLE intensity equation.
-%   The baseline intensity is estimated from lagged event counts and lagged
-%   macro controls only:
-%
-%       N_t | I_{t-1} ~ Poisson(lambda_t)
-%       log(lambda_t) = alpha + rho N_{t-1} + beta' X_{t-1}.
-%
-% The LP impulse is the standardized Pearson residual:
-%
-%       z_t^N = standardize((N_t - lambda_hat_t) / sqrt(lambda_hat_t)).
-%
-% This residual is now interpreted as an event-arrival surprise relative to
-% the non-GPR baseline intensity. The code then separately tests whether this
-% residual surprise is stronger when GPR shocks or GPR levels are high.
-cfg.run_event_onset_impulse_dashboards = false;        % old raw 0/1 dummy impulse LPs
-cfg.run_event_residual_impulse_dashboards = false;     % robustness only: Poisson-residual impulse LPs
-cfg.run_gpr_plus_event_residual_lp = false;            % robustness only: GPR shock + Poisson event surprise
-cfg.run_gpr_plus_event_count_lp = true;                % main FWL baseline: GPR shock + raw event count N_t^k
-
-% Prefer event-count columns for Poisson when available. In your extended dummy CSV,
-% these are named n_*_EventOnset. If a count column is missing, the code falls
-% back to the corresponding 0/1 *_EventOnset dummy.
 cfg.event_impulse_vars = { ...
-    'n_OilSpecificThreatShock_EventOnset', ...
-    'n_OilSpecificRealizedShock_EventOnset', ...
-    'n_StrictSupplyDisruption_EventOnset', ...
     'n_ChokepointShippingRisk_EventOnset', ...
-    'n_EnergySanction_EventOnset', ...
-    'n_ProducerRegionRisk_EventOnset' ...
+    'n_StrictSupplyDisruption_EventOnset', ...
+    'n_EnergySanction_EventOnset' ...
 };
 
-% Combined Figure 12/14/16 dashboard.
-% This draws the combined overlay dashboard. In this version, the Poisson
-% residual event shock is constructed from a non-GPR intensity model, while
-% the joint LP still controls for World GPR via estimate_lp_level_change_two_impulses(...).
-% The plotted coefficient remains component 2: the non-GPR Poisson residual
-% event-arrival shock while controlling for World GPR in the LP.
-cfg.make_combined_fig_12_14_16 = false;  % set true only when Poisson-residual robustness is enabled
+cfg.make_poisson_vs_raw_overlay_dashboards = true;
+cfg.poisson_vs_raw_overlay_events = cfg.event_impulse_vars;
+cfg.poisson_vs_raw_overlay_labels = { ...
+    'Chokepoint shipping onset', ...
+    'Strict supply disruption onset', ...
+    'Energy sanction onset' ...
+};
+cfg.poisson_vs_raw_raw_color = [0.05 0.25 0.90];
+cfg.poisson_vs_raw_poisson_color = [0.85 0.10 0.10];
+cfg.poisson_vs_raw_ci_alpha = 0.22;
+cfg.poisson_vs_raw_line_width = 3.2;
+cfg.poisson_vs_raw_poisson_line_style = '--';
+cfg.poisson_vs_raw_raw_line_style = '-';
 
-% Plot only the combined overlay for these three joint event dashboards,
-% rather than also opening the three separate Figure 12/14/16 windows.
-% The regressions are still estimated and stored exactly as before.
-cfg.skip_individual_fig_12_14_16 = true;
+cfg.run_standalone_poisson_residual_dashboards = false;
+cfg.skip_individual_poisson_overlay_events = true;
+cfg.skip_individual_raw_count_overlay_events = true;
 
-% Order required by the combined dashboard:
-%   black = Energy sanction onset
-%   red   = Chokepoint shipping onset
-%   blue  = Strict supply disruption onset
+cfg.make_combined_fig_12_14_16 = false;
+
+cfg.skip_individual_fig_12_14_16 = false;
+
 cfg.combined_fig_12_14_16_events = { ...
-    'n_EnergySanction_EventOnset',          'Energy sanction onset',          [0.00 0.00 0.00]; ...
     'n_ChokepointShippingRisk_EventOnset',  'Chokepoint shipping onset',      [0.85 0.10 0.10]; ...
-    'n_StrictSupplyDisruption_EventOnset',  'Strict supply disruption onset', [0.05 0.25 0.90]  ...
+    'n_StrictSupplyDisruption_EventOnset',  'Strict supply disruption onset', [0.05 0.25 0.90]; ...
+    'n_EnergySanction_EventOnset',          'Energy sanction onset',          [0.00 0.00 0.00]  ...
 };
 
-% Confidence-band opacity for the combined overlay.
-% 0 = invisible, 1 = fully opaque. 0.30 keeps overlap readable.
 cfg.combined_fig_12_14_16_ci_alpha = 0.30;
 cfg.combined_fig_12_14_16_line_width = 3.2;
 
-
-% GPR series used for second-stage LP controls and for residual-GPR tests.
-% NOTE: in this version, GPR is NOT included in the Poisson MLE intensity
-% equation used to construct the event-arrival residual. It is kept here for:
-%   (i) the joint LP where the event residual shock controls for World GPR;
-%   (ii) diagnostic regressions of the non-GPR residual arrival shock on
-%        current GPR shock and standardized GPR level.
 cfg.event_residual_poisson_gpr_aliases = {'LGPR'};
 cfg.event_residual_poisson_gpr_label = 'World';
 
-% Exclude GPR from the Poisson MLE intensity equation.
-% Baseline residualization model:
-%   log(lambda_t) = alpha + rho N_{t-1} + beta' X_{t-1}
-% rather than
-%   log(lambda_t) = alpha + gamma z_t^{GPR} + rho N_{t-1} + beta' X_{t-1}.
-cfg.poisson_exclude_gpr_from_intensity = true;
+cfg.poisson_exclude_gpr_from_intensity = false;
+cfg.poisson_include_current_gpr_shock = true;
+cfg.poisson_include_lagged_gpr_level = true;
+cfg.poisson_gpr_level_lags = 1;
+cfg.poisson_lagged_gpr_component_aliases = { ...
+    {'LGPR'} ...
+};
+cfg.poisson_lagged_gpr_component_labels = {'WorldGPR'};
 
-% Test whether the non-GPR Poisson residual event-arrival shock is stronger
-% when GPR shocks or GPR levels are high.
 cfg.run_event_residual_gpr_tests = true;
-cfg.gpr_high_threshold = 1.0;   % high GPR = above one standard deviation
+cfg.gpr_high_threshold = 1.0;
 
-% Poisson residualization controls.
-% Keep this parsimonious because the event-onset counts are rare.
 cfg.poisson_include_lagged_count = true;
 cfg.poisson_include_lagged_controls = true;
 cfg.poisson_standardize_predictors = true;
 cfg.poisson_min_positive_periods = 4;
-cfg.poisson_ridge_lambda = 1e-6;   % used only in fminsearch fallback; stabilizes very sparse counts
-cfg.poisson_gpr_timing = 'current'; % ignored when cfg.poisson_exclude_gpr_from_intensity=true
+cfg.poisson_ridge_lambda = 1e-6;
+cfg.poisson_gpr_timing = 'current';
 
-% Dummy controls used in the residual-event LP stage.
-% IMPORTANT FOR COMPARABILITY:
-%   To compare Poisson-residual event LPs with the raw dummy/event LPs,
-%   the Poisson LP uses the SAME current dummy-control set as the raw dummy
-%   regression. Therefore this list is set equal to cfg.dummy_control_vars.
-%
-%   For each event impulse, the code will then drop the corresponding raw
-%   event dummy from the controls, exactly as in the raw dummy impulse LP.
-%   Example: if the impulse is n_OilSpecificThreatShock_EventOnset, the LP
-%   controls start from cfg.dummy_control_vars and then drop
-%   OilSpecificThreatShock_EventOnset.
 cfg.event_residual_lp_dummy_control_vars = cfg.dummy_control_vars;
 
-% Macro controls are entered in lagged levels.
-% Missing variables are skipped automatically.
 cfg.control_aliases = { ...
     {'Unemp','Unemployment'}, ...
     {'FFR','FederalFundsRate','FedFunds','Policy_Rate','PolicyRate','FEDFUNDS'}, ...
@@ -266,14 +150,12 @@ cfg.control_aliases = { ...
     {'Indu_Prod','IndustrialProduction'} ...
 };
 
-% Aggregate GPR measures.
 cfg.aggregate_shock_specs = {
     'World',       {'LGPR'},    'World GPR shock';
     'GPT',         {'LGPRT'},   'Global geopolitical threats shock';
     'GPA',         {'LGPRA'},   'Global geopolitical acts shock'
 };
 
-% Country-specific GPR measures.
 cfg.country_shock_specs = {
     'US',          {'LGPRUS'},  'U.S. GPR shock';
     'Israel',      {'LGPRISR'}, 'Israel GPR shock';
@@ -283,8 +165,6 @@ cfg.country_shock_specs = {
     'SaudiArabia', {'LGPRSAR'}, 'Saudi Arabia GPR shock'
 };
 
-% Select shock block according to cfg.plot_mode.
-% This is the key switch: aggregate and countries are mutually exclusive unless cfg.plot_mode='all'.
 switch lower(strtrim(cfg.plot_mode))
     case {'aggregate','agg','global'}
         cfg.shock_specs = cfg.aggregate_shock_specs;
@@ -299,15 +179,13 @@ switch lower(strtrim(cfg.plot_mode))
         error('Unknown cfg.plot_mode = %s. Use aggregate, countries, or all.', cfg.plot_mode);
 end
 
-% Level outcomes to plot in each dashboard.
-% The dependent variable is always y_{t+h} - y_{t-1}.
 cfg.outcome_specs = {
-    'Real_Brent',    {'Real_Brent'},    'Brent crude oil price';
-    'Real_WTI',      {'Real_WTI'},      'WTI crude oil price';
-    'Real_Gasoline', {'Real_Gasoline'}, 'Gasoline price';
-    'inv_OECD',      {'inv_OECD'},      'OECD inventory';
-    'inv_USA',       {'inv_USA'},       'U.S. inventory';
-    'WorldCP',       {'WorldCP'},       'World crude-oil production'
+    'Real_Brent',    {'Real_Brent'},    'Brent';
+    'Real_WTI',      {'Real_WTI'},      'WTI';
+    'Real_Gasoline', {'Real_Gasoline'}, 'Gasoline';
+    'inv_OECD',      {'inv_OECD'},      'OECD inv.';
+    'inv_USA',       {'inv_USA'},       'US inv.';
+    'WorldCP',       {'WorldCP'},       'World prod.'
 };
 
 cfg.dashboard_nrow = 2;
@@ -316,7 +194,6 @@ cfg.horizon_label = 'Horizon (quarters)';
 
 apply_latex_graphics_defaults(cfg);
 
-%% -------------------------------------------------------
 if cfg.save_results || cfg.save_figures
     if ~exist(cfg.output_dir, 'dir'), mkdir(cfg.output_dir); end
 end
@@ -329,22 +206,11 @@ fprintf('GPR shock extraction: AR(%d) in GPR levels + current macro controls + l
     cfg.p_gpr_shock);
 fprintf('LP lags: %d; horizon: 0:%d; shock size: %.2f s.d.\n', cfg.p_lp, cfg.H, cfg.shock_size);
 
-%% -------------------- LOAD LEVEL DATABASE --------------------
 if ~exist(cfg.datafile, 'file')
-    if isfield(cfg, 'datafile_fallbacks')
-        for ff = 1:numel(cfg.datafile_fallbacks)
-            if exist(cfg.datafile_fallbacks{ff}, 'file')
-                fprintf('Data file not found under default name. Using fallback: %s\n', cfg.datafile_fallbacks{ff});
-                cfg.datafile = cfg.datafile_fallbacks{ff};
-                break;
-            end
-        end
-    end
-end
-if ~exist(cfg.datafile, 'file')
-    error('Data file not found: %s. Put this script in the same folder as Q_Levels_Database.csv or update cfg.datafile.', cfg.datafile);
+    error('Data file not found: %s. Put Q_Levels_Database.csv in the same folder as this script.', cfg.datafile);
 end
 
+fprintf('Loading level database: %s\n', cfg.datafile);
 DB = readtable(cfg.datafile, 'VariableNamingRule','preserve');
 T = height(DB);
 varnames = DB.Properties.VariableNames;
@@ -362,9 +228,6 @@ for j = 1:numel(control_names)
     fprintf('  Control %-18s finite = %3d / %3d\n', control_names{j}, sum(isfinite(controls(:,j))), T);
 end
 
-% Controls used specifically when extracting GPR shocks.
-% Current controls: unemployment and policy rate.
-% Lag-1 oil controls: Brent, WTI, and gasoline prices.
 [gpr_shock_current_controls, gpr_shock_current_control_names] = build_controls( ...
     DB, cfg.gpr_shock_current_control_aliases, T);
 
@@ -387,7 +250,6 @@ for j = 1:numel(gpr_shock_lag1_oil_control_names)
         sum(isfinite(gpr_shock_lag1_oil_controls(:,j))), T);
 end
 
-%% -------------------- LOAD AND ALIGN DUMMY CONTROLS --------------------
 [dummy_aligned, dummy_controls, dummy_control_names, dummy_info] = build_aligned_dummy_controls(DB, quarter_labels, has_quarter, T, cfg);
 
 fprintf('\nDummy controls loaded into the LP as contemporaneous controls:\n');
@@ -413,7 +275,6 @@ else
     fprintf('  No dummy table was loaded.\n');
 end
 
-%% -------------------- CONSTRUCT STANDARDIZED GPR SHOCKS --------------------
 Z = struct();
 GPR_levels = struct();
 innovation_info = table();
@@ -438,18 +299,18 @@ for s = 1:size(cfg.shock_specs,1)
     Z.(sid) = z;
 
     innovation_info = [innovation_info; table(string(sid), string(label), innov.nobs, innov.rsq, innov.std_resid, sum(isfinite(z)), ...
-        'VariableNames', {'shock','label','nobs','rsq','resid_sd','finite_z'})]; %#ok<AGROW>
+        'VariableNames', {'shock','label','nobs','rsq','resid_sd','finite_z'})];
 
     fprintf('  %-6s: nobs=%3d, AR R2=% .3f, pearson resid sd=% .4f, finite z=%3d\n', ...
         sid, innov.nobs, innov.rsq, innov.std_resid, sum(isfinite(z)));
 end
 
-%% -------------------- ESTIMATE LEVEL LOCAL PROJECTIONS --------------------
 level_lp_results = table();
 level_lp_struct = struct();
 
-fprintf('\n--- Estimating level local projections ---\n');
-for s = 1:size(cfg.shock_specs,1)
+if isfield(cfg, 'run_gpr_shock_dashboards') && cfg.run_gpr_shock_dashboards
+    fprintf('\n--- Estimating level local projections ---\n');
+    for s = 1:size(cfg.shock_specs,1)
     sid = cfg.shock_specs{s,1};
     z = Z.(sid);
     gpr_level = GPR_levels.(sid);
@@ -471,10 +332,10 @@ for s = 1:size(cfg.shock_specs,1)
         tmp.outcome = repmat(string(yid), height(tmp), 1);
         tmp.outcome_label = repmat(string(ylabel), height(tmp), 1);
         tmp.specification = repmat("level_change_y_tph_minus_y_tm1", height(tmp), 1);
-        level_lp_results = [level_lp_results; tmp]; %#ok<AGROW>
+        level_lp_results = [level_lp_results; tmp];
 
         res_list{i} = res;
-        plot_titles{i} = sprintf('%s, level-change response', ylabel);
+        plot_titles{i} = ylabel;
 
         fprintf('  %-14s: finite beta=%2d/%2d, nobs h0=%3.0f, beta h0=% .4f, beta h4=% .4f\n', ...
             yid, sum(isfinite(res.beta)), cfg.H+1, res.nobs(1), get_beta_at_h(res,0), get_beta_at_h(res,4));
@@ -483,22 +344,14 @@ for s = 1:size(cfg.shock_specs,1)
     fig_title = sprintf('%s: level LP response to %s GPR shock', sid, cfg.shock_group_label);
     fig = plot_irf_dashboard(res_list, plot_titles, cfg, fig_title, cfg.dashboard_nrow, cfg.dashboard_ncol, cfg.show_figures);
     save_figure_if_needed(fig, cfg, fullfile(cfg.output_dir, ['dashboard_' clean_file_string(sid)]));
+    end
 end
 
-%% -------------------- OPTIONAL EVENT-RESIDUAL IMPULSE DASHBOARDS --------------------
-% New teacher-suggested event transformation, now using Poisson:
-%   1. For each event-onset count N_t, estimate a Poisson arrival-intensity model.
-%      If the variable is a 0/1 dummy, it is treated as a count in {0,1}.
-%   2. Construct the Pearson residual e_t^N = (N_t - lambda_hat_t) / sqrt(lambda_hat_t).
-%   3. Standardize e_t^N into z_t^N.
-%   4. Use z_t^N as the LP impulse in y_{t+h} - y_{t-1}.
-%
-% This makes each event dummy/count closer to the GPR shock logic: the impulse is
-% the unexpected part of event arrival, not the raw 0/1 dummy itself.
 event_impulse_results = table();
 event_impulse_struct = struct();
 event_residual_results = table();
 event_joint_results = table();
+event_joint_rawN_control_results = table();
 event_residual_struct = struct();
 event_residual_diagnostics = table();
 event_residual_gpr_tests = table();
@@ -506,9 +359,6 @@ event_residual_gpr_tests = table();
 if isfield(cfg, 'run_event_residual_impulse_dashboards') && cfg.run_event_residual_impulse_dashboards && ~isempty(dummy_aligned)
     fprintf('\n--- Estimating Poisson-residual event impulse LPs ---\n');
 
-    % GPR shock and GPR level used for second-stage LP controls and for
-    % residual-GPR tests. GPR is NOT used inside the Poisson MLE intensity
-    % equation when cfg.poisson_exclude_gpr_from_intensity=true.
     poisson_gpr_level = get_required_series(DB, cfg.event_residual_poisson_gpr_aliases, T);
     poisson_innov = extract_ar_level_innovation_mixed_controls(poisson_gpr_level, sample, cfg.p_gpr_shock, ...
         gpr_shock_current_controls, gpr_shock_lag1_oil_controls, cfg.event_residual_poisson_gpr_label);
@@ -519,12 +369,11 @@ if isfield(cfg, 'run_event_residual_impulse_dashboards') && cfg.run_event_residu
     end
     gpr_level_for_poisson = zscore_in_sample(poisson_gpr_level, sample);
 
-    % Dummy controls for the residual-event LP stage.
-    % IMPORTANT:
-    %   Use exactly the same dummy-control matrix as the raw dummy/event LP.
-    %   This removes the previous inconsistency where Poisson-residual LPs
-    %   controlled only COVID_2020 while raw dummy LPs controlled COVID_2020
-    %   plus oil-specific onset controls.
+    [poisson_lambda_gpr_levels, poisson_lambda_gpr_level_names] = build_controls( ...
+        DB, cfg.poisson_lagged_gpr_component_aliases, T);
+    fprintf('Poisson log-intensity lag-1 GPR level controls loaded: %s\n', ...
+        strjoin_or_none(poisson_lambda_gpr_level_names));
+
     event_resid_lp_dummy_controls = dummy_controls;
     event_resid_lp_dummy_names = dummy_control_names;
 
@@ -549,20 +398,15 @@ if isfield(cfg, 'run_event_residual_impulse_dashboards') && cfg.run_event_residu
             continue;
         end
 
-        % Step 1--3: Poisson intensity and standardized Pearson residual.
-        eres = estimate_poisson_event_residual(dseries, z_for_poisson, controls, sample, cfg, did);
+        eres = estimate_poisson_event_residual(dseries, z_for_poisson, poisson_lambda_gpr_levels, controls, sample, cfg, did);
         event_residual_struct.(did).poisson = eres;
-        event_residual_diagnostics = [event_residual_diagnostics; eres.diagnostics]; %#ok<AGROW>
+        event_residual_diagnostics = [event_residual_diagnostics; eres.diagnostics];
 
-        % Diagnostic / research test:
-        % After constructing the event-arrival surprise from the non-GPR
-        % Poisson baseline, test whether this residual arrival shock is
-        % larger when GPR shocks or GPR levels are high.
         if isfield(cfg, 'run_event_residual_gpr_tests') && cfg.run_event_residual_gpr_tests
             gtest = estimate_event_residual_gpr_relation(did, eres.z_event_resid, ...
                 z_for_poisson, gpr_level_for_poisson, sample, cfg);
             event_residual_struct.(did).gpr_residual_test = gtest;
-            event_residual_gpr_tests = [event_residual_gpr_tests; gtest]; %#ok<AGROW>
+            event_residual_gpr_tests = [event_residual_gpr_tests; gtest];
         end
 
         if sum(isfinite(eres.z_event_resid)) == 0
@@ -570,13 +414,11 @@ if isfield(cfg, 'run_event_residual_impulse_dashboards') && cfg.run_event_residu
             continue;
         end
 
-        % Use the same controls as the raw dummy LP, then drop the raw dummy
-        % corresponding to the current event impulse. This handles n_* count
-        % columns by also dropping the matching non-n_ dummy name.
         drop_names = make_event_drop_candidates(did, did_source);
         [dummy_controls_dd, dummy_control_names_dd] = drop_dummy_controls_by_names( ...
-            event_resid_lp_dummy_controls, event_resid_lp_dummy_names, drop_names); %#ok<ASGLU>
+            event_resid_lp_dummy_controls, event_resid_lp_dummy_names, drop_names);
         fprintf('  Poisson LP controls after drop: %s\n', strjoin_or_none(dummy_control_names_dd));
+
 
         res_list = cell(size(cfg.outcome_specs,1),1);
         plot_titles = cell(size(cfg.outcome_specs,1),1);
@@ -589,8 +431,6 @@ if isfield(cfg, 'run_event_residual_impulse_dashboards') && cfg.run_event_residu
             ylabel = cfg.outcome_specs{i,3};
             y = get_required_series(DB, cfg.outcome_specs{i,2}, T);
 
-            % z_event_resid is standardized. shock_size=1 means one s.d.
-            % unexpected event-onset residual.
             cfg_event = cfg;
             cfg_event.shock_size = 1;
             res = estimate_lp_level_change(y, eres.z_event_resid, poisson_gpr_level, controls, dummy_controls_dd, sample, cfg_event);
@@ -602,19 +442,18 @@ if isfield(cfg, 'run_event_residual_impulse_dashboards') && cfg.run_event_residu
             tmp.outcome_label = repmat(string(ylabel), height(tmp), 1);
             tmp.specification = repmat("poisson_residual_event_level_lp", height(tmp), 1);
             tmp.gpr_test_series = repmat(string(cfg.event_residual_poisson_gpr_label), height(tmp), 1);
-            event_residual_results = [event_residual_results; tmp]; %#ok<AGROW>
+            event_residual_results = [event_residual_results; tmp];
 
             res_list{i} = res;
-            plot_titles{i} = sprintf('%s, level-change response', ylabel);
+            plot_titles{i} = ylabel;
         end
 
-        fig_title = sprintf('%s: level LP response to Poisson-residual event shock', did);
-        fig = plot_irf_dashboard(res_list, plot_titles, cfg, fig_title, cfg.dashboard_nrow, cfg.dashboard_ncol, cfg.show_figures);
-        save_figure_if_needed(fig, cfg, fullfile(cfg.output_dir, ['event_residual_dashboard_' clean_file_string(did)]));
+        if isfield(cfg, 'run_standalone_poisson_residual_dashboards') && cfg.run_standalone_poisson_residual_dashboards
+            fig_title = sprintf('%s: level LP response to Poisson-residual event shock', did);
+            fig = plot_irf_dashboard(res_list, plot_titles, cfg, fig_title, cfg.dashboard_nrow, cfg.dashboard_ncol, cfg.show_figures);
+            save_figure_if_needed(fig, cfg, fullfile(cfg.output_dir, ['event_residual_dashboard_' clean_file_string(did)]));
+        end
 
-        % Joint specification: include the GPR shock and the Poisson event-arrival
-        % surprise in the same LP. The dashboard plots the event-surprise coefficient
-        % while holding the GPR shock fixed. The result table also stores both betas.
         if isfield(cfg, 'run_gpr_plus_event_residual_lp') && cfg.run_gpr_plus_event_residual_lp
             joint_list = cell(size(cfg.outcome_specs,1),1);
             joint_titles = cell(size(cfg.outcome_specs,1),1);
@@ -624,32 +463,49 @@ if isfield(cfg, 'run_event_residual_impulse_dashboards') && cfg.run_event_residu
                 ylabel = cfg.outcome_specs{i,3};
                 y = get_required_series(DB, cfg.outcome_specs{i,2}, T);
 
-                cfg_joint = cfg;
-                cfg_joint.shock_size_z1 = cfg.shock_size;  % GPR shock size
-                cfg_joint.shock_size_z2 = 1;               % one s.d. event-surprise shock
-                joint = estimate_lp_level_change_two_impulses(y, z_for_poisson, eres.z_event_resid, poisson_gpr_level, controls, dummy_controls_dd, sample, cfg_joint);
+                [controls_with_lagN_event, cfg_joint] = make_overlay_lp_controls( ...
+                    yid, controls, gpr_shock_lag1_oil_controls, ...
+                    gpr_shock_lag1_oil_control_names, dseries, cfg);
+
+                joint = estimate_lp_level_change_two_impulses( ...
+                    y, z_for_poisson, eres.z_event_resid, poisson_gpr_level, ...
+                    controls_with_lagN_event, dummy_controls_dd, sample, cfg_joint);
                 event_residual_struct.(did).([yid '_joint_gpr_event']) = joint;
 
                 joint_tmp = joint.table;
                 joint_tmp.impulse = repmat(string(did), height(joint_tmp), 1);
                 joint_tmp.outcome = repmat(string(yid), height(joint_tmp), 1);
                 joint_tmp.outcome_label = repmat(string(ylabel), height(joint_tmp), 1);
-                joint_tmp.specification = repmat("gpr_plus_poisson_event_residual_level_lp", height(joint_tmp), 1);
+                joint_tmp.specification = repmat("overlay_exact_lp_poisson_zN_plus_worldgpr", height(joint_tmp), 1);
                 joint_tmp.gpr_test_series = repmat(string(cfg.event_residual_poisson_gpr_label), height(joint_tmp), 1);
-                event_joint_results = [event_joint_results; joint_tmp]; %#ok<AGROW>
+                event_joint_results = [event_joint_results; joint_tmp];
+
+                if isfield(cfg, 'run_poisson_arrival_rawN_control_robustness') && cfg.run_poisson_arrival_rawN_control_robustness
+                    current_controls_rawN = [dummy_controls_dd, dseries(:)];
+                    joint_rawN = estimate_lp_level_change_two_impulses(y, z_for_poisson, eres.z_event_resid, poisson_gpr_level, controls_with_lagN_event, current_controls_rawN, sample, cfg_joint);
+                    event_residual_struct.(did).([yid '_joint_gpr_event_rawN_control']) = joint_rawN;
+
+                    joint_rawN_tmp = joint_rawN.table;
+                    joint_rawN_tmp.impulse = repmat(string(did), height(joint_rawN_tmp), 1);
+                    joint_rawN_tmp.outcome = repmat(string(yid), height(joint_rawN_tmp), 1);
+                    joint_rawN_tmp.outcome_label = repmat(string(ylabel), height(joint_rawN_tmp), 1);
+                    joint_rawN_tmp.specification = repmat("gpr_plus_poisson_event_residual_with_current_rawN_control", height(joint_rawN_tmp), 1);
+                    joint_rawN_tmp.gpr_test_series = repmat(string(cfg.event_residual_poisson_gpr_label), height(joint_rawN_tmp), 1);
+                    event_joint_rawN_control_results = [event_joint_rawN_control_results; joint_rawN_tmp];
+                end
 
                 joint_list{i} = extract_two_impulse_component(joint, 2);
-                joint_titles{i} = sprintf('%s, event surprise controlling GPR', ylabel);
+                joint_titles{i} = ylabel;
             end
 
-            % Keep the original joint regression unchanged. This block only decides
-            % whether to draw the old separate event dashboard. For the three
-            % requested events, the code can skip the separate Figure 12/14/16
-            % windows and draw them together later in one combined dashboard.
             skip_individual_joint_fig = false;
             if isfield(cfg, 'skip_individual_fig_12_14_16') && cfg.skip_individual_fig_12_14_16 ...
                     && isfield(cfg, 'combined_fig_12_14_16_events') && ~isempty(cfg.combined_fig_12_14_16_events)
                 skip_individual_joint_fig = any(strcmp(did, cfg.combined_fig_12_14_16_events(:,1)));
+            end
+            if isfield(cfg, 'skip_individual_poisson_overlay_events') && cfg.skip_individual_poisson_overlay_events ...
+                    && isfield(cfg, 'poisson_vs_raw_overlay_events') && ~isempty(cfg.poisson_vs_raw_overlay_events)
+                skip_individual_joint_fig = skip_individual_joint_fig || any(strcmp(did, cfg.poisson_vs_raw_overlay_events));
             end
 
             if ~skip_individual_joint_fig
@@ -661,49 +517,24 @@ if isfield(cfg, 'run_event_residual_impulse_dashboards') && cfg.run_event_residu
         end
     end
 
-    %% -------- Combined Figure 12/14/16: three Poisson arrival shocks in one dashboard --------
-    % This is the requested combined figure. It does NOT re-estimate anything.
-    % It reads the already-estimated joint LP objects:
-    %   event_residual_struct.(did).([yid '_joint_gpr_event'])
-    % and plots component 2, i.e. the non-GPR Poisson residual event-arrival
-    % shock coefficient, while World GPR is controlled in the same LP regression.
     if isfield(cfg, 'make_combined_fig_12_14_16') && cfg.make_combined_fig_12_14_16
-        combined_fig_title = sprintf('Dummies of Interest: non-GPR Poisson residual shocks controlling for %s GPR', ...
+        combined_fig_title = sprintf('Dummies of Interest: Poisson residual shocks controlling for %s GPR', ...
             cfg.event_residual_poisson_gpr_label);
         combined_fig_12_14_16 = plot_combined_fig_12_14_16_dashboard( ...
             event_residual_struct, cfg, combined_fig_title, ...
             cfg.dashboard_nrow, cfg.dashboard_ncol, cfg.show_figures);
         set(combined_fig_12_14_16, 'Name', 'Figure_12_14_16_combined', 'NumberTitle', 'off');
         save_figure_if_needed(combined_fig_12_14_16, cfg, ...
-            fullfile(cfg.output_dir, 'Figure_12_14_16_combined_nonGPR_poisson_residual_control_world_gpr'));
+            fullfile(cfg.output_dir, 'Figure_12_14_16_combined_poisson_residual_control_world_gpr'));
     end
 end
 
-
-%% -------------------- FWL BASELINE: RAW EVENT COUNT N_t^k + GPR SHOCK --------------------
-% Teacher / FWL suggested baseline:
-%
-%   y_{t+h} - y_{t-1}
-%     = alpha_h
-%       + beta_h N_t^k
-%       + theta_h z_t^{WorldGPR}
-%       + current controls used in GPR shock extraction
-%       + lagged GPR levels
-%       + lagged event counts
-%       + lagged outcomes
-%       + lagged macro controls
-%       + other event dummies
-%       + error.
-%
-% The plotted coefficient is beta_h on raw N_t^k.
-% By FWL, beta_h uses the component of N_t^k orthogonal to all RHS controls.
 event_count_joint_results = table();
 event_count_joint_struct = struct();
 
 if isfield(cfg, 'run_gpr_plus_event_count_lp') && cfg.run_gpr_plus_event_count_lp && ~isempty(dummy_aligned)
     fprintf('\n--- Estimating FWL baseline: raw event count N_t^k controlling for GPR shock ---\n');
 
-    % World GPR level and shock used as the main GPR control.
     world_gpr_level = get_required_series(DB, cfg.event_residual_poisson_gpr_aliases, T);
 
     world_innov = extract_ar_level_innovation_mixed_controls(world_gpr_level, sample, cfg.p_gpr_shock, ...
@@ -715,9 +546,6 @@ if isfield(cfg, 'run_gpr_plus_event_count_lp') && cfg.run_gpr_plus_event_count_l
         z_world_gpr = world_innov.resid;
     end
 
-    % Build O_{t-1} as a time-t current RHS control matrix.
-    % Row t equals oil controls at t-1.
-    oil_lag1_as_current = lag_one_matrix(gpr_shock_lag1_oil_controls);
 
     fprintf('FWL baseline GPR control: %s; finite z = %d / %d\n', ...
         cfg.event_residual_poisson_gpr_label, sum(isfinite(z_world_gpr)), T);
@@ -725,14 +553,12 @@ if isfield(cfg, 'run_gpr_plus_event_count_lp') && cfg.run_gpr_plus_event_count_l
     for dd = 1:numel(cfg.event_impulse_vars)
         did = cfg.event_impulse_vars{dd};
 
-        % N_t^k: prefer n_* count variable; fall back to 0/1 onset dummy.
         [N_event, did_source] = get_event_count_or_dummy_series(dummy_aligned, did, T);
         if isempty(N_event) || sum(N_event > 0) == 0
             warning('Event count/dummy not found or all zero: %s. Skipping.', did);
             continue;
         end
 
-        % Drop the current event's own raw dummy from D_{t,-k}.
         drop_names = make_event_drop_candidates(did, did_source);
         [dummy_controls_dd, dummy_control_names_dd] = drop_dummy_controls_by_names( ...
             dummy_controls, dummy_control_names, drop_names);
@@ -741,9 +567,6 @@ if isfield(cfg, 'run_gpr_plus_event_count_lp') && cfg.run_gpr_plus_event_count_l
             did, did_source, sum(N_event > 0), sum(N_event, 'omitnan'));
         fprintf('  Current event controls after drop: %s\n', strjoin_or_none(dummy_control_names_dd));
 
-        % Add N_t^k to the lagged-control matrix so the LP automatically includes
-        % N_{t-1}^k, ..., N_{t-p}^k as controls.
-        controls_with_lagN = [controls, N_event(:)];
 
         joint_list = cell(size(cfg.outcome_specs,1),1);
         joint_titles = cell(size(cfg.outcome_specs,1),1);
@@ -753,36 +576,13 @@ if isfield(cfg, 'run_gpr_plus_event_count_lp') && cfg.run_gpr_plus_event_count_l
             ylabel = cfg.outcome_specs{i,3};
             y = get_required_series(DB, cfg.outcome_specs{i,2}, T);
 
-            % Avoid exact duplicate controls:
-            % if the outcome is Brent, WTI, or gasoline, its own lag y_{t-1}
-            % is already included in y-lags, so exclude the same oil lag from
-            % the current oil-control block.
-            oil_keep = true(1, size(oil_lag1_as_current,2));
-            if strcmpi(yid, 'Real_Brent')
-                oil_keep = ~strcmpi(gpr_shock_lag1_oil_control_names, 'Real_Brent');
-            elseif strcmpi(yid, 'Real_WTI')
-                oil_keep = ~strcmpi(gpr_shock_lag1_oil_control_names, 'Real_WTI');
-            elseif strcmpi(yid, 'Real_Gasoline')
-                oil_keep = ~strcmpi(gpr_shock_lag1_oil_control_names, 'Real_Gasoline');
-            end
+            [controls_with_lagN, cfg_joint] = make_overlay_lp_controls( ...
+                yid, controls, gpr_shock_lag1_oil_controls, ...
+                gpr_shock_lag1_oil_control_names, N_event, cfg);
 
-            % Current RHS controls:
-            % D_{t,-k}, B_t, and O_{t-1}^{(-y)}.
-            current_fwl_controls = [ ...
-                dummy_controls_dd, ...
-                gpr_shock_current_controls, ...
-                oil_lag1_as_current(:, oil_keep) ...
-            ];
-
-            cfg_joint = cfg;
-            cfg_joint.shock_size_z1 = cfg.shock_size;  % one-s.d. GPR shock
-            cfg_joint.shock_size_z2 = 1;               % one additional event arrival
-
-            % z1 = World GPR shock control.
-            % z2 = raw event arrival count N_t^k, the coefficient of interest.
             joint = estimate_lp_level_change_two_impulses( ...
                 y, z_world_gpr, N_event, world_gpr_level, ...
-                controls_with_lagN, current_fwl_controls, sample, cfg_joint);
+                controls_with_lagN, dummy_controls_dd, sample, cfg_joint);
 
             event_count_joint_struct.(did).([yid '_joint_gpr_count']) = joint;
 
@@ -790,29 +590,64 @@ if isfield(cfg, 'run_gpr_plus_event_count_lp') && cfg.run_gpr_plus_event_count_l
             joint_tmp.impulse = repmat(string(did), height(joint_tmp), 1);
             joint_tmp.outcome = repmat(string(yid), height(joint_tmp), 1);
             joint_tmp.outcome_label = repmat(string(ylabel), height(joint_tmp), 1);
-            joint_tmp.specification = repmat("fwl_raw_event_count_plus_gpr_level_lp", height(joint_tmp), 1);
+            joint_tmp.specification = repmat("overlay_exact_lp_rawN_plus_worldgpr", height(joint_tmp), 1);
             joint_tmp.gpr_control_series = repmat(string(cfg.event_residual_poisson_gpr_label), height(joint_tmp), 1);
-            event_count_joint_results = [event_count_joint_results; joint_tmp]; %#ok<AGROW>
+            event_count_joint_results = [event_count_joint_results; joint_tmp];
 
-            % Plot component 2: beta_h on N_t^k.
             joint_list{i} = extract_two_impulse_component(joint, 2);
-            joint_titles{i} = sprintf('%s, raw event count controlling GPR', ylabel);
+            joint_titles{i} = ylabel;
         end
 
-        fig_title = sprintf('%s: raw event-arrival count, controlling for %s GPR shock', ...
-            did, cfg.event_residual_poisson_gpr_label);
+        skip_individual_raw_fig = false;
+        if isfield(cfg, 'skip_individual_raw_count_overlay_events') && cfg.skip_individual_raw_count_overlay_events ...
+                && isfield(cfg, 'poisson_vs_raw_overlay_events') && ~isempty(cfg.poisson_vs_raw_overlay_events)
+            skip_individual_raw_fig = any(strcmp(did, cfg.poisson_vs_raw_overlay_events));
+        end
 
-        fig = plot_irf_dashboard(joint_list, joint_titles, cfg, fig_title, ...
-            cfg.dashboard_nrow, cfg.dashboard_ncol, cfg.show_figures);
+        if ~skip_individual_raw_fig
+            fig_title = sprintf('%s: raw event-arrival count, controlling for %s GPR shock', ...
+                did, cfg.event_residual_poisson_gpr_label);
 
-        save_figure_if_needed(fig, cfg, ...
-            fullfile(cfg.output_dir, ['fwl_raw_event_count_dashboard_' clean_file_string(did)]));
+            fig = plot_irf_dashboard(joint_list, joint_titles, cfg, fig_title, ...
+                cfg.dashboard_nrow, cfg.dashboard_ncol, cfg.show_figures);
+
+            save_figure_if_needed(fig, cfg, ...
+                fullfile(cfg.output_dir, ['fwl_raw_event_count_dashboard_' clean_file_string(did)]));
+        end
     end
 end
 
-%% -------------------- OPTIONAL OLD RAW EVENT-ONSET IMPULSE DASHBOARDS --------------------
-% Kept for comparison only. Set cfg.run_event_onset_impulse_dashboards=true
-% if you still want the old raw 0/1 dummy impulse figures.
+if isfield(cfg, 'make_poisson_vs_raw_overlay_dashboards') && cfg.make_poisson_vs_raw_overlay_dashboards
+    fprintf('\n--- Drawing augmented overlay dashboards: Poisson arrival shock vs raw event count ---\n');
+
+    for oo = 1:numel(cfg.poisson_vs_raw_overlay_events)
+        did = cfg.poisson_vs_raw_overlay_events{oo};
+
+        if ~isfield(event_residual_struct, did)
+            warning('Overlay skipped: Poisson results not found for %s.', did);
+            continue;
+        end
+        if ~isfield(event_count_joint_struct, did)
+            warning('Overlay skipped: raw event-count results not found for %s.', did);
+            continue;
+        end
+
+        label = clean_file_string(did);
+        if isfield(cfg, 'poisson_vs_raw_overlay_labels') && numel(cfg.poisson_vs_raw_overlay_labels) >= oo
+            label = cfg.poisson_vs_raw_overlay_labels{oo};
+        end
+
+        overlay_title = sprintf('%s: $z_t^{N,k}$ vs $N_t^k$', latex_escape_text(label));
+        overlay_fig = plot_poisson_vs_raw_event_dashboard( ...
+            event_residual_struct, event_count_joint_struct, did, cfg, overlay_title, ...
+            cfg.dashboard_nrow, cfg.dashboard_ncol, cfg.show_figures);
+
+        set(overlay_fig, 'Name', ['Overlay_poisson_vs_raw_' clean_file_string(did)], 'NumberTitle', 'off');
+        save_figure_if_needed(overlay_fig, cfg, ...
+            fullfile(cfg.output_dir, ['overlay_poisson_vs_raw_' clean_file_string(did)]));
+    end
+end
+
 if isfield(cfg, 'run_event_onset_impulse_dashboards') && cfg.run_event_onset_impulse_dashboards && ~isempty(dummy_aligned)
     fprintf('\n--- Estimating optional RAW event-onset dummy impulse LPs ---\n');
 
@@ -832,7 +667,7 @@ if isfield(cfg, 'run_event_onset_impulse_dashboards') && cfg.run_event_onset_imp
 
         drop_names = make_event_drop_candidates(did, did_source);
         [dummy_controls_dd, dummy_control_names_dd] = drop_dummy_controls_by_names( ...
-            dummy_controls, dummy_control_names, drop_names); %#ok<ASGLU>
+            dummy_controls, dummy_control_names, drop_names);
         fprintf('  Raw/count event LP controls after drop: %s\n', strjoin_or_none(dummy_control_names_dd));
 
         res_list = cell(size(cfg.outcome_specs,1),1);
@@ -854,10 +689,10 @@ if isfield(cfg, 'run_event_onset_impulse_dashboards') && cfg.run_event_onset_imp
             tmp.outcome = repmat(string(yid), height(tmp), 1);
             tmp.outcome_label = repmat(string(ylabel), height(tmp), 1);
             tmp.specification = repmat("raw_event_onset_dummy_level_lp", height(tmp), 1);
-            event_impulse_results = [event_impulse_results; tmp]; %#ok<AGROW>
+            event_impulse_results = [event_impulse_results; tmp];
 
             res_list{i} = res;
-            plot_titles{i} = sprintf('%s, level-change response', ylabel);
+            plot_titles{i} = ylabel;
         end
 
         fig_title = sprintf('%s: level LP response to raw event-onset dummy', did);
@@ -866,7 +701,6 @@ if isfield(cfg, 'run_event_onset_impulse_dashboards') && cfg.run_event_onset_imp
     end
 end
 
-%% -------------------- OPTIONAL SAVE --------------------
 if cfg.save_results
     mode_tag = clean_file_string(cfg.plot_mode);
     writetable(level_lp_results, fullfile(cfg.output_dir, ['level_lp_results_' mode_tag '.csv']));
@@ -876,6 +710,9 @@ if cfg.save_results
     end
     if exist('event_joint_results', 'var') && ~isempty(event_joint_results)
         writetable(event_joint_results, fullfile(cfg.output_dir, ['event_joint_gpr_plus_poisson_results_' mode_tag '.csv']));
+    end
+    if exist('event_joint_rawN_control_results', 'var') && ~isempty(event_joint_rawN_control_results)
+        writetable(event_joint_rawN_control_results, fullfile(cfg.output_dir, ['event_joint_gpr_plus_poisson_with_rawN_control_results_' mode_tag '.csv']));
     end
     if exist('event_count_joint_results', 'var') && ~isempty(event_count_joint_results)
         writetable(event_count_joint_results, fullfile(cfg.output_dir, ['event_count_fwl_gpr_results_' mode_tag '.csv']));
@@ -887,14 +724,17 @@ if cfg.save_results
         writetable(event_residual_gpr_tests, fullfile(cfg.output_dir, ['event_residual_nonGPR_resid_on_GPR_tests_' mode_tag '.csv']));
     end
     save(fullfile(cfg.output_dir, ['workspace_level_lp_' mode_tag '.mat']), ...
-        'cfg','Z','GPR_levels','innovation_info','level_lp_results','level_lp_struct','control_names','gpr_shock_control_names','dummy_aligned','dummy_controls','dummy_control_names','dummy_info','event_impulse_results','event_impulse_struct','event_residual_results','event_joint_results','event_residual_struct','event_residual_diagnostics','event_residual_gpr_tests','event_count_joint_results','event_count_joint_struct');
+        'cfg','Z','GPR_levels','innovation_info','level_lp_results','level_lp_struct','control_names','gpr_shock_control_names','dummy_aligned','dummy_controls','dummy_control_names','dummy_info','event_impulse_results','event_impulse_struct','event_residual_results','event_joint_results','event_joint_rawN_control_results','event_residual_struct','event_residual_diagnostics','event_residual_gpr_tests','event_count_joint_results','event_count_joint_struct');
     fprintf('\nSaved results in: %s\n', cfg.output_dir);
 else
-    fprintf('\nNo files saved because cfg.save_results=false and cfg.save_figures=false.\n');
-    fprintf('Results are available in workspace: level_lp_results, event_count_joint_results, event_count_joint_struct, event_residual_results, event_joint_results, event_residual_gpr_tests, level_lp_struct, Z, innovation_info, dummy_aligned.\n');
+    if cfg.save_figures
+        fprintf('\nFigures saved in: %s\n', cfg.output_dir);
+        fprintf('CSV/MAT results not saved because cfg.save_results=false.\n');
+    else
+        fprintf('\nNo files saved because cfg.save_results=false and cfg.save_figures=false.\n');
+    end
+    fprintf('Workspace results: event_count_joint_results, event_residual_results, event_joint_results, event_residual_gpr_tests.\n');
 end
-
-%% ======================= LOCAL HELPER FUNCTIONS =======================
 
 function [quarter_labels, has_quarter] = get_quarter_labels(DB, T)
     quarter_labels = repmat({''}, T, 1);
@@ -958,8 +798,8 @@ function [controls, control_names] = build_controls(DB, control_aliases, T)
     for i = 1:numel(control_aliases)
         x = get_series_if_exists(DB, control_aliases{i}, T);
         if ~isempty(x)
-            controls = [controls, x]; %#ok<AGROW>
-            control_names{end+1} = char(control_aliases{i}{1}); %#ok<AGROW>
+            controls = [controls, x];
+            control_names{end+1} = char(control_aliases{i}{1});
         else
             warning('Control not found and skipped: %s', strjoin(control_aliases{i}, ', '));
         end
@@ -980,10 +820,6 @@ function [dummy_aligned, dummy_controls, dummy_control_names, info] = build_alig
     q_db = string(quarter_labels(:));
     dummy_aligned = table(q_db, 'VariableNames', {'Quarter'});
 
-    % Load all numeric dummy columns from the dummy MAT/CSV and align them by Quarter.
-    % This is important for the extended dummy file, which already contains
-    % OilSpecificRealizedShock_EventOnset, OilSpecificThreatShock_EventOnset,
-    % StrictSupplyDisruption_EventOnset, ChokepointShippingRisk_EventOnset, etc.
     if isfield(cfg, 'use_event_dummies') && cfg.use_event_dummies
         D = load_dummy_table_from_file(cfg);
         if ~isempty(D)
@@ -1005,7 +841,7 @@ function [dummy_aligned, dummy_controls, dummy_control_names, info] = build_alig
                     if isnumeric(raw) || islogical(raw)
                         x = double(raw(:));
                     else
-                        % Skip narrative/string columns such as event_names, rationales, urls.
+
                         continue;
                     end
 
@@ -1017,8 +853,6 @@ function [dummy_aligned, dummy_controls, dummy_control_names, info] = build_alig
                     aligned(tf) = x(loc(tf));
                     aligned(~isfinite(aligned)) = 0;
 
-                    % Keep the original numeric values. Most requested dummies are 0/1;
-                    % count columns remain available but are not used unless explicitly requested.
                     safe_v = matlab.lang.makeValidName(v);
                     dummy_aligned.(safe_v) = aligned;
                 end
@@ -1026,7 +860,6 @@ function [dummy_aligned, dummy_controls, dummy_control_names, info] = build_alig
         end
     end
 
-    % If some broad event variables are missing, initialize them to zero.
     if isfield(cfg, 'event_episode_vars')
         for i = 1:numel(cfg.event_episode_vars)
             v = cfg.event_episode_vars{i};
@@ -1036,14 +869,11 @@ function [dummy_aligned, dummy_controls, dummy_control_names, info] = build_alig
         end
     end
 
-    % COVID dummy. If the dummy file already contains COVID_2020, this line overwrites
-    % it using cfg.covid_quarters so the baseline definition is transparent.
     if isfield(cfg, 'use_covid_dummy') && cfg.use_covid_dummy
         covid = double(ismember(q_db, string(cfg.covid_quarters(:))));
         dummy_aligned.(cfg.covid_dummy_name) = covid;
     end
 
-    % Aggregate event dummy if missing.
     if ~ismember('AnyOilEvent', dummy_aligned.Properties.VariableNames)
         if ismember('OilThreat', dummy_aligned.Properties.VariableNames) && ismember('OilAct', dummy_aligned.Properties.VariableNames)
             dummy_aligned.AnyOilEvent = double((dummy_aligned.OilThreat ~= 0) | (dummy_aligned.OilAct ~= 0));
@@ -1052,9 +882,6 @@ function [dummy_aligned, dummy_controls, dummy_control_names, info] = build_alig
         end
     end
 
-    % Construct generic onset dummies as a fallback. The extended dummy file already
-    % contains *_EventOnset columns. These fallback *_Onset columns are kept for
-    % backward compatibility with older specifications.
     base_onset_vars = unique([{'OilThreat','OilAct','ThreatOnly','ActOnly','ThreatAct','AnyOilEvent'}, cfg.event_episode_vars], 'stable');
     for i = 1:numel(base_onset_vars)
         v = base_onset_vars{i};
@@ -1066,24 +893,21 @@ function [dummy_aligned, dummy_controls, dummy_control_names, info] = build_alig
         end
     end
 
-    % Build the dummy-control matrix in the order requested by cfg.dummy_control_vars.
     for i = 1:numel(cfg.dummy_control_vars)
         v = cfg.dummy_control_vars{i};
         if ismember(v, dummy_aligned.Properties.VariableNames)
             x = double(dummy_aligned.(v)(:));
             x(~isfinite(x)) = 0;
-            dummy_controls = [dummy_controls, x]; %#ok<AGROW>
-            dummy_control_names{end+1} = v; %#ok<AGROW>
+            dummy_controls = [dummy_controls, x];
+            dummy_control_names{end+1} = v;
         else
             warning('Requested dummy control not found and skipped: %s', v);
         end
     end
 
     info.loaded_dummy_file = '';
-    if exist(cfg.dummy_file, 'file')
+    if isfield(cfg, 'dummy_file') && ~isempty(cfg.dummy_file) && exist(cfg.dummy_file, 'file')
         info.loaded_dummy_file = cfg.dummy_file;
-    elseif exist(cfg.dummy_csv_fallback, 'file')
-        info.loaded_dummy_file = cfg.dummy_csv_fallback;
     end
     info.dummy_control_names = dummy_control_names;
 end
@@ -1091,82 +915,28 @@ end
 function D = load_dummy_table_from_file(cfg)
     D = table();
 
-    candidate_files = {};
-    if isfield(cfg, 'dummy_file') && ~isempty(cfg.dummy_file)
-        candidate_files{end+1} = cfg.dummy_file; %#ok<AGROW>
-    end
-    if isfield(cfg, 'dummy_csv_fallback') && ~isempty(cfg.dummy_csv_fallback)
-        candidate_files{end+1} = cfg.dummy_csv_fallback; %#ok<AGROW>
-    end
-    if isfield(cfg, 'dummy_csv_fallbacks') && ~isempty(cfg.dummy_csv_fallbacks)
-        for ii = 1:numel(cfg.dummy_csv_fallbacks)
-            candidate_files{end+1} = cfg.dummy_csv_fallbacks{ii}; %#ok<AGROW>
-        end
-    end
-    candidate_files = unique(candidate_files, 'stable');
-
-    chosen = '';
-    for ii = 1:numel(candidate_files)
-        if exist(candidate_files{ii}, 'file')
-            chosen = candidate_files{ii};
-            break;
-        end
-    end
-
-    if isempty(chosen)
-        warning('No dummy file found. Event dummies are kept as zeros.');
+    if ~isfield(cfg, 'dummy_file') || isempty(cfg.dummy_file)
+        warning('cfg.dummy_file is empty. Event dummies are kept as zeros.');
         return;
     end
 
-    [~,~,ext] = fileparts(chosen);
-    if strcmpi(ext, '.mat')
-        raw = load(chosen);
-        D = unpack_dummy_database(raw);
-        fprintf('\nLoaded dummy MAT file: %s\n', chosen);
-    else
-        D = readtable(chosen, 'VariableNamingRule','preserve');
-        fprintf('\nLoaded dummy CSV file: %s\n', chosen);
+    if ~exist(cfg.dummy_file, 'file')
+        warning('Dummy CSV file not found: %s. Event dummies are kept as zeros.', cfg.dummy_file);
+        return;
     end
+
+    [~,~,ext] = fileparts(cfg.dummy_file);
+    if ~strcmpi(ext, '.csv')
+        error('This simplified version expects cfg.dummy_file to be a CSV file: %s', cfg.dummy_file);
+    end
+
+    D = readtable(cfg.dummy_file, 'VariableNamingRule','preserve');
+    fprintf('\nLoaded dummy CSV file: %s\n', cfg.dummy_file);
 
     if ~istable(D)
         warning('Loaded dummy object is not a table. Event dummies are kept as zeros.');
         D = table();
     end
-end
-
-function D = unpack_dummy_database(raw)
-    fns = fieldnames(raw);
-
-    % Prefer a table if present.
-    for i = 1:numel(fns)
-        obj = raw.(fns{i});
-        if istable(obj)
-            D = obj;
-            return;
-        end
-    end
-
-    % Otherwise convert a scalar struct of equal-length vectors to table.
-    if numel(fns) > 0
-        S = struct();
-        n = [];
-        for i = 1:numel(fns)
-            obj = raw.(fns{i});
-            if isvector(obj) && (isnumeric(obj) || islogical(obj) || iscell(obj) || isstring(obj) || isdatetime(obj))
-                obj = obj(:);
-                if isempty(n), n = numel(obj); end
-                if numel(obj) == n
-                    S.(fns{i}) = obj;
-                end
-            end
-        end
-        if ~isempty(fieldnames(S))
-            D = struct2table(S);
-            return;
-        end
-    end
-
-    D = table();
 end
 
 function q = get_quarter_from_dummy_table(D)
@@ -1220,8 +990,7 @@ function x = get_dummy_series(dummy_aligned, varname, T)
 end
 
 function [x, source_name] = get_event_count_or_dummy_series(dummy_aligned, varname, T)
-    % Prefer the requested variable. If it is an n_* count column and is missing,
-    % fall back to the corresponding 0/1 dummy without the n_ prefix.
+
     source_name = varname;
     x = get_dummy_series(dummy_aligned, varname, T);
     if ~isempty(x)
@@ -1245,7 +1014,6 @@ function [x, source_name] = get_event_count_or_dummy_series(dummy_aligned, varna
     end
 end
 
-
 function [Xdrop, names_drop] = drop_dummy_control(X, names, name_to_drop)
     Xdrop = X;
     names_drop = names;
@@ -1257,9 +1025,7 @@ function [Xdrop, names_drop] = drop_dummy_control(X, names, name_to_drop)
 end
 
 function candidates = make_event_drop_candidates(did, did_source)
-    % Build a list of equivalent event names so that count variables such as
-    % n_OilSpecificThreatShock_EventOnset map back to the raw dummy control
-    % OilSpecificThreatShock_EventOnset.
+
     if nargin < 2 || isempty(did_source)
         did_source = did;
     end
@@ -1320,16 +1086,13 @@ function [dummy_controls, dummy_control_names] = build_dummy_control_matrix_from
             continue;
         end
         x(~isfinite(x)) = 0;
-        dummy_controls = [dummy_controls, x(:)]; %#ok<AGROW>
-        dummy_control_names{end+1} = v; %#ok<AGROW>
+        dummy_controls = [dummy_controls, x(:)];
+        dummy_control_names{end+1} = v;
     end
 end
 
-function out = estimate_poisson_event_residual(N, z_gpr, controls, sample, cfg, label)
-    % Estimate an event-arrival intensity and return a standardized Poisson residual.
-    % If cfg.poisson_exclude_gpr_from_intensity=true, GPR is omitted from the
-    % MLE intensity equation, so the residual is relative to a non-GPR baseline.
-    % If N is a 0/1 dummy, it is treated as a count in {0,1}.
+function out = estimate_poisson_event_residual(N, z_gpr, gpr_level, controls, sample, cfg, label)
+
     N = double(N(:));
     N(~isfinite(N)) = NaN;
     N(N < 0) = NaN;
@@ -1339,6 +1102,17 @@ function out = estimate_poisson_event_residual(N, z_gpr, controls, sample, cfg, 
         z_gpr = z_gpr(:);
     end
     T = length(N);
+    if nargin < 3 || isempty(gpr_level)
+        gpr_level = nan(T,0);
+    else
+        gpr_level = double(gpr_level);
+        if isvector(gpr_level)
+            gpr_level = gpr_level(:);
+        end
+        if size(gpr_level,1) ~= T
+            error('GPR level matrix for Poisson intensity has %d rows, expected %d.', size(gpr_level,1), T);
+        end
+    end
 
     if isempty(controls)
         controls = zeros(T,0);
@@ -1347,12 +1121,14 @@ function out = estimate_poisson_event_residual(N, z_gpr, controls, sample, cfg, 
     use_lagN = isfield(cfg, 'poisson_include_lagged_count') && cfg.poisson_include_lagged_count;
     use_lagC = isfield(cfg, 'poisson_include_lagged_controls') && cfg.poisson_include_lagged_controls && ~isempty(controls);
 
-    % t must have N_t and lagged predictors.
-    % IMPORTANT: if cfg.poisson_exclude_gpr_from_intensity=true, the Poisson
-    % MLE intensity equation deliberately excludes GPR. This creates a
-    % non-GPR baseline event-arrival residual that can be tested against GPR
-    % shocks / levels later.
-    t_grid = 2:T;
+    p_gpr_level = 0;
+    if isfield(cfg, 'poisson_include_lagged_gpr_level') && cfg.poisson_include_lagged_gpr_level
+        p_gpr_level = cfg.poisson_gpr_level_lags;
+    end
+    p_gpr_level = max(0, round(p_gpr_level));
+    min_lag = max(1, p_gpr_level);
+
+    t_grid = (min_lag+1):T;
     Xraw = zeros(numel(t_grid), 0);
     pred_names = {};
 
@@ -1362,38 +1138,60 @@ function out = estimate_poisson_event_residual(N, z_gpr, controls, sample, cfg, 
     end
 
     if include_gpr_in_intensity
-        gpr_timing = 'current';
-        if isfield(cfg, 'poisson_gpr_timing')
-            gpr_timing = lower(strtrim(cfg.poisson_gpr_timing));
+        include_current_gpr_shock = true;
+        if isfield(cfg, 'poisson_include_current_gpr_shock')
+            include_current_gpr_shock = cfg.poisson_include_current_gpr_shock;
         end
-        switch gpr_timing
-            case {'current','contemporaneous','t'}
-                Xraw = [Xraw, z_gpr(t_grid)]; %#ok<AGROW>
-                pred_names{end+1} = 'z_GPR_t'; %#ok<AGROW>
-            case {'lagged','lag','tminus1','t-1'}
-                Xraw = [Xraw, z_gpr(t_grid-1)]; %#ok<AGROW>
-                pred_names{end+1} = 'z_GPR_lag1'; %#ok<AGROW>
-            otherwise
-                error('Unknown cfg.poisson_gpr_timing=%s. Use current or lagged.', gpr_timing);
+        if include_current_gpr_shock
+            gpr_timing = 'current';
+            if isfield(cfg, 'poisson_gpr_timing')
+                gpr_timing = lower(strtrim(cfg.poisson_gpr_timing));
+            end
+            switch gpr_timing
+                case {'current','contemporaneous','t'}
+                    Xraw = [Xraw, z_gpr(t_grid)];
+                    pred_names{end+1} = 'z_GPR_t';
+                case {'lagged','lag','tminus1','t-1'}
+                    Xraw = [Xraw, z_gpr(t_grid-1)];
+                    pred_names{end+1} = 'z_GPR_lag1';
+                otherwise
+                    error('Unknown cfg.poisson_gpr_timing=%s. Use current or lagged.', gpr_timing);
+            end
+        end
+
+        if p_gpr_level > 0 && ~isempty(gpr_level)
+            gpr_names = {};
+            if isfield(cfg, 'poisson_lagged_gpr_component_labels') && ~isempty(cfg.poisson_lagged_gpr_component_labels)
+                gpr_names = cfg.poisson_lagged_gpr_component_labels;
+            end
+            for jj = 1:p_gpr_level
+                for gg = 1:size(gpr_level,2)
+                    Xraw = [Xraw, gpr_level(t_grid-jj, gg)];
+                    if numel(gpr_names) >= gg
+                        base_name = gpr_names{gg};
+                    else
+                        base_name = sprintf('GPR_component%d', gg);
+                    end
+                    pred_names{end+1} = sprintf('%s_lag%d', base_name, jj);
+                end
+            end
         end
     end
 
-    % Lagged event count: discrete AR-type predictor.
     if use_lagN
-        Xraw = [Xraw, N(t_grid-1)]; %#ok<AGROW>
-        pred_names{end+1} = 'lagN'; %#ok<AGROW>
+        Xraw = [Xraw, N(t_grid-1)];
+        pred_names{end+1} = 'lagN';
     end
 
-    % Lagged macro controls.
     if use_lagC
-        Xraw = [Xraw, controls(t_grid-1,:)]; %#ok<AGROW>
+        Xraw = [Xraw, controls(t_grid-1,:)];
         for j = 1:size(controls,2)
-            pred_names{end+1} = sprintf('lagControl%d', j); %#ok<AGROW>
+            pred_names{end+1} = sprintf('lagControl%d', j);
         end
     end
 
     Y = N(t_grid);
-    valid = sample(t_grid) & sample(t_grid-1) & isfinite(Y) & all(isfinite(Xraw),2);
+    valid = sample(t_grid) & sample(t_grid-min_lag) & isfinite(Y) & all(isfinite(Xraw),2);
 
     Yuse = Y(valid);
     Xuse_raw = Xraw(valid,:);
@@ -1408,8 +1206,8 @@ function out = estimate_poisson_event_residual(N, z_gpr, controls, sample, cfg, 
     total_count = sum(Yuse);
 
     z_event_resid = nan(T,1);
-    event_resid = nan(T,1);          % raw residual: N - lambda_hat
-    pearson_resid = nan(T,1);        % Pearson residual: (N-lambda_hat)/sqrt(lambda_hat)
+    event_resid = nan(T,1);
+    pearson_resid = nan(T,1);
     lambda_hat = nan(T,1);
     eta_hat = nan(T,1);
     b = nan(size(Xuse_raw,2)+1,1);
@@ -1426,6 +1224,7 @@ function out = estimate_poisson_event_residual(N, z_gpr, controls, sample, cfg, 
         out = struct('label',label,'N',N,'z_event_resid',z_event_resid,'event_resid',event_resid, ...
             'pearson_resid',pearson_resid,'lambda_hat',lambda_hat,'eta_hat',eta_hat,'coeff',b, ...
             'predictor_names',{pred_names}, 'gpr_included_in_intensity', include_gpr_in_intensity, ...
+            'gpr_level_lags_in_intensity', p_gpr_level, ...
             'nobs',numel(Yuse),'positive_periods',n_positive, ...
             'zero_periods',n_zero,'total_count',total_count,'method',method,'converged',converged, ...
             'resid_sd',resid_sd,'diagnostics',diag);
@@ -1484,6 +1283,7 @@ function out = estimate_poisson_event_residual(N, z_gpr, controls, sample, cfg, 
     out.coeff = b;
     out.predictor_names = pred_names;
     out.gpr_included_in_intensity = include_gpr_in_intensity;
+    out.gpr_level_lags_in_intensity = p_gpr_level;
     out.predictor_mean = muX;
     out.predictor_sd = sdX;
     out.nobs = numel(Yuse);
@@ -1496,17 +1296,7 @@ function out = estimate_poisson_event_residual(N, z_gpr, controls, sample, cfg, 
     out.diagnostics = diag;
 end
 
-
 function outtab = estimate_event_residual_gpr_relation(event_id, z_event_resid, z_gpr_shock, gpr_level_std, sample, cfg)
-    % Test whether a non-GPR Poisson residual arrival shock is stronger when
-    % the current GPR shock or standardized GPR level is high.
-    %
-    % Regression:
-    %   z_event_resid_t = a + b1 z_GPRshock_t + b2 GPRlevelStd_t + error_t
-    %
-    % High-state summary:
-    %   mean(z_event_resid | z_GPRshock >= threshold)
-    %   mean(z_event_resid | GPRlevelStd >= threshold)
 
     y  = double(z_event_resid(:));
     x1 = double(z_gpr_shock(:));
@@ -1612,7 +1402,6 @@ function [b, method, converged] = fit_poisson_count(Y, X, cfg)
     X = double(X);
     k = size(X,2);
 
-    % First try MATLAB's glmfit if available.
     if exist('glmfit', 'file') == 2
         try
             [b, ~, stats] = glmfit(X, Y, 'poisson', 'link', 'log');
@@ -1627,7 +1416,6 @@ function [b, method, converged] = fit_poisson_count(Y, X, cfg)
         end
     end
 
-    % Fallback maximum-likelihood Poisson using base MATLAB fminsearch.
     ybar = max(mean(Y, 'omitnan'), 1e-6);
     b0 = zeros(k+1,1);
     b0(1) = log(ybar);
@@ -1680,11 +1468,8 @@ function p = clamp_probability(p)
     p = min(max(p, 1e-8), 1 - 1e-8);
 end
 
-
-
 function Xlag = lag_one_matrix(X)
-    % Return a matrix whose row t is X_{t-1}.
-    % First row is NaN because t-1 is unavailable.
+
     if isempty(X)
         Xlag = X;
         return;
@@ -1693,17 +1478,18 @@ function Xlag = lag_one_matrix(X)
     Xlag(2:end,:) = X(1:end-1,:);
 end
 
+function oil_keep = get_oil_keep_for_outcome(yid, oil_names)
+    oil_keep = true(1, numel(oil_names));
+    if strcmpi(yid, 'Real_Brent')
+        oil_keep = ~strcmpi(oil_names, 'Real_Brent');
+    elseif strcmpi(yid, 'Real_WTI')
+        oil_keep = ~strcmpi(oil_names, 'Real_WTI');
+    elseif strcmpi(yid, 'Real_Gasoline')
+        oil_keep = ~strcmpi(oil_names, 'Real_Gasoline');
+    end
+end
+
 function out = extract_ar_level_innovation_mixed_controls(x, sample, p, current_controls, lag1_controls, label)
-    % Extract GPR innovation from:
-    %
-    %   x_t = a + sum_{j=1}^p rho_j x_{t-j}
-    %         + xi' current_controls_t
-    %         + omega' lag1_controls_{t-1}
-    %         + u_t.
-    %
-    % Project default:
-    %   current_controls_t = [Unemp_t, FFR_t]
-    %   lag1_controls_{t-1} = [Brent_{t-1}, WTI_{t-1}, Gasoline_{t-1}]
 
     x = double(x(:));
     T = length(x);
@@ -1732,7 +1518,6 @@ function out = extract_ar_level_innovation_mixed_controls(x, sample, p, current_
     t_grid = (p+1):T;
     n = numel(t_grid);
 
-    % Columns: constant, p GPR lags, current controls, lag-1 oil controls.
     k = 1 + p + nCurrent + nLag1;
     Y = nan(n,1);
     X = nan(n,k);
@@ -1810,11 +1595,7 @@ function out = extract_ar_level_innovation_mixed_controls(x, sample, p, current_
 end
 
 function out = extract_ar_level_innovation_with_controls(x, sample, p, bc_controls, control_timing, label)
-    % Extract a standardized GPR innovation from an AR(p) equation augmented
-    % with business-cycle controls:
-    %   GPR_t = a + sum_j rho_j GPR_{t-j} + gamma' B_t + u_t
-    % or, if control_timing='lagged':
-    %   GPR_t = a + sum_j rho_j GPR_{t-j} + gamma' B_{t-1} + u_t.
+
     x = x(:);
     T = length(x);
 
@@ -2003,6 +1784,26 @@ function res = estimate_lp_level_change(y, z, gpr_level, controls, dummy_control
         'VariableNames', {'h','beta','se','lb','ub','nobs'});
 end
 
+
+function [controls_overlay, cfg_joint] = make_overlay_lp_controls(yid, macro_controls, oil_controls, oil_names, event_count, cfg)
+    oil_keep = get_oil_keep_for_outcome(yid, oil_names);
+    oil_minus_y = oil_controls(:, oil_keep);
+    controls_overlay = [macro_controls, oil_minus_y, event_count(:)];
+
+    cfg_joint = cfg;
+    if isfield(cfg, 'p_dynamic_lp_event_count') && ~isempty(cfg.p_dynamic_lp_event_count)
+        cfg_joint.p_lp = cfg.p_dynamic_lp_event_count;
+    end
+    if isfield(cfg, 'p_macro_lp_event_count') && ~isempty(cfg.p_macro_lp_event_count)
+        cfg_joint.p_control_lag_two_impulses = cfg.p_macro_lp_event_count;
+    else
+        cfg_joint.p_control_lag_two_impulses = 1;
+    end
+    cfg_joint.n_full_lag_controls_two_impulses = size(oil_minus_y, 2) + 1;
+    cfg_joint.shock_size_z1 = cfg.shock_size;
+    cfg_joint.shock_size_z2 = 1;
+end
+
 function res = estimate_lp_level_change_two_impulses(y, z1, z2, gpr_level, controls, dummy_controls, sample, cfg)
     H = cfg.H;
     zcrit = normal_icdf(0.5 + cfg.ci/2);
@@ -2017,7 +1818,7 @@ function res = estimate_lp_level_change_two_impulses(y, z1, z2, gpr_level, contr
     nobs = nan(H+1,1);
 
     for h = 0:H
-        [Y, X] = build_lp_level_change_design_two_impulses(y, z1, z2, gpr_level, controls, dummy_controls, sample, cfg.p_lp, h);
+        [Y, X] = build_lp_level_change_design_two_impulses(y, z1, z2, gpr_level, controls, dummy_controls, sample, cfg.p_lp, h, cfg);
         if isempty(Y) || size(X,1) <= size(X,2)
             continue;
         end
@@ -2068,12 +1869,16 @@ function comp = extract_two_impulse_component(joint, which_component)
         'VariableNames', {'h','beta','se','lb','ub','nobs'});
 end
 
-function [Y, X, good, dbg] = build_lp_level_change_design_two_impulses(y, z1, z2, gpr_level, controls, dummy_controls, sample, p, h)
+function [Y, X, good, dbg] = build_lp_level_change_design_two_impulses(y, z1, z2, gpr_level, controls, dummy_controls, sample, p, h, cfg)
     y = y(:);
     z1 = z1(:);
     z2 = z2(:);
     gpr_level = gpr_level(:);
     T = length(y);
+
+    if nargin < 10 || isempty(cfg)
+        cfg = struct();
+    end
 
     if isempty(controls)
         controls = zeros(T,0);
@@ -2084,11 +1889,29 @@ function [Y, X, good, dbg] = build_lp_level_change_design_two_impulses(y, z1, z2
     nC = size(controls,2);
     nD = size(dummy_controls,2);
 
-    % Columns: const, z1_t, z2_t, current dummy controls, y-level lags,
-    % GPR-level lags, and lagged macro controls.
-    t_grid = (p+1):(T-h);
+    p_control = p;
+    if isfield(cfg, 'p_control_lag_two_impulses') && ~isempty(cfg.p_control_lag_two_impulses)
+        p_control = cfg.p_control_lag_two_impulses;
+    end
+    p_control = max(0, min(p, round(p_control)));
+
+    n_full_lag_controls = 0;
+    if isfield(cfg, 'n_full_lag_controls_two_impulses') && ~isempty(cfg.n_full_lag_controls_two_impulses)
+        n_full_lag_controls = cfg.n_full_lag_controls_two_impulses;
+    end
+    n_full_lag_controls = max(0, min(nC, round(n_full_lag_controls)));
+
+    n_short = nC - n_full_lag_controls;
+    controls_short = controls(:, 1:n_short);
+    controls_full  = controls(:, n_short+1:nC);
+    nC_short = size(controls_short,2);
+    nC_full  = size(controls_full,2);
+
+    p_max = max(p, p_control);
+
+    t_grid = (p_max+1):(T-h);
     n = numel(t_grid);
-    k = 1 + 2 + nD + p + p + p*nC;
+    k = 1 + 2 + nD + p + p + p_control*nC_short + p*nC_full;
     X0 = nan(n,k);
     Y0 = nan(n,1);
 
@@ -2131,23 +1954,33 @@ function [Y, X, good, dbg] = build_lp_level_change_design_two_impulses(y, z1, z2
         end
 
         ctrl_block = [];
-        if nC > 0
+
+        if nC_short > 0 && p_control > 0
+            for j = 1:p_control
+                valsC = controls_short(t-j,:);
+                row(c:c+nC_short-1) = valsC;
+                ctrl_block = [ctrl_block, valsC];
+                c = c + nC_short;
+            end
+        end
+
+        if nC_full > 0
             for j = 1:p
-                valsC = controls(t-j,:);
-                row(c:c+nC-1) = valsC;
-                ctrl_block = [ctrl_block, valsC]; %#ok<AGROW>
-                c = c + nC;
+                valsC = controls_full(t-j,:);
+                row(c:c+nC_full-1) = valsC;
+                ctrl_block = [ctrl_block, valsC];
+                c = c + nC_full;
             end
         end
 
         X0(ii,:) = row;
 
-        sample_ok(ii) = sample(t) && sample(t+h) && all(sample(t-p:t));
+        sample_ok(ii) = sample(t) && sample(t+h) && all(sample(t-p_max:t));
         y_ok(ii) = isfinite(Y0(ii));
         z_ok(ii) = isfinite(z1(t)) && isfinite(z2(t));
         ylags_ok(ii) = all(isfinite(ylag));
         gprlags_ok(ii) = all(isfinite(gprlag));
-        if nC > 0
+        if (nC_short > 0 && p_control > 0) || nC_full > 0
             controls_ok(ii) = all(isfinite(ctrl_block));
         end
     end
@@ -2166,6 +1999,10 @@ function [Y, X, good, dbg] = build_lp_level_change_design_two_impulses(y, z1, z2
     dbg.gprlags_ok = sum(gprlags_ok);
     dbg.controls_ok = sum(controls_ok);
     dbg.final_good = sum(good);
+    dbg.p_full = p;
+    dbg.p_control = p_control;
+    dbg.n_short_lag_controls = nC_short;
+    dbg.n_full_lag_controls = nC_full;
 end
 
 function [Y, X, good, dbg] = build_lp_level_change_design(y, z, gpr_level, controls, dummy_controls, sample, p, h)
@@ -2183,13 +2020,9 @@ function [Y, X, good, dbg] = build_lp_level_change_design(y, z, gpr_level, contr
     nC = size(controls,2);
     nD = size(dummy_controls,2);
 
-    % t must have y(t-1), p lags, z(t), current dummy controls, and y(t+h).
     t_grid = (p+1):(T-h);
     n = numel(t_grid);
 
-    % Columns: const, z_t, current dummy controls, y-level lags,
-    % GPR-level lags, and lagged macro controls.
-    % No lagged z-values are included.
     k = 1 + 1 + nD + p + p + p*nC;
     X0 = nan(n,k);
     Y0 = nan(n,1);
@@ -2207,7 +2040,6 @@ function [Y, X, good, dbg] = build_lp_level_change_design(y, z, gpr_level, contr
         c = 1;
         row = nan(1,k);
 
-        % Dependent variable: y_{t+h} - y_{t-1}.
         Y0(ii) = y(t+h) - y(t-1);
 
         row(c) = 1; c = c + 1;
@@ -2237,7 +2069,7 @@ function [Y, X, good, dbg] = build_lp_level_change_design(y, z, gpr_level, contr
             for j = 1:p
                 valsC = controls(t-j,:);
                 row(c:c+nC-1) = valsC;
-                ctrl_block = [ctrl_block, valsC]; %#ok<AGROW>
+                ctrl_block = [ctrl_block, valsC];
                 c = c + nC;
             end
         end
@@ -2360,7 +2192,6 @@ function fig = plot_irf_dashboard(res_list, titles, cfg, fig_title, nrow, ncol, 
             continue;
         end
 
-        % -------------------- Stronger visual style --------------------
         ci_color = [0.45 0.45 0.45];
         if isfield(cfg, 'ci_band_color'), ci_color = cfg.ci_band_color; end
 
@@ -2376,7 +2207,6 @@ function fig = plot_irf_dashboard(res_list, titles, cfg, fig_title, nrow, ncol, 
         axis_lw = 1.4;
         if isfield(cfg, 'figure_axis_line_width'), axis_lw = cfg.figure_axis_line_width; end
 
-        % Darker confidence band.
         if sum(finite_ci) >= 2
             hci = h(finite_ci);
             ub = r.ub(finite_ci)';
@@ -2387,11 +2217,9 @@ function fig = plot_irf_dashboard(res_list, titles, cfg, fig_title, nrow, ncol, 
                 'HandleVisibility','off');
         end
 
-        % Thicker impulse-response line.
         plot(ax, h(finite_beta), r.beta(finite_beta), 'k-', ...
             'LineWidth', irf_lw);
 
-        % Zero line.
         plot(ax, h, zeros(size(h)), 'k--', ...
             'LineWidth', zero_lw);
 
@@ -2445,18 +2273,7 @@ function fig = plot_irf_dashboard(res_list, titles, cfg, fig_title, nrow, ncol, 
     drawnow;
 end
 
-
 function fig = plot_combined_fig_12_14_16_dashboard(event_residual_struct, cfg, fig_title, nrow, ncol, show_figures)
-    % Combined overlay for Figure 12/14/16.
-    % Each panel is one outcome. Within each panel:
-    %   black = Energy sanction onset
-    %   red   = Chokepoint shipping onset
-    %   blue  = Strict supply disruption onset
-    %
-    % The regression is NOT changed. The function only plots already-stored
-    % joint LP results from estimate_lp_level_change_two_impulses(...).
-    % Component 2 is the Poisson event-arrival shock coefficient controlling
-    % for World GPR shock.
 
     if show_figures
         fig = figure('Color','w','Position',[80,60,1550,900]);
@@ -2526,7 +2343,6 @@ function fig = plot_combined_fig_12_14_16_dashboard(event_residual_struct, cfg, 
             finite_beta = isfinite(r.beta);
             finite_ci = isfinite(r.lb) & isfinite(r.ub);
 
-            % Same-color confidence band.
             if sum(finite_ci) >= 2
                 hci = h(finite_ci);
                 ub = r.ub(finite_ci)';
@@ -2537,7 +2353,6 @@ function fig = plot_combined_fig_12_14_16_dashboard(event_residual_struct, cfg, 
                     'HandleVisibility','off');
             end
 
-            % Same-color impulse-response line.
             if sum(finite_beta) >= 1
                 plot(ax, h(finite_beta), r.beta(finite_beta), '-', ...
                     'Color', this_color, ...
@@ -2547,7 +2362,6 @@ function fig = plot_combined_fig_12_14_16_dashboard(event_residual_struct, cfg, 
             end
         end
 
-        % Zero line.
         plot(ax, 0:cfg.H, zeros(1, cfg.H+1), 'k--', ...
             'LineWidth', zero_lw, ...
             'HandleVisibility','off');
@@ -2602,6 +2416,193 @@ function fig = plot_combined_fig_12_14_16_dashboard(event_residual_struct, cfg, 
     drawnow;
 end
 
+function fig = plot_poisson_vs_raw_event_dashboard(event_residual_struct, event_count_joint_struct, did, cfg, fig_title, nrow, ncol, show_figures)
+
+    if show_figures
+        fig = figure('Color','w','Position',[80,60,1550,900]);
+    else
+        fig = figure('Color','w','Position',[80,60,1550,900], 'Visible','off');
+    end
+
+    use_latex = isfield(cfg, 'use_latex_fonts') && cfg.use_latex_fonts;
+
+    fs = 12;
+    if isfield(cfg, 'figure_font_size'), fs = cfg.figure_font_size; end
+    title_fs = 14;
+    if isfield(cfg, 'figure_title_font_size'), title_fs = cfg.figure_title_font_size; end
+    axis_lw = 1.4;
+    if isfield(cfg, 'figure_axis_line_width'), axis_lw = cfg.figure_axis_line_width; end
+    zero_lw = 1.4;
+    if isfield(cfg, 'zero_line_width'), zero_lw = cfg.zero_line_width; end
+
+    line_lw = 3.2;
+    if isfield(cfg, 'poisson_vs_raw_line_width'), line_lw = cfg.poisson_vs_raw_line_width; end
+
+    raw_color = [0.05 0.25 0.90];
+    if isfield(cfg, 'poisson_vs_raw_raw_color'), raw_color = cfg.poisson_vs_raw_raw_color; end
+
+    poisson_color = [0.85 0.10 0.10];
+    if isfield(cfg, 'poisson_vs_raw_poisson_color'), poisson_color = cfg.poisson_vs_raw_poisson_color; end
+
+    ci_alpha = 0.22;
+    if isfield(cfg, 'poisson_vs_raw_ci_alpha'), ci_alpha = cfg.poisson_vs_raw_ci_alpha; end
+
+    raw_style = '-';
+    if isfield(cfg, 'poisson_vs_raw_raw_line_style'), raw_style = cfg.poisson_vs_raw_raw_line_style; end
+    poisson_style = '--';
+    if isfield(cfg, 'poisson_vs_raw_poisson_line_style'), poisson_style = cfg.poisson_vs_raw_poisson_line_style; end
+
+    for i = 1:size(cfg.outcome_specs,1)
+        ax = subplot(nrow, ncol, i, 'Parent', fig);
+        hold(ax, 'on');
+
+        if use_latex
+            set(ax, 'TickLabelInterpreter','latex', 'FontSize', fs);
+        else
+            set(ax, 'FontSize', fs);
+        end
+
+        yid = cfg.outcome_specs{i,1};
+        outcome_label = cfg.outcome_specs{i,3};
+
+        raw_field = [yid '_joint_gpr_count'];
+        poisson_field = [yid '_joint_gpr_event'];
+
+        has_raw = isfield(event_count_joint_struct, did) && isfield(event_count_joint_struct.(did), raw_field);
+        has_poisson = isfield(event_residual_struct, did) && isfield(event_residual_struct.(did), poisson_field);
+
+        h_raw_line = gobjects(1);
+        h_poisson_line = gobjects(1);
+
+        if has_raw
+            raw_comp = extract_two_impulse_component(event_count_joint_struct.(did).(raw_field), 2);
+            h_raw_line = plot_irf_with_band(ax, raw_comp, raw_color, ci_alpha, raw_style, line_lw, ...
+                'Raw event count $N_t^k$');
+        end
+
+        if has_poisson
+            poisson_comp = extract_two_impulse_component(event_residual_struct.(did).(poisson_field), 2);
+            h_poisson_line = plot_irf_with_band(ax, poisson_comp, poisson_color, ci_alpha, poisson_style, line_lw, ...
+                'Poisson arrival shock $z_t^{N,k}$');
+        end
+
+        if ~has_raw && ~has_poisson
+            if use_latex
+                text(ax, 0.5, 0.5, latex_escape_text('Missing raw and Poisson results'), ...
+                    'HorizontalAlignment','center', 'Units','normalized', ...
+                    'FontWeight','bold', 'Interpreter','latex', 'FontSize', fs);
+                title(ax, latex_escape_text(outcome_label), 'Interpreter','latex', 'FontSize', fs);
+            else
+                text(ax, 0.5, 0.5, 'Missing raw and Poisson results', ...
+                    'HorizontalAlignment','center', 'Units','normalized', ...
+                    'FontWeight','bold', 'FontSize', fs);
+                title(ax, outcome_label, 'Interpreter','none', 'FontSize', fs);
+            end
+            axis(ax, 'off');
+            continue;
+        end
+
+        hgrid = 0:cfg.H;
+        plot(ax, hgrid, zeros(size(hgrid)), 'k--', 'LineWidth', zero_lw, 'HandleVisibility','off');
+
+        grid(ax, 'on');
+        box(ax, 'on');
+        xlim(ax, [0 cfg.H]);
+
+        if use_latex
+            set(ax, ...
+                'FontSize', fs, ...
+                'FontWeight', 'bold', ...
+                'LineWidth', axis_lw, ...
+                'TickLabelInterpreter', 'latex');
+
+            xlabel(ax, ['\textbf{' latex_escape_text(cfg.horizon_label) '}'], ...
+                'Interpreter','latex', 'FontSize', fs, 'FontWeight','bold');
+
+            ylabel(ax, '$\mathbf{y}_{t+h}-\mathbf{y}_{t-1}$', ...
+                'Interpreter','latex', 'FontSize', fs, 'FontWeight','bold');
+
+            title(ax, ['\textbf{' latex_escape_text(outcome_label) '}'], ...
+                'Interpreter','latex', 'FontSize', fs, 'FontWeight','bold');
+        else
+            set(ax, ...
+                'FontSize', fs, ...
+                'FontWeight', 'bold', ...
+                'LineWidth', axis_lw);
+
+            xlabel(ax, cfg.horizon_label, ...
+                'FontSize', fs, 'FontWeight','bold');
+
+            ylabel(ax, 'Level change', ...
+                'FontSize', fs, 'FontWeight','bold');
+
+            title(ax, outcome_label, ...
+                'Interpreter','none', 'FontSize', fs, 'FontWeight','bold');
+        end
+
+        if i == 1
+            handles = gobjects(0);
+            labels = {};
+            if has_raw && isgraphics(h_raw_line)
+                handles(end+1) = h_raw_line;
+                labels{end+1} = 'Raw event count $N_t^k$';
+            end
+            if has_poisson && isgraphics(h_poisson_line)
+                handles(end+1) = h_poisson_line;
+                labels{end+1} = 'Poisson shock $z_t^{N,k}$';
+            end
+            if ~isempty(handles)
+                if use_latex
+                    legend(ax, handles, labels, 'Interpreter','latex', 'Location','best', ...
+                        'FontSize', max(10, fs-2), 'Box','off');
+                else
+                    legend(ax, handles, strrep(labels, '$',''), 'Interpreter','none', ...
+                        'Location','best', 'FontSize', max(10, fs-2), 'Box','off');
+                end
+            end
+        end
+    end
+
+    if use_latex
+        sgtitle(fig, fig_title, ...
+            'Interpreter','latex', ...
+            'FontSize', title_fs, ...
+            'FontWeight','bold');
+    else
+        sgtitle(fig, regexprep(fig_title, '\$|\{|\}|\^|_', ''), ...
+            'Interpreter','none', ...
+            'FontSize', title_fs, ...
+            'FontWeight','bold');
+    end
+
+    drawnow;
+end
+
+function h_line = plot_irf_with_band(ax, r, color, ci_alpha, line_style, line_lw, display_name)
+    h = r.h(:)';
+    finite_beta = isfinite(r.beta);
+    finite_ci = isfinite(r.lb) & isfinite(r.ub);
+
+    if sum(finite_ci) >= 2
+        hci = h(finite_ci);
+        ub = r.ub(finite_ci)';
+        lb = r.lb(finite_ci)';
+        fill(ax, [hci, fliplr(hci)], [ub, fliplr(lb)], color, ...
+            'EdgeColor','none', ...
+            'FaceAlpha', ci_alpha, ...
+            'HandleVisibility','off');
+    end
+
+    if sum(finite_beta) > 0
+        h_line = plot(ax, h(finite_beta), r.beta(finite_beta), ...
+            'LineStyle', line_style, ...
+            'Color', color, ...
+            'LineWidth', line_lw, ...
+            'DisplayName', display_name);
+    else
+        h_line = gobjects(1);
+    end
+end
 
 function apply_latex_graphics_defaults(cfg)
     if isfield(cfg, 'use_latex_fonts') && cfg.use_latex_fonts
@@ -2610,7 +2611,6 @@ function apply_latex_graphics_defaults(cfg)
         set(groot, 'defaultLegendInterpreter','latex');
     end
 
-    % Global bold/large defaults for all generated figures.
     if isfield(cfg, 'figure_font_size')
         set(groot, 'defaultAxesFontSize', cfg.figure_font_size);
         set(groot, 'defaultTextFontSize', cfg.figure_font_size);
@@ -2621,8 +2621,7 @@ function apply_latex_graphics_defaults(cfg)
 end
 
 function s = latex_escape_text(s)
-    % Escape ordinary text so underscores in variable names such as
-    % n_ProducerRegionRisk_EventOnset are rendered literally under LaTeX.
+
     s = char(string(s));
     s = strrep(s, '\', '\textbackslash{}');
     s = strrep(s, '_', '\_');
