@@ -235,13 +235,3 @@ Poisson_shock_tests_output/
 └── event_arrivals_and_poisson_shocks_*.{png,fig}  # Visualization
 ```
 
-## Requirements
-
-- MATLAB R2020a or later
-- Statistics and Machine Learning Toolbox (for `glmfit`, `lbqtest`)
-- Econometrics Toolbox (optional, for `gctest`)
-
-## References
-
-- Caldara, D., & Iacoviello, M. (2022). Measuring Geopolitical Risk. *American Economic Review*.
-- Jordà, Ò. (2005). Estimation and Inference of Impulse Responses by Local Projections. *American Economic Review*.
