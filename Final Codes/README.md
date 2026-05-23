@@ -1,6 +1,6 @@
 # GPR Shock Analysis: Local Projection with Poisson Residualization
 
-> **Last Updated:** 2026.05.23 6:53 PM  
+> **Last Updated:** 2026.05.23 7:03 PM  
 > **Status:** Work in Progress
 
 MATLAB code for extracting Geopolitical Risk (GPR) shocks and conducting Local Projection analysis.
