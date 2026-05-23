@@ -1,6 +1,6 @@
 # GPR Shock Analysis: Local Projection with Poisson Residualization
 
-> **Last Updated:** 2026.05.23 7:03 PM  
+> **Last Updated:** 2026.05.23 8:30 PM  
 > **Status:** Work in Progress
 
 MATLAB code for extracting Geopolitical Risk (GPR) shocks and conducting Local Projection analysis.
@@ -13,8 +13,9 @@ AR_GPR_shock.m          # Step 1: Extract GPR shocks
 Plot_GPR_shock.m        # (Optional) Visualize shocks
         ↓
 LP_baseline.m           # Step 2a: Baseline LP analysis
-LP_Poisson.m            # Step 2b: Poisson-residualized LP analysis
-Poisson_shock_test.m    # Step 2c: Poisson shock diagnostics
+LP_Poisson.m            # Step 2b: Poisson-residualized LP (3 events, overlay)
+LP_Poisson_robust.m     # Step 2c: Poisson-residualized LP (6 events, robustness)
+Poisson_shock_test.m    # Step 2d: Poisson shock diagnostics
 ```
 
 ## File Descriptions
@@ -96,11 +97,59 @@ z_t^{N,k} = (N_t - λ_t) / sqrt(λ_t)  (Pearson residual, standardized)
 
 **Step 4:** Overlay dashboard comparing (a) vs (b)
 
+**Events analyzed:** 3 events (Chokepoint, StrictSupplyDisruption, EnergySanction)
+
 **Output:** `LP_Poisson_output/`
 
 ---
 
-### 5. `Poisson_shock_test.m`
+### 5. `LP_Poisson_robust.m`
+**Poisson-Residualized LP with Extended Robustness Checks**
+
+Extended robustness analysis for Poisson event-arrival shocks with additional events and diagnostic tests.
+
+**Step 1:** Load GPR shocks (aggregate from file, country-specific extracted on-the-fly)
+
+**Step 2:** Baseline level LP for each GPR shock
+```
+y_{t+h} - y_{t-1} = α + β·z_t^{GPR} + controls + ε_{t+h}
+```
+
+**Step 3:** Poisson event-arrival residualization
+```
+N_t^k ~ Poisson(λ_t^k)
+log(λ_t^k) = α + γ·z_t^{WorldGPR} + ψ'[GPR_{t-1}^{World}, GPR_{t-1}^{Threat}, GPR_{t-1}^{Act}] + ρ·N_{t-1}^k + η'W_{t-1}
+z_t^{N,k} = (N_t - λ_hat) / sqrt(λ_hat)  (standardized Pearson residual)
+```
+
+**Step 4:** Joint LP with two impulses
+```
+y_{t+h} - y_{t-1} = α + θ·z_t^{WorldGPR} + β·z_t^{N,k} + controls + ε_{t+h}
+```
+
+**Step 5:** Robustness: raw event count N_t^k as additional control (FWL baseline)
+
+**Events analyzed:** 6 events
+- OilSpecificThreatShock_EventOnset
+- OilSpecificRealizedShock_EventOnset
+- StrictSupplyDisruption_EventOnset
+- ChokepointShippingRisk_EventOnset
+- EnergySanction_EventOnset
+- ProducerRegionRisk_EventOnset
+
+**Key differences from `LP_Poisson.m`:**
+| Feature | LP_Poisson.m | LP_Poisson_robust.m |
+|---------|--------------|---------------------|
+| Events | 3 | 6 |
+| Poisson intensity GPR | World only | World + Threat + Act |
+| Primary output | Overlay comparison | Individual dashboards + diagnostics |
+| Raw N_t robustness | No | Yes (as current control) |
+
+**Output:** `LP_Poisson_robust_output/`
+
+---
+
+### 6. `Poisson_shock_test.m`
 **Poisson Event-Arrival Shock Diagnostics**
 
 Performs diagnostic tests on Poisson-residualized event shocks.
@@ -140,7 +189,8 @@ run('Plot_GPR_shock.m')
 
 % Step 3: LP analysis (choose as needed)
 run('LP_baseline.m')         % Baseline LP
-run('LP_Poisson.m')          % Poisson-residualized LP
+run('LP_Poisson.m')          % Poisson-residualized LP (3 events, overlay comparison)
+run('LP_Poisson_robust.m')   % Poisson-residualized LP (6 events, robustness checks)
 run('Poisson_shock_test.m')  % Poisson shock diagnostics
 ```
 
@@ -163,6 +213,19 @@ LP_baseline_output/
 LP_Poisson_output/
 ├── overlay_*.{png,fig}            # Poisson vs Raw comparison
 └── gpr_diagnostics_*.csv          # Diagnostic results
+
+LP_Poisson_robust_output/
+├── dashboard_*.{png,fig}                              # GPR shock LP dashboards
+├── event_residual_dashboard_*.{png,fig}               # Poisson-residual event dashboards
+├── joint_gpr_event_residual_dashboard_*.{png,fig}     # Joint GPR + event dashboards
+├── level_lp_results_*.csv                             # Level LP results
+├── level_lp_gpr_shock_diagnostics_*.csv               # GPR shock diagnostics
+├── event_residual_lp_results_*.csv                    # Event residual LP results
+├── event_joint_gpr_plus_poisson_results_*.csv         # Joint GPR + Poisson results
+├── event_joint_gpr_plus_poisson_with_rawN_control_results_*.csv  # Robustness with raw N control
+├── event_residual_poisson_diagnostics_*.csv           # Poisson model diagnostics
+├── event_residual_nonGPR_resid_on_GPR_tests_*.csv     # GPR relation tests
+└── workspace_level_lp_*.mat                           # Full workspace
 
 Poisson_shock_tests_output/
 ├── poisson_shock_diagnostics.csv  # Poisson model diagnostics
