@@ -1,0 +1,469 @@
+h,beta,se,lb,ub,nobs,impulse,outcome,outcome_label,specification,gpr_test_series
+0,1.98225824689068,2.53065555258341,-2.18029971734103,6.14481621112239,137,n_OilSpecificThreatShock_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+1,3.28517065835149,2.29087189041812,-0.482978279483939,7.05331959618691,136,n_OilSpecificThreatShock_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+2,1.55715961160265,2.65966346452574,-2.81759748449283,5.93191670769814,135,n_OilSpecificThreatShock_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+3,0.292071151727221,3.28823503626422,-5.11659417394088,5.70073647739533,134,n_OilSpecificThreatShock_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+4,0.514324192637368,2.44956129519221,-3.51484558819949,4.54349397347422,133,n_OilSpecificThreatShock_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+5,-0.0766145653370495,2.96417775461866,-4.95225309595042,4.79902396527632,132,n_OilSpecificThreatShock_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+6,-3.76294425748191,3.35233406617788,-9.27704310498757,1.75115459002376,131,n_OilSpecificThreatShock_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+7,-0.568186754155469,3.59364553090775,-6.47920763964703,5.34283413133609,130,n_OilSpecificThreatShock_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+8,0.302780133269389,4.35903947716016,-6.86720176076215,7.47276202730093,129,n_OilSpecificThreatShock_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+9,0.0785040275907919,4.22054372284743,-6.86367262264208,7.02068067782366,128,n_OilSpecificThreatShock_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+10,1.3500861369021,4.16909952275222,-5.50747233421855,8.20764460802274,127,n_OilSpecificThreatShock_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+11,0.914412330666119,3.11817928728237,-4.21453617950525,6.04336084083749,126,n_OilSpecificThreatShock_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+12,-1.49975778796487,3.97955550734815,-8.04554409788117,5.04602852195144,125,n_OilSpecificThreatShock_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+0,2.66665335659435,2.55603494215955,-1.53764998863149,6.87095670182019,137,n_OilSpecificThreatShock_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+1,3.42575437442904,2.30031924984161,-0.357934086819223,7.20944283567731,136,n_OilSpecificThreatShock_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+2,2.19094813693006,2.5017198101629,-1.92401476643274,6.30591104029286,135,n_OilSpecificThreatShock_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+3,0.0074451959387949,3.14253315984299,-5.16156186984421,5.1764522617218,134,n_OilSpecificThreatShock_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+4,-0.65070194134354,2.34295725091209,-4.50452367329854,3.20311979061146,133,n_OilSpecificThreatShock_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+5,-0.779288260519091,2.68109258248663,-5.18929311901491,3.63071659797673,132,n_OilSpecificThreatShock_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+6,-4.30540251912001,3.42351733538311,-9.93658742515616,1.32578238691613,131,n_OilSpecificThreatShock_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+7,-1.28671560629764,3.73434073809695,-7.42915951362905,4.85572830103377,130,n_OilSpecificThreatShock_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+8,-0.340512751192808,4.44130363392961,-7.64580714185468,6.96478163946906,129,n_OilSpecificThreatShock_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+9,-0.471838273576025,4.0891798390734,-7.19794056313274,6.25426401598069,128,n_OilSpecificThreatShock_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+10,0.325723042838261,3.87661760133327,-6.05074547901869,6.70219156469521,127,n_OilSpecificThreatShock_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+11,0.313842731408137,2.8211764593925,-4.32657960009373,4.95426506291001,126,n_OilSpecificThreatShock_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+12,-1.52785177754285,3.63932843748144,-7.51401435760183,4.45831080251613,125,n_OilSpecificThreatShock_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+0,0.437749086628352,1.55900057438227,-2.12657866256375,3.00207683582046,137,n_OilSpecificThreatShock_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+1,0.160656098410249,1.50183581742053,-2.30964399295953,2.63095618978003,136,n_OilSpecificThreatShock_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+2,0.397398217644776,1.33594542586317,-1.80003646149548,2.59483289678504,135,n_OilSpecificThreatShock_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+3,0.729216633262262,1.68980608310415,-2.05026703137626,3.50870029790079,134,n_OilSpecificThreatShock_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+4,-0.359492112620189,1.52105767777575,-2.86140935071201,2.14242512547163,133,n_OilSpecificThreatShock_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+5,-0.524903614273538,1.49854557105862,-2.98979173198138,1.93998450343431,132,n_OilSpecificThreatShock_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+6,-1.1666444430766,2.01984080337922,-4.48898691437949,2.15569802822629,131,n_OilSpecificThreatShock_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+7,-0.488186238009583,1.836125883895,-3.50834455767375,2.53197208165458,130,n_OilSpecificThreatShock_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+8,0.188389682061854,1.93748659521604,-2.99849217124911,3.37527153537282,129,n_OilSpecificThreatShock_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+9,0.0359795688329735,1.89137892469643,-3.07506191539353,3.14702105305948,128,n_OilSpecificThreatShock_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+10,0.0404139321513877,1.97849722742332,-3.21392440828929,3.29475227259206,127,n_OilSpecificThreatShock_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+11,-0.0218246248083341,1.43536206052956,-2.38278511605891,2.33913586644224,126,n_OilSpecificThreatShock_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+12,-0.363195556362539,1.72468876671653,-3.20005612965868,2.4736650169336,125,n_OilSpecificThreatShock_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+0,0.0476230846271164,0.200769559767427,-0.282613453937786,0.377859623192019,137,n_OilSpecificThreatShock_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+1,0.0365489187286499,0.307746357520504,-0.469648793620055,0.542746631077355,136,n_OilSpecificThreatShock_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+2,0.0297841789348643,0.276392314227475,-0.424840721583709,0.484409079453438,135,n_OilSpecificThreatShock_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+3,0.293468901141289,0.280778873098687,-0.168371246646433,0.755309048929011,134,n_OilSpecificThreatShock_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+4,0.234365077766935,0.342459303576258,-0.328930349803748,0.797660505337618,133,n_OilSpecificThreatShock_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+5,0.082259902777132,0.388637104606002,-0.556991248301969,0.721511053856233,132,n_OilSpecificThreatShock_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+6,-0.045948356353563,0.433934834650273,-0.759707642988652,0.667810930281526,131,n_OilSpecificThreatShock_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+7,-0.0308131787150133,0.439610706871855,-0.753908444359885,0.692282086929858,130,n_OilSpecificThreatShock_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+8,-0.553120424863135,0.477669623221662,-1.33881703710383,0.232576187377559,129,n_OilSpecificThreatShock_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+9,-0.478048544618744,0.384853593577144,-1.11107637385942,0.15497928462193,128,n_OilSpecificThreatShock_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+10,-0.561790147583325,0.380071526637719,-1.18695217667436,0.0633718815077108,127,n_OilSpecificThreatShock_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+11,-0.556035218305581,0.354235089203168,-1.13870008957489,0.0266296529637282,126,n_OilSpecificThreatShock_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+12,-0.325789986710329,0.388928962100499,-0.965521200647806,0.313941227227148,125,n_OilSpecificThreatShock_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+0,0.129432933472249,0.467994612820405,-0.640349702819145,0.899215569763642,137,n_OilSpecificThreatShock_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+1,-0.304004649726607,0.499144869639649,-1.1250248989276,0.517015599474389,136,n_OilSpecificThreatShock_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+2,-0.0689867641748548,0.444644506144205,-0.800361892810196,0.662388364460487,135,n_OilSpecificThreatShock_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+3,0.491452590872745,0.511346910239777,-0.349638229065581,1.33254341081107,134,n_OilSpecificThreatShock_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+4,0.0408874294789891,0.516431121001114,-0.808566172970307,0.890341031928286,133,n_OilSpecificThreatShock_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+5,-0.136449960200228,0.532661300865913,-1.01259983286621,0.739699912465759,132,n_OilSpecificThreatShock_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+6,0.130624567590179,0.645805573505455,-0.931631072295745,1.1928802074761,131,n_OilSpecificThreatShock_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+7,0.217066813227054,0.774340391381848,-1.0566097880324,1.49074341448651,130,n_OilSpecificThreatShock_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+8,-0.716554555720576,0.686209360895998,-1.84526851183841,0.412159400397258,129,n_OilSpecificThreatShock_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+9,-0.564923118428152,0.535254856198305,-1.44533900998932,0.315492773133019,128,n_OilSpecificThreatShock_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+10,-0.672906464181952,0.597142842596431,-1.6551190346348,0.3093061062709,127,n_OilSpecificThreatShock_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+11,-0.999740418116227,0.552800382812207,-1.90901613276505,-0.0904647034674055,126,n_OilSpecificThreatShock_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+12,-0.316451848954973,0.529850564301598,-1.18797847138874,0.555074773478795,125,n_OilSpecificThreatShock_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+0,-0.313403977547445,0.270024840102214,-0.757555315156563,0.130747360061674,137,n_OilSpecificThreatShock_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+1,-0.0401884049544381,0.155333522624528,-0.295689313030542,0.215312503121666,136,n_OilSpecificThreatShock_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+2,-0.0229974678003722,0.21500275886656,-0.376645535526606,0.330650599925862,135,n_OilSpecificThreatShock_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+3,-0.263016727259551,0.265212069531125,-0.699251761739129,0.173218307220027,134,n_OilSpecificThreatShock_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+4,-0.264533470052339,0.207370903401579,-0.60562825263663,0.0765613125319514,133,n_OilSpecificThreatShock_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+5,-0.149357261910703,0.313187170608393,-0.664504315400588,0.365789791579182,132,n_OilSpecificThreatShock_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+6,-0.041681213026813,0.300530819315477,-0.536010421188573,0.452647995134947,131,n_OilSpecificThreatShock_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+7,-0.109807887475929,0.272181163385986,-0.557506061259239,0.33789028630738,130,n_OilSpecificThreatShock_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+8,0.298350010033278,0.303863686551775,-0.201461276890256,0.798161296956811,129,n_OilSpecificThreatShock_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+9,-0.148620658439159,0.293671290053435,-0.631666945015069,0.334425628136752,128,n_OilSpecificThreatShock_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+10,0.0443591101069656,0.298329235597028,-0.446348815090467,0.535067035304398,127,n_OilSpecificThreatShock_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+11,0.150669697160361,0.265924105749464,-0.286736532675472,0.588075926996194,126,n_OilSpecificThreatShock_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+12,0.0742424700495999,0.256891955095781,-0.348307194024351,0.496792134123551,125,n_OilSpecificThreatShock_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+0,2.47770707655572,2.47303282553926,-1.59006993610257,6.54548408921402,137,n_OilSpecificRealizedShock_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+1,2.09332547547102,2.79205004351238,-2.49918816523033,6.68583911617236,136,n_OilSpecificRealizedShock_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+2,2.49569997603753,2.96206614208569,-2.37646526104226,7.36786521311733,135,n_OilSpecificRealizedShock_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+3,0.709115192570781,3.87290240369491,-5.66124237297586,7.07947275811743,134,n_OilSpecificRealizedShock_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+4,0.0511957047194426,3.9608966501213,-6.46389951621252,6.5662909256514,133,n_OilSpecificRealizedShock_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+5,-1.38878613189354,4.0481688802429,-8.04743139707316,5.26985913328608,132,n_OilSpecificRealizedShock_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+6,-7.38370781242683,5.06832855781087,-15.7203664233238,0.952950798470097,131,n_OilSpecificRealizedShock_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+7,-7.94252115449743,5.29424873996064,-16.650785396405,0.765743087410084,130,n_OilSpecificRealizedShock_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+8,-9.7715326318041,5.95156443454372,-19.5609849779987,0.0179197143905334,129,n_OilSpecificRealizedShock_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+9,-9.22499786410567,5.8636900667664,-18.8699097377457,0.419914009534368,128,n_OilSpecificRealizedShock_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+10,-11.3108622842419,6.12030942504465,-21.3778754400919,-1.24384912839192,127,n_OilSpecificRealizedShock_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+11,-7.48599214220483,4.7843504414469,-15.3555483184256,0.383564034015983,126,n_OilSpecificRealizedShock_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+12,-7.14782278736131,4.38692716111559,-14.3636758394942,0.0680302647715987,125,n_OilSpecificRealizedShock_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+0,1.67532795036105,2.47303199570179,-2.39244769733608,5.74310359805818,137,n_OilSpecificRealizedShock_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+1,0.392112581819584,2.75984876318874,-4.14743466614895,4.93165982978812,136,n_OilSpecificRealizedShock_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+2,1.99287591870664,2.55795947609107,-2.21459300313664,6.20034484054992,135,n_OilSpecificRealizedShock_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+3,0.730675355235456,3.48611500414676,-5.00347355330529,6.4648242637762,134,n_OilSpecificRealizedShock_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+4,-0.494858975854202,3.68438373273718,-6.55513092172796,5.56541297001955,133,n_OilSpecificRealizedShock_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+5,-2.2179525466558,3.4777367702353,-7.93832048675984,3.50241539344823,132,n_OilSpecificRealizedShock_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+6,-8.35077804214064,4.54276396647121,-15.8229598287753,-0.878596255506024,131,n_OilSpecificRealizedShock_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+7,-8.42158950674835,4.64690815254477,-16.065073235572,-0.778105777924711,130,n_OilSpecificRealizedShock_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+8,-9.53546367125007,5.64502366129945,-18.8207013147654,-0.250226027734787,129,n_OilSpecificRealizedShock_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+9,-9.98481184859743,5.64856123815845,-19.2758682882399,-0.69375540895501,128,n_OilSpecificRealizedShock_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+10,-12.9776834259903,5.72307968483739,-22.3913118029274,-3.56405504905323,127,n_OilSpecificRealizedShock_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+11,-8.54550864260365,4.34155990374028,-15.6867391968979,-1.40427808830936,126,n_OilSpecificRealizedShock_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+12,-7.13781363137773,4.16687932966045,-13.9917202098388,-0.283907052916621,125,n_OilSpecificRealizedShock_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+0,0.976969780049197,1.39192921599474,-1.31255003933947,3.26648959943787,137,n_OilSpecificRealizedShock_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+1,-0.319431960998382,1.95353471446117,-3.53271062145545,2.89384669945869,136,n_OilSpecificRealizedShock_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+2,0.513457036294567,1.37183755328785,-1.74301493881918,2.76992901140831,135,n_OilSpecificRealizedShock_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+3,0.560087502557541,1.84322878975459,-2.47175405757166,3.59192906268675,134,n_OilSpecificRealizedShock_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+4,-0.873381457049201,2.24040708919762,-4.5585231835637,2.8117602694653,133,n_OilSpecificRealizedShock_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+5,-1.61463938415827,2.0738767354845,-5.02586305437022,1.79658428605369,132,n_OilSpecificRealizedShock_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+6,-2.91958860229157,2.73171112407341,-7.41285355250741,1.57367634792427,131,n_OilSpecificRealizedShock_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+7,-3.11598657306277,2.34839113513782,-6.9787462491949,0.746773103069347,130,n_OilSpecificRealizedShock_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+8,-4.15801225920566,3.02670326419308,-9.1364961010195,0.820471582608191,129,n_OilSpecificRealizedShock_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+9,-5.10408388896095,3.01498616799245,-10.0632948225919,-0.144872955330042,128,n_OilSpecificRealizedShock_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+10,-7.20305225970039,3.36193681577639,-12.7329462247119,-1.67315829468891,127,n_OilSpecificRealizedShock_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+11,-4.91875843488571,2.8642276369342,-9.62999365191158,-0.207523217859842,126,n_OilSpecificRealizedShock_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+12,-2.71478300566696,2.47381035194132,-6.78383893544773,1.35427292411381,125,n_OilSpecificRealizedShock_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+0,0.462382866378328,0.187217328123148,0.154437765186803,0.770327967569852,137,n_OilSpecificRealizedShock_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+1,0.280139781046724,0.278712675519638,-0.178301774159101,0.73858133625255,136,n_OilSpecificRealizedShock_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+2,0.188172234130088,0.320440454654422,-0.338905409930216,0.715249878190393,135,n_OilSpecificRealizedShock_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+3,0.10220704015106,0.381507714842868,-0.525317308318199,0.72973138862032,134,n_OilSpecificRealizedShock_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+4,0.453496781377352,0.508003711769588,-0.382094966431665,1.28908852918637,133,n_OilSpecificRealizedShock_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+5,0.29221301110013,0.561981341626671,-0.632164036953554,1.21659005915381,132,n_OilSpecificRealizedShock_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+6,0.182002613663237,0.507424044161651,-0.652635665778439,1.01664089310491,131,n_OilSpecificRealizedShock_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+7,0.520409709413995,0.472292261752634,-0.256441930310939,1.29726134913893,130,n_OilSpecificRealizedShock_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+8,1.10116425250576,0.583396918120399,0.141561715783114,2.06076678922841,129,n_OilSpecificRealizedShock_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+9,0.907947401531508,0.688285216927637,-0.224181033908997,2.04007583697201,128,n_OilSpecificRealizedShock_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+10,0.681358516179552,0.748843338276416,-0.550379164802859,1.91309619716196,127,n_OilSpecificRealizedShock_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+11,0.622831879173357,0.650624609950754,-0.447350370288028,1.69301412863474,126,n_OilSpecificRealizedShock_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+12,1.0123710173049,0.588015475706243,0.0451716293858896,1.97957040522391,125,n_OilSpecificRealizedShock_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+0,0.816778284493532,0.388626453721846,0.177544652559865,1.4560119164272,137,n_OilSpecificRealizedShock_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+1,0.459635591558536,0.445362444276634,-0.272920440217859,1.19219162333493,136,n_OilSpecificRealizedShock_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+2,0.320753085889659,0.4781837827861,-0.465789243575433,1.10729541535475,135,n_OilSpecificRealizedShock_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+3,0.511074554457899,0.624014926010113,-0.51533865986169,1.53748776877749,134,n_OilSpecificRealizedShock_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+4,0.682857650120558,0.696324145153158,-0.462493645568498,1.82820894580961,133,n_OilSpecificRealizedShock_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+5,0.598523620955118,0.757038266535888,-0.646693517497494,1.84374075940773,132,n_OilSpecificRealizedShock_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+6,0.650481189217809,0.776216947564716,-0.626282072285215,1.92724445072083,131,n_OilSpecificRealizedShock_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+7,1.11938760472592,0.8513014697207,-0.280878705373293,2.51965391482513,130,n_OilSpecificRealizedShock_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+8,1.54454397162416,0.824214609639974,0.188831581571457,2.90025636167687,129,n_OilSpecificRealizedShock_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+9,1.41220556586943,0.921939763063308,-0.104250397236032,2.9286615289749,128,n_OilSpecificRealizedShock_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+10,1.01235171558345,0.954039358031907,-0.556903382729783,2.58160681389669,127,n_OilSpecificRealizedShock_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+11,0.859801764211711,0.98873086764439,-0.76651578951204,2.48611931793546,126,n_OilSpecificRealizedShock_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+12,1.41292685038682,0.756366098651895,0.168815329716117,2.65703837105753,125,n_OilSpecificRealizedShock_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+0,-0.155353908802653,0.286450515335609,-0.626523077894549,0.315815260289242,137,n_OilSpecificRealizedShock_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+1,0.184440481204129,0.196627385029912,-0.138982786220306,0.507863748628563,136,n_OilSpecificRealizedShock_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+2,0.170669207413507,0.230043557775423,-0.207718772950218,0.549057187777233,135,n_OilSpecificRealizedShock_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+3,0.401924694011074,0.367296301893851,-0.20222396032489,1.00607334834704,134,n_OilSpecificRealizedShock_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+4,0.614594611037231,0.524502934148279,-0.248135942543255,1.47732516461772,133,n_OilSpecificRealizedShock_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+5,0.901647467113187,0.651766208650876,-0.170412545110616,1.97370747933699,132,n_OilSpecificRealizedShock_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+6,1.30344806326586,0.610469522295524,0.299315055374738,2.30758107115699,131,n_OilSpecificRealizedShock_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+7,1.14839943255427,0.471859604792105,0.372259450200091,1.92453941490846,130,n_OilSpecificRealizedShock_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+8,0.949394880621502,0.3060808244743,0.445936726344654,1.45285303489835,129,n_OilSpecificRealizedShock_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+9,0.0426635020736332,0.359214469078852,-0.548191720244163,0.63351872439143,128,n_OilSpecificRealizedShock_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+10,0.320933043961125,0.428195871652498,-0.383386488572133,1.02525257649438,127,n_OilSpecificRealizedShock_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+11,0.285074419681419,0.406555913222539,-0.383650548741243,0.95379938810408,126,n_OilSpecificRealizedShock_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+12,-0.0657559612217334,0.411822662293466,-0.743143960955953,0.611632038512486,125,n_OilSpecificRealizedShock_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+0,0.603567847503866,2.57791342901231,-3.63672240617394,4.84385810118167,137,n_StrictSupplyDisruption_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+1,1.50901068103232,2.70390507874967,-2.93851739468159,5.95653875674622,136,n_StrictSupplyDisruption_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+2,0.402419661186392,2.9421209406283,-4.43693863893594,5.24177796130872,135,n_StrictSupplyDisruption_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+3,1.95030655061586,3.58966644369706,-3.95416931884525,7.85478242007696,134,n_StrictSupplyDisruption_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+4,-1.28859974995514,3.98095402279945,-7.83668641308388,5.25948691317359,133,n_StrictSupplyDisruption_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+5,0.868043158870383,3.09582212417424,-4.22413109047423,5.96021740821499,132,n_StrictSupplyDisruption_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+6,1.95981167006667,4.49347512992423,-5.43129719500544,9.35092053513878,131,n_StrictSupplyDisruption_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+7,3.93863178313367,4.35942634503825,-3.23198645193029,11.1092500181976,130,n_StrictSupplyDisruption_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+8,5.23237513539929,5.16692171796816,-3.26645479257497,13.7312050633736,129,n_StrictSupplyDisruption_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+9,0.224605913945871,4.65508160548035,-7.43232194858356,7.8815337764753,128,n_StrictSupplyDisruption_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+10,-1.37963412945722,4.93102056459837,-9.49044118970915,6.73117293079471,127,n_StrictSupplyDisruption_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+11,0.0603584563945508,3.56008674268705,-5.7954631345761,5.9161800473652,126,n_StrictSupplyDisruption_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+12,-5.28676604648257,5.25816324072686,-13.9356749240951,3.36214283112991,125,n_StrictSupplyDisruption_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+0,0.246150374222268,2.65428350908782,-4.11975748265831,4.61205823110285,137,n_StrictSupplyDisruption_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+1,0.708074078545045,2.63465206364911,-3.62554292410337,5.04169108119346,136,n_StrictSupplyDisruption_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+2,0.2580745400603,2.77509303326644,-4.30654730083576,4.82269638095636,135,n_StrictSupplyDisruption_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+3,1.46500215316254,3.33089699380385,-4.01383584809749,6.94384015442256,134,n_StrictSupplyDisruption_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+4,-1.61659156898551,3.91245841388259,-8.0520129813571,4.81882984338608,133,n_StrictSupplyDisruption_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+5,0.266544027301608,2.74024013948481,-4.24074990484799,4.77383795945121,132,n_StrictSupplyDisruption_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+6,1.7878835643412,4.13093062865213,-5.00689266288218,8.58265979156458,131,n_StrictSupplyDisruption_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+7,3.50094057136562,4.16779073165231,-3.35446512996742,10.3563462726987,130,n_StrictSupplyDisruption_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+8,5.1256510402146,4.77378884111894,-2.72653284940036,12.9778349298296,129,n_StrictSupplyDisruption_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+9,-0.223923536103738,4.30427434296807,-7.30382480052893,6.85597772832145,128,n_StrictSupplyDisruption_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+10,-2.57779660596499,4.1925686824447,-9.47395840952732,4.31836519759733,127,n_StrictSupplyDisruption_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+11,-1.36468805274787,2.9870263309774,-6.2779091470556,3.54853304155987,126,n_StrictSupplyDisruption_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+12,-5.88169638201245,4.58240284092075,-13.4190783150537,1.65568555102878,125,n_StrictSupplyDisruption_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+0,0.152139260028412,1.59561208684674,-2.47240906822905,2.77668758828588,137,n_StrictSupplyDisruption_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+1,-0.829454743880033,1.63389764087211,-3.51697720453597,1.85806771677591,136,n_StrictSupplyDisruption_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+2,-0.566781848693836,1.42272766115636,-2.90696060231106,1.77339690492339,135,n_StrictSupplyDisruption_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+3,1.16658925648665,2.05858634784424,-2.21948396415772,4.55266247713103,134,n_StrictSupplyDisruption_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+4,-0.792777273034363,2.16115249724164,-4.3475567965175,2.76200225044877,133,n_StrictSupplyDisruption_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+5,-0.465840837547246,1.60374036177523,-3.10375898830169,2.1720773132072,132,n_StrictSupplyDisruption_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+6,1.06472839195211,2.12086771095535,-2.42378855469707,4.55324533860128,131,n_StrictSupplyDisruption_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+7,1.60418022713482,2.18175006817394,-1.98447928560271,5.19283973987236,130,n_StrictSupplyDisruption_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+8,2.76549929185604,2.40857168024147,-1.19624857216174,6.72724715587381,129,n_StrictSupplyDisruption_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+9,0.091461308035351,2.2834524925,-3.66448380622465,3.84740642229535,128,n_StrictSupplyDisruption_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+10,-1.27678011395092,2.48469358057989,-5.36373736183078,2.81017713392895,127,n_StrictSupplyDisruption_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+11,-0.820923468128013,1.6357313095752,-3.51146204540086,1.86961510914483,126,n_StrictSupplyDisruption_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+12,-1.53108994305871,2.41374286193442,-5.50134364403977,2.43916375792236,125,n_StrictSupplyDisruption_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+0,-0.113119218507177,0.187015445438252,-0.420732252232232,0.194493815217877,137,n_StrictSupplyDisruption_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+1,-0.240395363112629,0.342226483558207,-0.803307835832193,0.322517109606936,136,n_StrictSupplyDisruption_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+2,-0.223501708096175,0.255897656352093,-0.644415896275297,0.197412480082948,135,n_StrictSupplyDisruption_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+3,-0.17976613038712,0.28225496895623,-0.644034239799851,0.28450197902561,134,n_StrictSupplyDisruption_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+4,-0.151059636783814,0.422834244838247,-0.846560078005291,0.544440804437664,133,n_StrictSupplyDisruption_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+5,-0.701846822148586,0.398369012698271,-1.35710553755041,-0.0465881067467583,132,n_StrictSupplyDisruption_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+6,-0.96544437935477,0.3556394865215,-1.55041927864682,-0.380469480062721,131,n_StrictSupplyDisruption_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+7,-0.905918675254524,0.344723927521566,-1.47293907773533,-0.33889827277372,130,n_StrictSupplyDisruption_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+8,-1.22147098494884,0.499320204004472,-2.04277963351574,-0.400162336381934,129,n_StrictSupplyDisruption_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+9,-1.03072815676133,0.500381301789659,-1.85378215586875,-0.207674157653911,128,n_StrictSupplyDisruption_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+10,-0.792756696000373,0.508937964063116,-1.62988515208289,0.0443717600821408,127,n_StrictSupplyDisruption_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+11,-0.35824040636006,0.476188062627817,-1.14150006828442,0.425019255564301,126,n_StrictSupplyDisruption_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+12,-0.112442691046524,0.58575259231164,-1.07591996700655,0.851034584913504,125,n_StrictSupplyDisruption_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+0,0.0434891592061619,0.397031065644364,-0.609568829131379,0.696547147543703,137,n_StrictSupplyDisruption_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+1,-0.613916143054751,0.514292156043681,-1.45985146123589,0.23201917512639,136,n_StrictSupplyDisruption_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+2,-0.51888685558112,0.405896397349497,-1.18652701692798,0.148753305765735,135,n_StrictSupplyDisruption_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+3,-0.151004633843192,0.475471910832306,-0.933086330889258,0.631077063202873,134,n_StrictSupplyDisruption_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+4,-0.446034969776085,0.605801151657303,-1.44248919129098,0.550419251738809,133,n_StrictSupplyDisruption_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+5,-1.13334401151373,0.571156668406297,-2.07281312909934,-0.193874893928108,132,n_StrictSupplyDisruption_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+6,-1.4612552553762,0.551208710372119,-2.36791290183902,-0.554597608913376,131,n_StrictSupplyDisruption_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+7,-1.1275810736167,0.683682230580011,-2.2521382702685,-0.0030238769648927,130,n_StrictSupplyDisruption_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+8,-1.75656797425204,0.689118727062065,-2.89006741186026,-0.623068536643823,129,n_StrictSupplyDisruption_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+9,-1.23332204374286,0.681516097780829,-2.35431626900347,-0.112327818482251,128,n_StrictSupplyDisruption_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+10,-0.780381868701471,0.711046125278035,-1.94994866679484,0.389184929391897,127,n_StrictSupplyDisruption_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+11,-0.840046567475193,0.707257042887995,-2.00338087965648,0.323287744706099,126,n_StrictSupplyDisruption_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+12,0.0663351555066935,0.789945492087912,-1.23300955224807,1.36567986326146,125,n_StrictSupplyDisruption_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+0,-0.500126161645228,0.186500610817509,-0.806892367777073,-0.193359955513384,137,n_StrictSupplyDisruption_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+1,-0.328048392424182,0.189265709181334,-0.639362780628641,-0.0167340042197227,136,n_StrictSupplyDisruption_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+2,-0.405040588433424,0.250793381839491,-0.817558992167536,0.00747781530068836,135,n_StrictSupplyDisruption_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+3,-0.218741674385535,0.409025740646271,-0.891529147404067,0.454045798632996,134,n_StrictSupplyDisruption_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+4,-0.181753479872777,0.410005816794649,-0.856153034698657,0.492646074953103,133,n_StrictSupplyDisruption_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+5,-0.410280019577188,0.416049639795536,-1.09462077858673,0.274060739432353,132,n_StrictSupplyDisruption_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+6,-0.467679650307722,0.530020071619456,-1.33948508746806,0.404125786852619,131,n_StrictSupplyDisruption_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+7,0.0545188986320252,0.409346849717742,-0.618796751807362,0.727834549071413,130,n_StrictSupplyDisruption_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+8,0.517204870923269,0.497014962900527,-0.300311993452813,1.33472173529935,129,n_StrictSupplyDisruption_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+9,0.572816322770719,0.539714613598547,-0.314935216925564,1.460567862467,128,n_StrictSupplyDisruption_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+10,0.675200177885984,0.403945603174951,0.0107687874125657,1.3396315683594,127,n_StrictSupplyDisruption_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+11,0.556897158927619,0.389926584524478,-0.0844749978722678,1.19826931572751,126,n_StrictSupplyDisruption_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+12,0.530036419727509,0.25702032780304,0.107275601340423,0.952797238114595,125,n_StrictSupplyDisruption_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+0,-2.53541381784799,1.01766938769734,-4.20933100123944,-0.861496634456536,137,n_ChokepointShippingRisk_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+1,-2.68837814526546,1.94042793723105,-5.88009807565792,0.503341785126996,136,n_ChokepointShippingRisk_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+2,-3.85035542126395,2.04502747513283,-7.2141262809516,-0.48658456157631,135,n_ChokepointShippingRisk_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+3,-2.45753103691452,2.45713729340188,-6.49916222588433,1.5841001520553,134,n_ChokepointShippingRisk_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+4,-4.06013354688157,2.57871715875147,-8.30174581833593,0.181478724572779,133,n_ChokepointShippingRisk_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+5,-2.85820131118757,2.61901418779784,-7.1660962970242,1.44969367464907,132,n_ChokepointShippingRisk_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+6,-2.92921645192883,2.85662173746792,-7.62794107763136,1.7695081737737,131,n_ChokepointShippingRisk_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+7,-0.403089717397161,2.52685443018008,-4.55939539165726,3.75321595686294,130,n_ChokepointShippingRisk_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+8,1.7572032108244,2.18215345430041,-1.83211981304632,5.34652623469512,129,n_ChokepointShippingRisk_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+9,0.357561695263791,2.05003610650824,-3.01444762990776,3.72957102043534,128,n_ChokepointShippingRisk_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+10,1.93006609868402,1.99137984080494,-1.34546225510203,5.20559445247007,127,n_ChokepointShippingRisk_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+11,2.36247453668622,1.71392629763335,-0.456683350303511,5.18163242367594,126,n_ChokepointShippingRisk_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+12,1.81698221869089,1.94404181096871,-1.38068200502629,5.01464644240808,125,n_ChokepointShippingRisk_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+0,-2.09512859819892,1.11241440790654,-3.92488747171707,-0.265369724680772,137,n_ChokepointShippingRisk_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+1,-2.58584722208418,1.99077541361902,-5.86038138162124,0.688686937452879,136,n_ChokepointShippingRisk_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+2,-3.94401439061834,2.07719994963894,-7.36070426168537,-0.527324519551313,135,n_ChokepointShippingRisk_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+3,-2.62985348895776,2.42156845349089,-6.61297914259353,1.353272164678,134,n_ChokepointShippingRisk_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+4,-4.6067332474526,2.6374993183255,-8.94503356728232,-0.268432927622868,133,n_ChokepointShippingRisk_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+5,-2.96022206411675,2.46167835785186,-7.00932263941733,1.08887851118382,132,n_ChokepointShippingRisk_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+6,-2.49610304410837,2.65602004039861,-6.86486724081382,1.87266115259708,131,n_ChokepointShippingRisk_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+7,0.269846468064509,1.93099432611211,-2.9063565528637,3.44604948899272,130,n_ChokepointShippingRisk_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+8,2.07145038868141,1.96437595030679,-1.15966051787696,5.30256129523978,129,n_ChokepointShippingRisk_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+9,0.272806910574648,1.8797939229606,-2.81917894152844,3.36479276267773,128,n_ChokepointShippingRisk_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+10,1.30740334479025,1.83235908599948,-1.70655914369349,4.32136583327398,127,n_ChokepointShippingRisk_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+11,2.13364586716136,1.7221567949107,-0.699049983126625,4.96634171744934,126,n_ChokepointShippingRisk_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+12,2.33935150578643,1.73676102906962,-0.517366172026702,5.19606918359956,125,n_ChokepointShippingRisk_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+0,-1.31373166965777,0.820091488174133,-2.66266212841303,0.0351987890974776,137,n_ChokepointShippingRisk_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+1,-1.92483045848061,1.36419851078896,-4.16873732683363,0.319076409872401,136,n_ChokepointShippingRisk_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+2,-2.21031833334841,1.13719483343987,-4.08083737968245,-0.339799287014367,135,n_ChokepointShippingRisk_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+3,-1.20482694002768,1.06382466032835,-2.95466279100919,0.545008910953836,134,n_ChokepointShippingRisk_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+4,-2.0898393444982,1.3451064213733,-4.30234252032978,0.122663831333391,133,n_ChokepointShippingRisk_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+5,-2.58240097782249,1.24878295642639,-4.63646615297562,-0.528335802669365,132,n_ChokepointShippingRisk_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+6,-2.44687114540066,1.60069038515875,-5.07977253105538,0.186030240254064,131,n_ChokepointShippingRisk_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+7,-0.500118800491741,1.28104947074268,-2.60725766874711,1.60702006776363,130,n_ChokepointShippingRisk_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+8,0.552606095761641,1.07611182600325,-1.21744034424517,2.32265253576845,129,n_ChokepointShippingRisk_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+9,0.123025199660396,1.10909250536157,-1.70126963040829,1.94732002972908,128,n_ChokepointShippingRisk_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+10,0.86211255547792,1.20548054201922,-1.12072648628183,2.84495159723767,127,n_ChokepointShippingRisk_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+11,2.12309308593169,1.16768057496178,0.202429457085019,4.04375671477836,126,n_ChokepointShippingRisk_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+12,1.7762339269631,1.35621194223778,-0.45453620514161,4.00700405906782,125,n_ChokepointShippingRisk_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+0,0.179004458457922,0.130603024364534,-0.0358183998589128,0.393827316774756,137,n_ChokepointShippingRisk_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+1,0.449740140769778,0.198248224717306,0.123650829306827,0.775829452232729,136,n_ChokepointShippingRisk_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+2,0.297455599823364,0.209477072191336,-0.0471035221337308,0.64201472178046,135,n_ChokepointShippingRisk_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+3,0.36025172148776,0.234304685564363,-0.025145190374507,0.745648633350027,134,n_ChokepointShippingRisk_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+4,0.405063483685279,0.343563209934543,-0.160047708262644,0.970174675633202,133,n_ChokepointShippingRisk_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+5,0.415804500594612,0.401719737965925,-0.244965667416635,1.07657466860586,132,n_ChokepointShippingRisk_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+6,-0.0625372996461592,0.34548659293907,-0.630812175105096,0.505737575812778,131,n_ChokepointShippingRisk_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+7,-0.0829671059002441,0.33354065909208,-0.631592668743637,0.465658456943149,130,n_ChokepointShippingRisk_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+8,-0.135340383517563,0.382966944076111,-0.765264950483677,0.49458418344855,129,n_ChokepointShippingRisk_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+9,-0.337303363275455,0.416285625248934,-1.02203228381393,0.347425557263015,128,n_ChokepointShippingRisk_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+10,-0.667798395073203,0.35547309081747,-1.25249959778797,-0.0830971923584375,127,n_ChokepointShippingRisk_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+11,-0.742048901578116,0.243584058233316,-1.14270902323074,-0.341388779925488,126,n_ChokepointShippingRisk_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+12,-0.595564223771749,0.212467795583537,-0.945042647947714,-0.246085799595784,125,n_ChokepointShippingRisk_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+0,0.526004216539704,0.181200626547649,0.227955708756924,0.824052724322484,137,n_ChokepointShippingRisk_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+1,0.753118616578101,0.276034194936388,0.299082769874354,1.20715446328185,136,n_ChokepointShippingRisk_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+2,0.593457808678125,0.282710185254155,0.128440935086706,1.05847468226954,135,n_ChokepointShippingRisk_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+3,0.482420848690567,0.38144531813784,-0.145000866332117,1.10984256371325,134,n_ChokepointShippingRisk_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+4,0.635028762739619,0.51173593960664,-0.206701953563782,1.47675947904302,133,n_ChokepointShippingRisk_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+5,0.580725482845601,0.56111024696195,-0.3422187419894,1.5036697076806,132,n_ChokepointShippingRisk_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+6,0.111928848250077,0.522870399464457,-0.7481164247346,0.971974121234754,131,n_ChokepointShippingRisk_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+7,0.0425699323329858,0.601559877589677,-0.946908014148878,1.03204787881485,130,n_ChokepointShippingRisk_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+8,-0.0755627189508354,0.605204011876434,-1.07103473293137,0.9199092950297,129,n_ChokepointShippingRisk_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+9,-0.339017710814994,0.639019390578245,-1.39011107309994,0.712075651469952,128,n_ChokepointShippingRisk_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+10,-0.908056103283329,0.535037320664823,-1.78811418073326,-0.0279980258333963,127,n_ChokepointShippingRisk_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+11,-1.11336049601083,0.391650360540199,-1.75756801204223,-0.46915297997943,126,n_ChokepointShippingRisk_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+12,-0.795276962751755,0.290899034674948,-1.27376329501353,-0.316790630489985,125,n_ChokepointShippingRisk_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+0,0.0377553153735556,0.121458133358138,-0.162025535803333,0.237536166550444,137,n_ChokepointShippingRisk_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+1,0.161601319266446,0.141876751676105,-0.071765170308089,0.394967808840982,136,n_ChokepointShippingRisk_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+2,-0.122928755887097,0.17333115744258,-0.408033138870221,0.162175627096027,135,n_ChokepointShippingRisk_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+3,-0.235761813614697,0.187727866133123,-0.544546675103625,0.0730230478742308,134,n_ChokepointShippingRisk_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+4,-0.246979375250191,0.173553899954358,-0.53245013706169,0.0384913865613069,133,n_ChokepointShippingRisk_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+5,-0.367725242821118,0.1841848490971,-0.670682359887993,-0.064768125754244,132,n_ChokepointShippingRisk_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+6,0.0356524026307821,0.15205027653066,-0.214448046199648,0.285752851461212,131,n_ChokepointShippingRisk_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+7,0.0485371295776556,0.158868943888323,-0.212779028987003,0.309853288142314,130,n_ChokepointShippingRisk_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+8,0.0184208572468032,0.247233855170176,-0.388242646135056,0.425084360628662,129,n_ChokepointShippingRisk_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+9,-0.232850354085523,0.291861339929971,-0.712919537636252,0.247218829465206,128,n_ChokepointShippingRisk_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+10,-0.0671580974830714,0.277427872550442,-0.523486339865098,0.389170144898955,127,n_ChokepointShippingRisk_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+11,-0.082463143363244,0.24476515347967,-0.485065993815612,0.320139707089124,126,n_ChokepointShippingRisk_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+12,-0.15077445930863,0.21927773580546,-0.511454238357947,0.209905319740688,125,n_ChokepointShippingRisk_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+0,-0.157063616509384,1.68306321759796,-2.92545625436401,2.61132902134524,137,n_EnergySanction_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+1,1.53111490486966,2.33753883874437,-2.31379433217894,5.37602414191827,136,n_EnergySanction_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+2,1.82570599358542,2.7976568234514,-2.77602997943415,6.42744196660499,135,n_EnergySanction_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+3,3.22002746934408,2.03073611171317,-0.120236189388646,6.56029112807681,134,n_EnergySanction_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+4,2.88889502535486,2.6627915619205,-1.49100733308585,7.26879738379557,133,n_EnergySanction_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+5,5.65946048852464,2.31527985882206,1.85116401533348,9.4677569617158,132,n_EnergySanction_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+6,5.71178628356674,2.17723317452987,2.13055639972221,9.29301616741127,131,n_EnergySanction_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+7,6.81492230994252,1.87342147003107,3.73341821015316,9.89642640973189,130,n_EnergySanction_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+8,2.44875511379595,2.00582964847772,-0.850541058549416,5.74805128614132,129,n_EnergySanction_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+9,1.65613457208505,2.34921221553013,-2.20797566110838,5.52024480527848,128,n_EnergySanction_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+10,1.03361520310734,2.92388301085944,-3.7757443720866,5.84297477830128,127,n_EnergySanction_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+11,2.22542577320684,2.66559568019637,-2.15908894935034,6.60994049576402,126,n_EnergySanction_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+12,-2.03735885264428,3.38369286260688,-7.60303833019301,3.52832062490446,125,n_EnergySanction_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+0,-0.894933978803197,1.65535044800453,-3.61774316707919,1.8278752094728,137,n_EnergySanction_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+1,1.13616096577532,2.23528676138558,-2.54055857096637,4.81288050251701,136,n_EnergySanction_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+2,1.8031591901839,2.4938296740463,-2.29882559417036,5.90514397453816,135,n_EnergySanction_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+3,3.06710736971177,1.77695770216204,0.144272048371176,5.98994269105236,134,n_EnergySanction_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+4,2.38354920956147,2.60207012537221,-1.89647527373907,6.66357369286202,133,n_EnergySanction_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+5,5.02899879074072,2.15929764662989,1.47727022501377,8.58072735646767,132,n_EnergySanction_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+6,6.00885233823442,1.95821397295906,2.78787698246566,9.22982769400318,131,n_EnergySanction_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+7,6.49241627016502,1.73354890700156,3.64098206298575,9.3438504773443,130,n_EnergySanction_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+8,2.07137523813721,1.9164658962935,-1.08093064230995,5.22368111858437,129,n_EnergySanction_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+9,1.44305821003285,2.31254149278822,-2.36073405185562,5.24685047192132,128,n_EnergySanction_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+10,1.23103280539963,2.69376359865412,-3.19981401999645,5.66187963079571,127,n_EnergySanction_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+11,2.53837542604622,2.44503940599338,-1.48335650894126,6.5601073610337,126,n_EnergySanction_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+12,-1.65136584647656,3.48399906022306,-7.38203433697997,4.07930264402686,125,n_EnergySanction_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+0,0.480391040419417,1.26212247061368,-1.59561568302645,2.55639776386529,137,n_EnergySanction_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+1,1.04483134304862,1.30523053572867,-1.10208183765251,3.19174452374974,136,n_EnergySanction_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+2,1.30667952013949,1.33509173401632,-0.889350960870185,3.50271000114916,135,n_EnergySanction_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+3,1.96049303071738,1.16516206836611,0.0439719765791169,3.87701408485565,134,n_EnergySanction_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+4,1.65965338192156,1.17013702431233,-0.265050746548787,3.5843575103919,133,n_EnergySanction_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+5,2.70848462461819,1.36763933919277,0.458918097185448,4.95805115205093,132,n_EnergySanction_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+6,3.73578472410254,0.987712483568304,2.11114226311997,5.36042718508511,131,n_EnergySanction_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+7,3.65906325978103,1.00805230257323,2.00096477373667,5.31716174582539,130,n_EnergySanction_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+8,1.50935135678556,1.36301888070811,-0.732615192750511,3.75131790632163,129,n_EnergySanction_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+9,0.788481310805273,1.29628129270654,-1.34371167505242,2.92067429666297,128,n_EnergySanction_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+10,-0.346891614912077,1.3761661827924,-2.61048355196613,1.91670032214197,127,n_EnergySanction_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+11,0.455366877162639,1.37731104611959,-1.8101081924875,2.72084194681278,126,n_EnergySanction_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+12,-0.0389391739324931,1.76664966156183,-2.94481927730506,2.86694092944007,125,n_EnergySanction_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+0,-0.252829425289528,0.164644711535978,-0.523645876217861,0.017987025638805,137,n_EnergySanction_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+1,-0.44079205527763,0.20177605402342,-0.772684129570008,-0.108899980985252,136,n_EnergySanction_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+2,-0.255181678503861,0.215285939357736,-0.609295536688088,0.0989321796803669,135,n_EnergySanction_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+3,-0.284114622319313,0.239027898770959,-0.677280528555315,0.109051283916689,134,n_EnergySanction_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+4,-0.552489790312139,0.378989398429594,-1.17587187689521,0.0708922962709351,133,n_EnergySanction_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+5,-0.819267914902447,0.331773566802973,-1.36498686958494,-0.27354896021995,132,n_EnergySanction_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+6,-0.682815836155456,0.255621600166462,-1.1032759523164,-0.262355719994512,131,n_EnergySanction_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+7,-0.669322643889065,0.262371754108826,-1.10088577524459,-0.237759512533543,130,n_EnergySanction_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+8,-0.827645368155669,0.33219041719788,-1.37404998072212,-0.281240755589212,129,n_EnergySanction_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+9,-0.750982387397563,0.347531008957326,-1.32262002795912,-0.179344746836,128,n_EnergySanction_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+10,-0.54367082765043,0.315867132658976,-1.06322602643931,-0.0241156288615506,127,n_EnergySanction_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+11,-0.300017302822544,0.351859949624346,-0.878775417141112,0.278740811496024,126,n_EnergySanction_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+12,-0.0452806436544738,0.539240886552766,-0.932252971701318,0.841691684392371,125,n_EnergySanction_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+0,-0.515109136485801,0.310332224136452,-1.02556022091656,-0.00465805205504122,137,n_EnergySanction_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+1,-0.711927806160277,0.314281167804984,-1.22887432490685,-0.194981287413705,136,n_EnergySanction_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+2,-0.501382274418842,0.270857237447712,-0.946902783820766,-0.0558617650169173,135,n_EnergySanction_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+3,-0.305139434512909,0.343091252343944,-0.869474325306168,0.25919545628035,134,n_EnergySanction_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+4,-0.814971065272697,0.598676606747894,-1.79970645325297,0.169764322707577,133,n_EnergySanction_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+5,-1.47045968996146,0.548014599536824,-2.37186349163197,-0.569055888290959,132,n_EnergySanction_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+6,-1.05786109327597,0.445490631057781,-1.79062797354427,-0.325094213007683,131,n_EnergySanction_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+7,-0.784756647706001,0.473684823085083,-1.56389884698937,-0.00561444842263548,130,n_EnergySanction_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+8,-1.25918833162898,0.524987987583855,-2.12271672711224,-0.395659936145725,129,n_EnergySanction_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+9,-1.37693281748125,0.553971193529193,-2.28813434438438,-0.465731290578122,128,n_EnergySanction_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+10,-0.796640053556133,0.541159420695319,-1.68676808944579,0.0934879823335202,127,n_EnergySanction_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+11,-0.336181656411919,0.532270088072937,-1.21168804129647,0.539324728472631,126,n_EnergySanction_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+12,0.295292340464329,0.633867407985445,-0.74732676456686,1.33791144549552,125,n_EnergySanction_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+0,-0.187829277080483,0.139530673943415,-0.417336812187292,0.0416782580263256,137,n_EnergySanction_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+1,-0.184468168304387,0.144859554322696,-0.422740931630647,0.0538045950218731,136,n_EnergySanction_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+2,-0.0915421990570437,0.145749045363221,-0.331278044947452,0.148193646833365,135,n_EnergySanction_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+3,-0.189694457930102,0.258180071186407,-0.614362884427653,0.234973968567449,134,n_EnergySanction_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+4,-0.494010245953367,0.192983352844682,-0.811439613821199,-0.176580878085536,133,n_EnergySanction_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+5,-0.630994940633199,0.262989023710433,-1.06357339013173,-0.198416491134666,132,n_EnergySanction_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+6,-0.490961656886397,0.249774122759533,-0.901803528626037,-0.0801197851467569,131,n_EnergySanction_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+7,-0.445456827678602,0.272950224471009,-0.89441999437696,0.00350633901975655,130,n_EnergySanction_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+8,-0.547630055768472,0.250151514976263,-0.959092682464583,-0.13616742907236,129,n_EnergySanction_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+9,-0.627342070217191,0.345897703698344,-1.1962931626996,-0.0583909777347845,128,n_EnergySanction_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+10,-0.663033057403864,0.330808201480969,-1.20716412743513,-0.118901987372598,127,n_EnergySanction_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+11,-0.10216160447697,0.250983404180378,-0.514992567147692,0.310669358193752,126,n_EnergySanction_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+12,0.334738070861753,0.16465306607837,0.0639078779340652,0.605568263789441,125,n_EnergySanction_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+0,-0.814399493997287,2.09613836126941,-4.26224028012339,2.63344129212882,137,n_ProducerRegionRisk_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+1,-2.66728047149539,2.90961325591242,-7.45316838850901,2.11860744551824,136,n_ProducerRegionRisk_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+2,-4.51711167098999,2.8089132917365,-9.13736288669497,0.103139544714985,135,n_ProducerRegionRisk_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+3,-4.34274349452881,3.26173637995409,-9.70782240925586,1.02233542019824,134,n_ProducerRegionRisk_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+4,-2.51042078120023,3.08595230420167,-7.58636062136561,2.56551905896515,133,n_ProducerRegionRisk_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+5,-4.30837603163985,3.32473443858798,-9.77707753160175,1.16032546832206,132,n_ProducerRegionRisk_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+6,-4.29186455297048,3.36526835478334,-9.82723841200088,1.24350930605991,131,n_ProducerRegionRisk_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+7,-5.19154639894386,3.58400520611422,-11.0867103612338,0.70361756334607,130,n_ProducerRegionRisk_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+8,-4.36109689194387,3.47406488631688,-10.0754251204669,1.35323133657921,129,n_ProducerRegionRisk_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+9,-4.98138041394777,3.30696750649589,-10.4208579112182,0.458097083322653,128,n_ProducerRegionRisk_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+10,-4.64525235170885,3.12140566973364,-9.77950778875712,0.489003085339414,127,n_ProducerRegionRisk_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+11,-2.79174203473627,2.25058378168164,-6.49362293079348,0.910138861320937,126,n_ProducerRegionRisk_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+12,-5.91155486253738,2.55318542836039,-10.1111711746556,-1.71193855041914,125,n_ProducerRegionRisk_EventOnset,Real_Brent,Brent crude oil price,poisson_residual_event_level_lp,World
+0,0.344691625516436,2.37473650968181,-3.56140233548778,4.25078558652065,137,n_ProducerRegionRisk_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+1,-2.61868156073063,2.98281627422007,-7.52497772791139,2.28761460645013,136,n_ProducerRegionRisk_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+2,-3.61085922417855,2.7222096231637,-8.08849559616156,0.866777147804462,135,n_ProducerRegionRisk_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+3,-4.29410415686312,3.12849410257554,-9.44001902838078,0.851810714654547,134,n_ProducerRegionRisk_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+4,-3.06498267447486,2.91576146763466,-7.86098349983908,1.73101815088937,133,n_ProducerRegionRisk_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+5,-4.8377719502741,3.16238812602258,-10.0394375291906,0.363893628642403,132,n_ProducerRegionRisk_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+6,-4.48353268793285,3.31600218842343,-9.93787091454015,0.970805538674457,131,n_ProducerRegionRisk_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+7,-4.75363268362844,3.01904752613287,-9.71952395692696,0.21225858967008,130,n_ProducerRegionRisk_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+8,-3.49860944643658,3.26974988662834,-8.87686940668137,1.8796505138082,129,n_ProducerRegionRisk_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+9,-4.83276377295466,3.19187101841913,-10.0829243943627,0.417396848453338,128,n_ProducerRegionRisk_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+10,-5.13300414460494,3.02469572125448,-10.108185872135,-0.157822417074916,127,n_ProducerRegionRisk_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+11,-2.80650124121698,2.14468090126082,-6.3341874003094,0.721184917875441,126,n_ProducerRegionRisk_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+12,-5.49359659220301,2.38550498534014,-9.41740311945057,-1.56979006495546,125,n_ProducerRegionRisk_EventOnset,Real_WTI,WTI crude oil price,poisson_residual_event_level_lp,World
+0,-0.354977433600426,1.37776501890338,-2.62119922203051,1.91124435482966,137,n_ProducerRegionRisk_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+1,-2.28743045416416,2.21208947351121,-5.92599384781025,1.35113293948193,136,n_ProducerRegionRisk_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+2,-2.63798034765139,1.55632660995956,-5.19790981676447,-0.0780508785383174,135,n_ProducerRegionRisk_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+3,-1.6475999012117,1.4852433823497,-4.09060786557527,0.795408063151864,134,n_ProducerRegionRisk_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+4,-1.92857500820882,1.58646944352504,-4.53808502643866,0.680935010021031,133,n_ProducerRegionRisk_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+5,-2.76600430855568,1.8255551386826,-5.76877529961765,0.236766682506288,132,n_ProducerRegionRisk_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+6,-1.35598300627326,2.29524108195114,-5.13131862464861,2.41935261210209,131,n_ProducerRegionRisk_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+7,-2.3735462049391,1.49185758794233,-4.82743356936112,0.08034115948292,130,n_ProducerRegionRisk_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+8,-2.34347205892788,2.05968292811842,-5.73134899361349,1.04440487575773,129,n_ProducerRegionRisk_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+9,-3.27747381028874,1.86377642164019,-6.34311321725024,-0.211834403327238,128,n_ProducerRegionRisk_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+10,-3.22504059787115,1.59609092268175,-5.85037654098856,-0.599704654753747,127,n_ProducerRegionRisk_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+11,-1.1682924022729,0.951790043019255,-2.73384770662942,0.397262902083621,126,n_ProducerRegionRisk_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+12,-2.14777017805063,1.51163706751621,-4.63419189118896,0.338651535087697,125,n_ProducerRegionRisk_EventOnset,Real_Gasoline,Gasoline price,poisson_residual_event_level_lp,World
+0,0.146052955370997,0.185322846936223,-0.158776001569022,0.450881912311015,137,n_ProducerRegionRisk_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+1,0.15108817519731,0.356564528092392,-0.435408282077701,0.737584632472321,136,n_ProducerRegionRisk_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+2,0.151213853915506,0.378000753066489,-0.470542055756297,0.772969763587309,135,n_ProducerRegionRisk_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+3,0.425953793444685,0.437108697119585,-0.293026032384497,1.14493361927387,134,n_ProducerRegionRisk_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+4,0.231020231577917,0.540159301301887,-0.657462754300065,1.1195032174559,133,n_ProducerRegionRisk_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+5,0.0451526030918939,0.586379442951308,-0.91935575041635,1.00966095660014,132,n_ProducerRegionRisk_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+6,-0.222443586625214,0.48479581735546,-1.01986174513324,0.574974571882818,131,n_ProducerRegionRisk_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+7,-0.0570132318390293,0.497704988034004,-0.8756650865586,0.761638622880541,130,n_ProducerRegionRisk_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+8,0.0218423005315176,0.504110633646335,-0.807345903606461,0.851030504669496,129,n_ProducerRegionRisk_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+9,-0.195185001834975,0.415778022064765,-0.879078989434913,0.488708985764963,128,n_ProducerRegionRisk_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+10,-0.297774924897423,0.399718866218414,-0.955253951757712,0.359704101962866,127,n_ProducerRegionRisk_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+11,-0.136912833512445,0.2457898833398,-0.541201214591895,0.267375547567005,126,n_ProducerRegionRisk_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+12,0.181921005741864,0.275262224757552,-0.270845063013327,0.634687074497055,125,n_ProducerRegionRisk_EventOnset,inv_OECD,OECD inventory,poisson_residual_event_level_lp,World
+0,0.652097327395422,0.315190353646985,0.133655331019061,1.17053932377178,137,n_ProducerRegionRisk_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+1,0.367968278898499,0.504655788168492,-0.4621166246325,1.1980531824295,136,n_ProducerRegionRisk_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+2,0.442521084342922,0.539549215142595,-0.444958399103196,1.33000056778904,135,n_ProducerRegionRisk_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+3,0.716898254780698,0.685247971862011,-0.410234357097672,1.84403086665907,134,n_ProducerRegionRisk_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+4,0.443280307799954,0.833070254710384,-0.926998322165808,1.81355893776572,133,n_ProducerRegionRisk_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+5,0.347599028740381,0.915063819332262,-1.15754701338036,1.85274507086112,132,n_ProducerRegionRisk_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+6,-0.121397684782427,0.806147869782301,-1.44739293225305,1.20459756268819,131,n_ProducerRegionRisk_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+7,-0.176861194518576,0.945397354117511,-1.73190146134909,1.37817907231194,130,n_ProducerRegionRisk_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+8,-0.236217084875628,0.790876418593843,-1.5370930304701,1.06465886071885,129,n_ProducerRegionRisk_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+9,-0.136262851118376,0.69838938429006,-1.28501116289229,1.01248546065553,128,n_ProducerRegionRisk_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+10,-0.25716967590004,0.632187043259116,-1.29702482691652,0.782685475116444,127,n_ProducerRegionRisk_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+11,-0.455024900588949,0.479117438486158,-1.24310295701861,0.333053155840707,126,n_ProducerRegionRisk_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+12,0.16290698372605,0.358944421518279,-0.42750404988229,0.75331801733439,125,n_ProducerRegionRisk_EventOnset,inv_USA,U.S. inventory,poisson_residual_event_level_lp,World
+0,-0.100370134355076,0.306940994173781,-0.60524314188191,0.404502873171758,137,n_ProducerRegionRisk_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+1,0.454921436610131,0.222026016382669,0.0897211382855108,0.820121734934752,136,n_ProducerRegionRisk_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+2,0.130536123246076,0.306510734241349,-0.373629169670366,0.634701416162518,135,n_ProducerRegionRisk_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+3,0.124038107528361,0.305434985175355,-0.378357735635191,0.626433950691914,134,n_ProducerRegionRisk_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+4,0.466986252531415,0.307567034757437,-0.038916500120064,0.972889005182894,133,n_ProducerRegionRisk_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+5,0.39290313214708,0.427084374711758,-0.309588150611857,1.09539441490602,132,n_ProducerRegionRisk_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+6,0.47475449692846,0.344653948765675,-0.0921508007419079,1.04165979459883,131,n_ProducerRegionRisk_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+7,0.323385612433513,0.267975687852396,-0.117395169665316,0.764166394532342,130,n_ProducerRegionRisk_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+8,0.329076948635647,0.238373561395952,-0.0630126683958235,0.721166565667117,129,n_ProducerRegionRisk_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+9,0.195812172941082,0.292268811649837,-0.284927241945949,0.676551587828112,128,n_ProducerRegionRisk_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+10,0.503936391323664,0.261523051892265,0.0737692508872545,0.934103531760074,127,n_ProducerRegionRisk_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+11,0.297936821498688,0.236699820157213,-0.0913997361856647,0.687273379183041,126,n_ProducerRegionRisk_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
+12,0.155812357062871,0.296318880801562,-0.331588828757779,0.643213542883521,125,n_ProducerRegionRisk_EventOnset,WorldCP,World crude-oil production,poisson_residual_event_level_lp,World
