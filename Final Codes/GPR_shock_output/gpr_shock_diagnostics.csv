@@ -1,0 +1,7 @@
+variant,shock,label,nobs,rsq,resid_sd,finite_z
+with_oil,World,World GPR shock,153,0.506565399555267,22.9634270600844,153
+with_oil,GPT,Global geopolitical threats shock,153,0.515132542365565,22.5752824449364,153
+with_oil,GPA,Global geopolitical acts shock,153,0.537845981607178,30.4413611947163,153
+without_oil,World,World GPR shock,156,0.504838035801447,22.7886856384213,156
+without_oil,GPT,Global geopolitical threats shock,156,0.512184862824201,22.4545955290786,156
+without_oil,GPA,Global geopolitical acts shock,156,0.529211827580318,30.4266555505052,156
