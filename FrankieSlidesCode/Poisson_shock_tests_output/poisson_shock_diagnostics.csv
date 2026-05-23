@@ -1,4 +1,0 @@
-shock,method,converged,nobs,positive_periods,zero_periods,total_count,mean_lambda_positive,mean_lambda_zero,pearson_resid_sd,deviance
-ChokepointShippingRisk,glmfit_poisson,1,140,12,128,14,0.406231584061455,0.0712907889942387,1.03125473578153,41.6261848284611
-StrictSupplyDisruption,glmfit_poisson,1,140,15,125,15,0.229810502627592,0.0924227396846889,0.815874375459995,53.4415187516731
-EnergySanction,glmfit_poisson,1,140,10,130,10,0.24438752054534,0.0581240384855831,0.616324508869414,32.5698796642698
